@@ -512,9 +512,6 @@ function renderDashboard({ totalImagens, totalOrcamentos, naoLidos, user }) {
     </div>
   `, user, 'dashboard');
 }
-    </div>
-  `, user);
-}
 
 function renderImagens(rows, okMsg = '', errMsg = '') {
   // BUG CORRIGIDO: removido URLSearchParams (não existe no Node.js/servidor)
