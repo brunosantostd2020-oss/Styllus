@@ -96,7 +96,9 @@ router.get('/admin', requireAuth, async (req, res) => {
 router.get('/admin/imagens', requireAuth, async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM imagens ORDER BY criado_em DESC');
-    res.send(renderImagens(rows));
+    const okMsg = req.query.ok ? decodeURIComponent(req.query.ok) : '';
+    const errMsg = req.query.erro ? decodeURIComponent(req.query.erro) : '';
+    res.send(renderImagens(rows, okMsg, errMsg));
   } catch (err) {
     res.send('<p>Erro: ' + err.message + '</p>');
   }
@@ -168,69 +170,193 @@ router.post('/admin/orcamentos/:id/deletar', requireAuth, async (req, res) => {
 
 // ─── HELPERS DE RENDERIZAÇÃO ──────────────────────────────────────────────────
 
-function layout(titulo, conteudo, user = '') {
+function layout(titulo, conteudo, user = '', paginaAtiva = '') {
+  const navItems = [
+    { href: '/admin', label: 'Dashboard', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>', key: 'dashboard' },
+    { href: '/admin/imagens', label: 'Imagens', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>', key: 'imagens' },
+    { href: '/admin/orcamentos', label: 'Orçamentos', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>', key: 'orcamentos' },
+  ];
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${titulo} — Stilus Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',sans-serif;background:#0f0f0f;color:#e0e0e0;min-height:100vh;display:flex}
-  .sidebar{width:220px;background:#1a1a1a;border-right:1px solid #2a2a2a;display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;min-height:100vh}
-  .sidebar-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid #2a2a2a;margin-bottom:1rem}
-  .sidebar-logo h2{color:#E8000D;font-size:1.1rem;font-weight:700}
-  .sidebar-logo p{color:#888;font-size:0.7rem;margin-top:2px}
-  .sidebar a{display:block;padding:0.75rem 1.5rem;color:#aaa;text-decoration:none;font-size:0.82rem;transition:all 0.2s;border-left:3px solid transparent}
-  .sidebar a:hover,.sidebar a.active{color:#fff;background:#222;border-left-color:#E8000D}
-  .sidebar-footer{margin-top:auto;padding:1rem 1.5rem;border-top:1px solid #2a2a2a}
-  .sidebar-footer a{color:#666;font-size:0.75rem;text-decoration:none}
-  .sidebar-footer a:hover{color:#E8000D}
-  .main{flex:1;padding:2rem;overflow-x:auto}
-  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
-  .page-header h1{font-size:1.4rem;font-weight:600}
-  .page-header small{color:#888;font-size:0.78rem}
-  .card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem}
-  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
-  .stat-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:1.2rem;text-align:center}
-  .stat-num{font-size:2.2rem;font-weight:700;color:#E8000D;display:block}
-  .stat-label{font-size:0.75rem;color:#888;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
-  .btn{display:inline-block;padding:0.6rem 1.2rem;border:none;border-radius:4px;font-size:0.82rem;cursor:pointer;text-decoration:none;transition:all .2s}
-  .btn-red{background:#E8000D;color:#fff}.btn-red:hover{background:#B50009}
-  .btn-gray{background:#2a2a2a;color:#ccc;border:1px solid #444}.btn-gray:hover{background:#333}
-  .btn-sm{padding:0.35rem 0.8rem;font-size:0.75rem}
-  .btn-danger{background:#7a1a1a;color:#fff;border:none}.btn-danger:hover{background:#9a2020}
-  table{width:100%;border-collapse:collapse;font-size:0.83rem}
-  th{text-align:left;padding:0.75rem;color:#888;font-weight:500;border-bottom:1px solid #2a2a2a;font-size:0.72rem;text-transform:uppercase;letter-spacing:.05em}
-  td{padding:0.75rem;border-bottom:1px solid #1e1e1e;vertical-align:middle}
-  tr:hover td{background:rgba(255,255,255,.02)}
-  .badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:0.7rem;font-weight:600}
-  .badge-red{background:rgba(232,0,13,.15);color:#E8000D}
-  .badge-gray{background:rgba(255,255,255,.07);color:#aaa}
-  .badge-green{background:rgba(37,211,102,.15);color:#25D366}
-  input,select,textarea{background:#111;border:1px solid #333;color:#e0e0e0;padding:0.6rem 0.85rem;border-radius:4px;font-size:0.85rem;width:100%}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:#E8000D}
-  label{display:block;font-size:0.78rem;color:#aaa;margin-bottom:0.4rem;margin-top:1rem}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  .alert{padding:0.75rem 1rem;border-radius:4px;margin-bottom:1rem;font-size:0.83rem}
-  .alert-ok{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#25D366}
-  .alert-erro{background:rgba(232,0,13,.1);border:1px solid rgba(232,0,13,.2);color:#E8000D}
-  .img-thumb{width:60px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #333}
-  .upload-area{border:2px dashed #333;border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:.2s}
-  .upload-area:hover{border-color:#E8000D;background:rgba(232,0,13,.03)}
-  .upload-area input[type=file]{display:none}
-  @media(max-width:768px){.sidebar{width:60px}.sidebar a span,.sidebar-logo p,.sidebar-logo h2,.sidebar-footer{display:none}.sidebar a{padding:.75rem;text-align:center}.form-row{grid-template-columns:1fr}}
+  :root{
+    --bg:#0a0a0b;--surface:#111114;--surface2:#18181c;--border:#242428;--border2:#2e2e34;
+    --text:#e8e8ea;--muted:#72727a;--subtle:#3a3a42;
+    --red:#E8000D;--red-dim:rgba(232,0,13,.12);--red-glow:rgba(232,0,13,.25);
+    --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+    --sidebar:240px;
+  }
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;font-size:14px;line-height:1.5}
+
+  /* ── Sidebar ── */
+  .sidebar{width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;position:sticky;top:0;height:100vh}
+  .sidebar-brand{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+  .brand-icon{width:34px;height:34px;border-radius:8px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .brand-icon svg{stroke:#fff}
+  .brand-name{font-size:.95rem;font-weight:600;letter-spacing:.01em;color:var(--text)}
+  .brand-sub{font-size:.7rem;color:var(--muted);margin-top:1px}
+  .nav{padding:.75rem .75rem;display:flex;flex-direction:column;gap:2px;flex:1}
+  .nav-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);padding:.75rem .5rem .35rem;font-weight:500}
+  .nav a{display:flex;align-items:center;gap:.65rem;padding:.6rem .75rem;border-radius:6px;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;transition:all .15s;position:relative}
+  .nav a:hover{background:var(--surface2);color:var(--text)}
+  .nav a.active{background:var(--red-dim);color:var(--red)}
+  .nav a.active svg{stroke:var(--red)}
+  .nav a svg{flex-shrink:0;opacity:.7}
+  .nav a.active svg{opacity:1}
+  .sidebar-user{padding:.75rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:.65rem}
+  .user-avatar{width:30px;height:30px;border-radius:50%;background:var(--red-dim);border:1px solid var(--red-glow);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:var(--red);flex-shrink:0}
+  .user-info{flex:1;min-width:0}
+  .user-name{font-size:.78rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .user-role{font-size:.68rem;color:var(--muted)}
+  .logout-btn{color:var(--muted);text-decoration:none;display:flex;align-items:center;padding:.25rem;border-radius:4px;transition:.15s}
+  .logout-btn:hover{color:var(--red)}
+
+  /* ── Main ── */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-x:auto}
+  .topbar{padding:1rem 1.75rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--surface);position:sticky;top:0;z-index:10}
+  .topbar-title{font-size:1rem;font-weight:600;color:var(--text)}
+  .topbar-sub{font-size:.72rem;color:var(--muted);margin-top:1px}
+  .topbar-actions{display:flex;gap:.5rem}
+  .content{padding:1.75rem;flex:1}
+
+  /* ── Cards ── */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem}
+  .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem}
+  .card-title{font-size:.85rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:.5rem}
+  .card-title svg{stroke:var(--red);opacity:.9}
+  .card-sub{font-size:.72rem;color:var(--muted);margin-top:2px}
+
+  /* ── Stats ── */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.25rem}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.35rem}
+  .stat-header{display:flex;justify-content:space-between;align-items:flex-start}
+  .stat-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+  .stat-icon-red{background:var(--red-dim)}
+  .stat-icon-red svg{stroke:var(--red)}
+  .stat-icon-green{background:var(--green-dim)}
+  .stat-icon-green svg{stroke:var(--green)}
+  .stat-num{font-size:1.6rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
+  .stat-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+  /* ── Buttons ── */
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1rem;border:none;border-radius:6px;font-size:.78rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all .15s;font-family:inherit;white-space:nowrap}
+  .btn-primary{background:var(--red);color:#fff}.btn-primary:hover{background:#c5000b;box-shadow:0 0 0 3px var(--red-glow)}
+  .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}.btn-secondary:hover{border-color:var(--subtle);background:var(--subtle)}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:var(--border2)}
+  .btn-danger{background:rgba(220,38,38,.12);color:#ef4444;border:1px solid rgba(220,38,38,.2)}.btn-danger:hover{background:rgba(220,38,38,.2)}
+  .btn-sm{padding:.35rem .7rem;font-size:.73rem}
+  .btn-full{width:100%;justify-content:center}
+  .btn svg{flex-shrink:0}
+
+  /* ── Table ── */
+  .table-wrap{overflow-x:auto;margin:-1.25rem;padding:0 1.25rem}
+  table{width:100%;border-collapse:collapse;font-size:.8rem}
+  thead th{padding:.7rem .9rem;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  tbody td{padding:.75rem .9rem;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:rgba(255,255,255,.015)}
+
+  /* ── Badges ── */
+  .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:.68rem;font-weight:500;letter-spacing:.02em}
+  .badge-red{background:var(--red-dim);color:var(--red)}
+  .badge-gray{background:rgba(255,255,255,.06);color:var(--muted)}
+  .badge-green{background:var(--green-dim);color:var(--green)}
+  .badge-blue{background:rgba(59,130,246,.12);color:#60a5fa}
+
+  /* ── Forms ── */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+  .form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem}
+  .form-col{display:flex;flex-direction:column;gap:.3rem}
+  .form-col.span2{grid-column:span 2}
+  .form-label{font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:.03em}
+  .form-input{background:var(--bg);border:1px solid var(--border2);color:var(--text);padding:.55rem .75rem;border-radius:6px;font-size:.82rem;width:100%;font-family:inherit;transition:border-color .15s,box-shadow .15s;outline:none}
+  .form-input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-glow)}
+  .form-input::placeholder{color:var(--subtle)}
+  select.form-input option{background:#1a1a1e}
+  textarea.form-input{resize:vertical;min-height:80px}
+  .checkbox-label{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.8rem;color:var(--text);padding:.55rem 0}
+  .checkbox-label input[type=checkbox]{width:16px;height:16px;accent-color:var(--red);cursor:pointer}
+
+  /* ── Upload zone ── */
+  .upload-zone{border:1.5px dashed var(--border2);border-radius:8px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:.2s;background:var(--bg)}
+  .upload-zone:hover,.upload-zone.drag{border-color:var(--red);background:var(--red-dim)}
+  .upload-zone input[type=file]{display:none}
+  .upload-icon{color:var(--subtle);margin-bottom:.75rem}
+  .upload-title{font-size:.85rem;color:var(--text);font-weight:500;margin-bottom:.25rem}
+  .upload-hint{font-size:.72rem;color:var(--muted)}
+  .upload-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem;margin-top:.75rem}
+  .preview-item{aspect-ratio:1;border-radius:4px;overflow:hidden;background:var(--surface2);border:1px solid var(--border)}
+  .preview-item img{width:100%;height:100%;object-fit:cover}
+
+  /* ── Image thumb ── */
+  .img-thumb{width:56px;height:44px;object-fit:cover;border-radius:5px;border:1px solid var(--border)}
+  .img-thumb-lg{width:80px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--border)}
+
+  /* ── Alerts ── */
+  .alert{padding:.7rem 1rem;border-radius:7px;margin-bottom:1rem;font-size:.8rem;display:flex;align-items:center;gap:.5rem}
+  .alert-ok{background:var(--green-dim);border:1px solid rgba(34,197,94,.2);color:var(--green)}
+  .alert-err{background:var(--red-dim);border:1px solid var(--red-glow);color:var(--red)}
+
+  /* ── Empty state ── */
+  .empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+  .empty svg{margin:0 auto .75rem;display:block;opacity:.3}
+  .empty p{font-size:.85rem}
+
+  /* ── Modal ── */
+  .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+  .modal-backdrop.open{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:1.75rem;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
+  .modal-title{font-size:.95rem;font-weight:600}
+  .modal-close{background:var(--surface2);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.15s}
+  .modal-close:hover{color:var(--text);border-color:var(--border2)}
+  .modal-footer{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+
+  /* ── Divider ── */
+  .divider{height:1px;background:var(--border);margin:1rem 0}
+
+  /* ── Responsive ── */
+  @media(max-width:900px){:root{--sidebar:60px}.brand-name,.brand-sub,.nav-label,.nav a span,.user-info,.logout-btn{display:none}.sidebar-brand{justify-content:center;padding:1rem}.nav a{justify-content:center;padding:.65rem}.sidebar-user{justify-content:center}.form-grid,.form-grid-3{grid-template-columns:1fr}.form-col.span2{grid-column:span 1}}
 </style>
 </head>
 <body>
-<div class="sidebar">
-  <div class="sidebar-logo"><h2>🪵 Stilus</h2><p>Admin Panel</p></div>
-  <a href="/admin">🏠 <span>Dashboard</span></a>
-  <a href="/admin/imagens">🖼️ <span>Imagens</span></a>
-  <a href="/admin/orcamentos">📋 <span>Orçamentos</span></a>
-  <div class="sidebar-footer"><a href="/admin/logout">🚪 <span>Sair (${user})</span></a></div>
-</div>
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <div>
+      <div class="brand-name">Stilus</div>
+      <div class="brand-sub">Painel Admin</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div class="nav-label">Menu</div>
+    ${navItems.map(n => `<a href="${n.href}" class="${paginaAtiva === n.key ? 'active' : ''}">${n.icon} <span>${n.label}</span></a>`).join('')}
+    <div style="margin-top:auto"></div>
+    <a href="/" target="_blank" style="margin-top:.5rem">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span>Ver Site</span>
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">${user ? user.charAt(0).toUpperCase() : 'A'}</div>
+    <div class="user-info">
+      <div class="user-name">${user || 'Admin'}</div>
+      <div class="user-role">Administrador</div>
+    </div>
+    <a href="/admin/logout" class="logout-btn" title="Sair">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </a>
+  </div>
+</aside>
 <div class="main">${conteudo}</div>
 </body>
 </html>`;
@@ -243,34 +369,58 @@ function renderLogin(erro = '') {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin Login — Stilus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',sans-serif;background:#0f0f0f;color:#e0e0e0;display:flex;align-items:center;justify-content:center;min-height:100vh}
-  .box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:2.5rem;width:360px}
-  h1{font-size:1.3rem;margin-bottom:0.3rem;color:#fff}
-  p.sub{font-size:0.8rem;color:#888;margin-bottom:1.8rem}
-  label{display:block;font-size:0.78rem;color:#aaa;margin-bottom:.4rem;margin-top:1rem}
-  input{background:#111;border:1px solid #333;color:#e0e0e0;padding:0.7rem 1rem;border-radius:4px;font-size:0.88rem;width:100%}
-  input:focus{outline:none;border-color:#E8000D}
-  button{width:100%;background:#E8000D;color:#fff;border:none;padding:0.75rem;border-radius:4px;font-size:0.88rem;cursor:pointer;margin-top:1.5rem;font-weight:600}
-  button:hover{background:#B50009}
-  .err{background:rgba(232,0,13,.1);border:1px solid rgba(232,0,13,.2);color:#E8000D;padding:.6rem .9rem;border-radius:4px;font-size:.8rem;margin-top:1rem}
-  .logo{color:#E8000D;font-size:1.8rem;margin-bottom:1rem}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0b;color:#e8e8ea;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
+  .wrap{width:100%;max-width:380px}
+  .logo-block{text-align:center;margin-bottom:2rem}
+  .logo-icon{width:52px;height:52px;border-radius:12px;background:#E8000D;display:inline-flex;align-items:center;justify-content:center;margin-bottom:.85rem;box-shadow:0 8px 24px rgba(232,0,13,.35)}
+  .logo-icon svg{stroke:#fff}
+  .logo-name{font-size:1.35rem;font-weight:700;color:#fff;letter-spacing:.01em}
+  .logo-sub{font-size:.76rem;color:#72727a;margin-top:3px}
+  .box{background:#111114;border:1px solid #242428;border-radius:14px;padding:2rem}
+  .box-title{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+  .box-hint{font-size:.76rem;color:#72727a;margin-bottom:1.5rem}
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:.72rem;font-weight:500;color:#72727a;margin-bottom:.35rem;letter-spacing:.03em}
+  .field input{background:#0a0a0b;border:1px solid #2e2e34;color:#e8e8ea;padding:.6rem .8rem;border-radius:7px;font-size:.84rem;width:100%;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+  .field input:focus{border-color:#E8000D;box-shadow:0 0 0 3px rgba(232,0,13,.18)}
+  .btn-login{width:100%;background:#E8000D;color:#fff;border:none;padding:.7rem;border-radius:7px;font-size:.84rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem;transition:background .15s,box-shadow .15s}
+  .btn-login:hover{background:#c5000b;box-shadow:0 0 0 3px rgba(232,0,13,.25)}
+  .err{background:rgba(232,0,13,.1);border:1px solid rgba(232,0,13,.22);color:#f87171;padding:.6rem .85rem;border-radius:7px;font-size:.77rem;margin-top:.85rem;display:flex;align-items:center;gap:.4rem}
+  .back-link{text-align:center;margin-top:1.25rem;font-size:.75rem;color:#3a3a42}
+  .back-link a{color:#72727a;text-decoration:none}
+  .back-link a:hover{color:#E8000D}
 </style>
 </head>
 <body>
-<div class="box">
-  <div class="logo">🪵</div>
-  <h1>Painel Admin</h1>
-  <p class="sub">Stilus Planejados — Cataguases MG</p>
-  <form method="POST" action="/admin/login">
-    <label>Usuário</label>
-    <input type="text" name="username" required autocomplete="username">
-    <label>Senha</label>
-    <input type="password" name="password" required autocomplete="current-password">
-    <button type="submit">Entrar</button>
-    ${erro ? `<div class="err">${erro}</div>` : ''}
-  </form>
+<div class="wrap">
+  <div class="logo-block">
+    <div class="logo-icon">
+      <svg width="24" height="24" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <div class="logo-name">Stilus</div>
+    <div class="logo-sub">Planejados · Cataguases MG</div>
+  </div>
+  <div class="box">
+    <div class="box-title">Acesso ao Painel</div>
+    <div class="box-hint">Entre com suas credenciais de administrador</div>
+    <form method="POST" action="/admin/login">
+      <div class="field">
+        <label>Usuário</label>
+        <input type="text" name="username" required autocomplete="username" placeholder="admin">
+      </div>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn-login">Entrar no Painel</button>
+      ${erro ? `<div class="err"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${erro}</div>` : ''}
+    </form>
+  </div>
+  <div class="back-link"><a href="/">← Voltar ao site</a></div>
 </div>
 </body>
 </html>`;
@@ -278,139 +428,261 @@ function renderLogin(erro = '') {
 
 function renderDashboard({ totalImagens, totalOrcamentos, naoLidos, user }) {
   return layout('Dashboard', `
-    <div class="page-header">
-      <div><h1>Dashboard</h1><small>Bem-vindo, ${user}</small></div>
-      <a href="/" target="_blank" class="btn btn-gray">Ver Site ↗</a>
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Dashboard</div>
+        <div class="topbar-sub">Bem-vindo, ${user} · Stilus Planejados</div>
+      </div>
+      <div class="topbar-actions">
+        <a href="/" target="_blank" class="btn btn-secondary">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Ver Site
+        </a>
+      </div>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card"><span class="stat-num">${totalImagens}</span><span class="stat-label">Imagens</span></div>
-      <div class="stat-card"><span class="stat-num">${totalOrcamentos}</span><span class="stat-label">Orçamentos</span></div>
-      <div class="stat-card"><span class="stat-num" style="color:#25D366">${naoLidos}</span><span class="stat-label">Não Lidos</span></div>
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-num">${totalImagens}</div>
+              <div class="stat-label">Imagens</div>
+            </div>
+            <div class="stat-icon stat-icon-red">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-num">${totalOrcamentos}</div>
+              <div class="stat-label">Orçamentos</div>
+            </div>
+            <div class="stat-icon stat-icon-red">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div>
+              <div class="stat-num" style="color:var(--green)">${naoLidos}</div>
+              <div class="stat-label">Não Lidos</div>
+            </div>
+            <div class="stat-icon stat-icon-green">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Ações Rápidas
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <a href="/admin/imagens" class="btn btn-primary">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            Gerenciar Imagens
+          </a>
+          <a href="/admin/orcamentos" class="btn btn-secondary">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+            Ver Orçamentos ${naoLidos > 0 ? `<span style="background:var(--red);color:#fff;border-radius:99px;padding:1px 6px;font-size:.65rem;margin-left:.2rem">${naoLidos}</span>` : ''}
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Como usar
+          </div>
+        </div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.75">
+          <p>Envie imagens no menu <strong style="color:var(--text)">Imagens</strong> e defina a <strong style="color:var(--text)">seção</strong> (hero, sobre, portfolio, categorias) e a <strong style="color:var(--text)">categoria</strong> (cozinha, quarto, closet…). Elas aparecerão automaticamente no site.</p>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3 style="margin-bottom:1rem;font-size:1rem">Ações Rápidas</h3>
-      <a href="/admin/imagens" class="btn btn-red" style="margin-right:.5rem">🖼️ Gerenciar Imagens</a>
-      <a href="/admin/orcamentos" class="btn btn-gray">📋 Ver Orçamentos</a>
-    </div>
-    <div class="card">
-      <h3 style="font-size:.9rem;color:#888;margin-bottom:.75rem">💡 Dica</h3>
-      <p style="font-size:.82rem;color:#666;line-height:1.7">
-        As imagens que você enviar aqui aparecerão automaticamente no site.<br>
-        Defina a <strong style="color:#aaa">seção</strong> (hero, sobre, portfolio, categorias) e a <strong style="color:#aaa">categoria</strong> (cozinha, quarto, closet, etc.) para organizar corretamente.
-      </p>
+  `, user, 'dashboard');
+}
     </div>
   `, user);
 }
 
-function renderImagens(rows) {
-  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+function renderImagens(rows, okMsg = '', errMsg = '') {
+  // BUG CORRIGIDO: removido URLSearchParams (não existe no Node.js/servidor)
   const categorias = ['geral', 'cozinha', 'quarto', 'closet', 'banheiro', 'escritorio', 'sala'];
   const secoes = ['hero', 'sobre', 'portfolio', 'categorias'];
 
+  const catOpts = categorias.map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('');
+  const secOpts = secoes.map(s => `<option value="${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('');
+
   const tabela = rows.length === 0
-    ? '<p style="color:#888;text-align:center;padding:2rem">Nenhuma imagem cadastrada ainda.</p>'
-    : `<table>
-      <tr><th>Imagem</th><th>Título</th><th>Categoria</th><th>Seção</th><th>Destaque</th><th>Ordem</th><th>Ações</th></tr>
-      ${rows.map(img => `
-      <tr>
-        <td><img class="img-thumb" src="${img.url}" alt="${img.titulo}" onerror="this.style.opacity='.3'"></td>
-        <td>${img.titulo}</td>
-        <td><span class="badge badge-red">${img.categoria}</span></td>
-        <td><span class="badge badge-gray">${img.secao}</span></td>
-        <td>${img.destaque ? '<span class="badge badge-green">Sim</span>' : '<span class="badge badge-gray">Não</span>'}</td>
-        <td>${img.ordem}</td>
-        <td>
-          <button onclick="abrirEditar(${img.id},'${img.titulo}','${img.descricao || ''}','${img.categoria}','${img.secao}',${img.destaque},${img.ordem})" class="btn btn-gray btn-sm">✏️</button>
-          <form method="POST" action="/admin/imagens/${img.id}/deletar" style="display:inline" onsubmit="return confirm('Deletar esta imagem?')">
-            <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
-          </form>
-        </td>
-      </tr>`).join('')}
-    </table>`;
+    ? `<div class="empty">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <p>Nenhuma imagem cadastrada ainda.<br>Envie as primeiras imagens acima.</p>
+      </div>`
+    : `<div class="table-wrap">
+      <table>
+        <thead><tr><th>Imagem</th><th>Título</th><th>Categoria</th><th>Seção</th><th>Destaque</th><th>Ordem</th><th style="text-align:right">Ações</th></tr></thead>
+        <tbody>
+        ${rows.map(img => {
+          const titulo = (img.titulo || '').replace(/'/g, "\\'");
+          const descricao = (img.descricao || '').replace(/'/g, "\\'");
+          const categoria = (img.categoria || 'geral').replace(/'/g, "\\'");
+          const secao = (img.secao || 'portfolio').replace(/'/g, "\\'");
+          return `
+          <tr>
+            <td><img class="img-thumb" src="${img.url}" alt="${img.titulo}" onerror="this.style.opacity='.2'"></td>
+            <td style="font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${img.titulo}</td>
+            <td><span class="badge badge-red">${img.categoria}</span></td>
+            <td><span class="badge badge-blue">${img.secao}</span></td>
+            <td>${img.destaque ? '<span class="badge badge-green">✓ Sim</span>' : '<span class="badge badge-gray">Não</span>'}</td>
+            <td style="color:var(--muted)">${img.ordem}</td>
+            <td style="text-align:right">
+              <button onclick="abrirEditar(${img.id},'${titulo}','${descricao}','${categoria}','${secao}',${img.destaque},${img.ordem})" class="btn btn-ghost btn-sm">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Editar
+              </button>
+              <form method="POST" action="/admin/imagens/${img.id}/deletar" style="display:inline" onsubmit="return confirm('Deletar esta imagem permanentemente?')">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                </button>
+              </form>
+            </td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>`;
 
   return layout('Imagens', `
-    <div class="page-header"><h1>🖼️ Imagens</h1></div>
-
-    <div class="card">
-      <h3 style="margin-bottom:1.2rem;font-size:1rem">📤 Enviar Novas Imagens</h3>
-      <form method="POST" action="/admin/imagens/upload" enctype="multipart/form-data">
-        <div class="upload-area" onclick="document.getElementById('fInput').click()">
-          <input id="fInput" type="file" name="fotos" accept="image/*" multiple onchange="mostrarArquivos(this)">
-          <div id="uploadLabel">
-            <p style="font-size:2rem">📁</p>
-            <p style="margin-top:.5rem;color:#aaa">Clique para selecionar imagens</p>
-            <p style="font-size:.75rem;color:#666;margin-top:.3rem">JPG, PNG, WEBP · até 8MB cada · múltiplos arquivos</p>
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Título</label>
-            <input type="text" name="titulo" placeholder="Ex: Cozinha Moderna Branca">
-          </div>
-          <div>
-            <label>Ordem (menor = primeiro)</label>
-            <input type="number" name="ordem" value="0" min="0">
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label>Categoria</label>
-            <select name="categoria">
-              ${categorias.map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('')}
-            </select>
-          </div>
-          <div>
-            <label>Seção do site</label>
-            <select name="secao">
-              ${secoes.map(s => `<option value="${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
-            </select>
-          </div>
-        </div>
-        <label>Descrição (opcional)</label>
-        <textarea name="descricao" rows="2" placeholder="Breve descrição..."></textarea>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;margin-top:1rem">
-          <input type="checkbox" name="destaque" style="width:auto"> Imagem em destaque
-        </label>
-        <button type="submit" class="btn btn-red" style="margin-top:1.2rem;width:100%">📤 Enviar Imagens</button>
-      </form>
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Imagens</div>
+        <div class="topbar-sub">${rows.length} imagem(ns) cadastrada(s)</div>
+      </div>
     </div>
+    <div class="content">
+      ${okMsg ? `<div class="alert alert-ok"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>${okMsg}</div>` : ''}
+      ${errMsg ? `<div class="alert alert-err"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${errMsg}</div>` : ''}
 
-    <div class="card">
-      <h3 style="margin-bottom:1.2rem;font-size:1rem">📋 Imagens Cadastradas (${rows.length})</h3>
-      ${tabela}
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Enviar Novas Imagens
+            </div>
+            <div class="card-sub">JPG, PNG, WEBP · até 8MB por arquivo · múltiplos arquivos</div>
+          </div>
+        </div>
+        <form method="POST" action="/admin/imagens/upload" enctype="multipart/form-data">
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
+            <input id="fInput" type="file" name="fotos" accept="image/*" multiple onchange="mostrarArquivos(this)">
+            <div id="uploadLabel">
+              <div class="upload-icon">
+                <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="upload-title">Clique ou arraste imagens aqui</div>
+              <div class="upload-hint">Selecione uma ou várias fotos de uma vez</div>
+            </div>
+            <div id="uploadPreview" class="upload-preview"></div>
+          </div>
+
+          <div style="height:.85rem"></div>
+          <div class="form-grid">
+            <div class="form-col">
+              <label class="form-label">Título</label>
+              <input class="form-input" type="text" name="titulo" placeholder="Ex: Cozinha Moderna Branca">
+            </div>
+            <div class="form-col">
+              <label class="form-label">Ordem <span style="color:var(--subtle);font-size:.68rem">(menor = primeiro)</span></label>
+              <input class="form-input" type="number" name="ordem" value="0" min="0">
+            </div>
+            <div class="form-col">
+              <label class="form-label">Categoria</label>
+              <select class="form-input" name="categoria">${catOpts}</select>
+            </div>
+            <div class="form-col">
+              <label class="form-label">Seção do site</label>
+              <select class="form-input" name="secao">${secOpts}</select>
+            </div>
+            <div class="form-col span2">
+              <label class="form-label">Descrição <span style="color:var(--subtle);font-size:.68rem">(opcional)</span></label>
+              <textarea class="form-input" name="descricao" placeholder="Breve descrição da imagem..."></textarea>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.75rem">
+            <label class="checkbox-label">
+              <input type="checkbox" name="destaque"> Marcar como destaque
+            </label>
+            <button type="submit" class="btn btn-primary">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Enviar Imagens
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            Imagens Cadastradas
+          </div>
+          <span class="badge badge-gray">${rows.length} total</span>
+        </div>
+        ${tabela}
+      </div>
     </div>
 
     <!-- Modal editar -->
-    <div id="modalEditar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;align-items:center;justify-content:center">
-      <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:2rem;width:500px;max-width:95vw">
-        <h3 style="margin-bottom:1rem">✏️ Editar Imagem</h3>
+    <div class="modal-backdrop" id="modalEditar">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">Editar Imagem</div>
+          <button class="modal-close" onclick="fecharModal()">✕</button>
+        </div>
         <form id="formEditar" method="POST">
-          <div class="form-row">
-            <div><label>Título</label><input type="text" name="titulo" id="eTitulo"></div>
-            <div><label>Ordem</label><input type="number" name="ordem" id="eOrdem" min="0"></div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label>Categoria</label>
-              <select name="categoria" id="eCategoria">
-                ${categorias.map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('')}
-              </select>
+          <div class="form-grid">
+            <div class="form-col">
+              <label class="form-label">Título</label>
+              <input class="form-input" type="text" name="titulo" id="eTitulo">
             </div>
-            <div>
-              <label>Seção</label>
-              <select name="secao" id="eSecao">
-                ${secoes.map(s => `<option value="${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
-              </select>
+            <div class="form-col">
+              <label class="form-label">Ordem</label>
+              <input class="form-input" type="number" name="ordem" id="eOrdem" min="0">
+            </div>
+            <div class="form-col">
+              <label class="form-label">Categoria</label>
+              <select class="form-input" name="categoria" id="eCategoria">${catOpts}</select>
+            </div>
+            <div class="form-col">
+              <label class="form-label">Seção</label>
+              <select class="form-input" name="secao" id="eSecao">${secOpts}</select>
+            </div>
+            <div class="form-col span2">
+              <label class="form-label">Descrição</label>
+              <textarea class="form-input" name="descricao" id="eDescricao"></textarea>
             </div>
           </div>
-          <label>Descrição</label>
-          <textarea name="descricao" id="eDescricao" rows="2"></textarea>
-          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;margin-top:1rem">
-            <input type="checkbox" name="destaque" id="eDestaque" style="width:auto"> Destaque
+          <label class="checkbox-label" style="margin-top:.5rem">
+            <input type="checkbox" name="destaque" id="eDestaque"> Imagem em destaque
           </label>
-          <div style="display:flex;gap:.5rem;margin-top:1.2rem">
-            <button type="submit" class="btn btn-red">Salvar</button>
-            <button type="button" onclick="fecharModal()" class="btn btn-gray">Cancelar</button>
+          <div class="modal-footer">
+            <button type="button" onclick="fecharModal()" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" class="btn btn-primary">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Salvar Alterações
+            </button>
           </div>
         </form>
       </div>
@@ -418,10 +690,29 @@ function renderImagens(rows) {
 
     <script>
     function mostrarArquivos(input){
+      const preview = document.getElementById('uploadPreview');
       const label = document.getElementById('uploadLabel');
-      label.innerHTML = input.files.length > 0
-        ? '<p style="color:#25D366;font-size:1.5rem">✅</p><p style="margin-top:.5rem;color:#25D366">' + input.files.length + ' arquivo(s) selecionado(s)</p>'
-        : '<p style="font-size:2rem">📁</p><p style="color:#aaa">Clique para selecionar</p>';
+      if(!input.files.length){ preview.innerHTML=''; return; }
+      label.querySelector('.upload-title').textContent = input.files.length + ' arquivo(s) selecionado(s)';
+      label.querySelector('.upload-title').style.color = 'var(--green)';
+      label.querySelector('.upload-hint').textContent = 'Preencha os campos abaixo e clique em Enviar';
+      preview.innerHTML = '';
+      Array.from(input.files).slice(0,8).forEach(f => {
+        const url = URL.createObjectURL(f);
+        const div = document.createElement('div');
+        div.className = 'preview-item';
+        div.innerHTML = '<img src="'+url+'">';
+        preview.appendChild(div);
+      });
+    }
+    function dragOver(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag');}
+    function dragLeave(e){document.getElementById('uploadZone').classList.remove('drag');}
+    function dropFiles(e){
+      e.preventDefault();
+      document.getElementById('uploadZone').classList.remove('drag');
+      const input = document.getElementById('fInput');
+      input.files = e.dataTransfer.files;
+      mostrarArquivos(input);
     }
     function abrirEditar(id,titulo,descricao,categoria,secao,destaque,ordem){
       document.getElementById('formEditar').action='/admin/imagens/'+id+'/editar';
@@ -429,42 +720,58 @@ function renderImagens(rows) {
       document.getElementById('eDescricao').value=descricao;
       document.getElementById('eCategoria').value=categoria;
       document.getElementById('eSecao').value=secao;
-      document.getElementById('eDestaque').checked=destaque;
+      document.getElementById('eDestaque').checked=!!destaque;
       document.getElementById('eOrdem').value=ordem;
-      document.getElementById('modalEditar').style.display='flex';
+      document.getElementById('modalEditar').classList.add('open');
     }
-    function fecharModal(){ document.getElementById('modalEditar').style.display='none'; }
-    document.getElementById('modalEditar').addEventListener('click',function(e){ if(e.target===this) fecharModal(); });
+    function fecharModal(){document.getElementById('modalEditar').classList.remove('open');}
+    document.getElementById('modalEditar').addEventListener('click',function(e){if(e.target===this)fecharModal();});
     </script>
-  `);
+  `, '', 'imagens');
 }
 
 function renderOrcamentos(rows) {
   return layout('Orçamentos', `
-    <div class="page-header"><h1>📋 Orçamentos Recebidos</h1></div>
-    <div class="card">
-      ${rows.length === 0
-        ? '<p style="color:#888;text-align:center;padding:2rem">Nenhum orçamento recebido ainda.</p>'
-        : `<table>
-          <tr><th>Data</th><th>Nome</th><th>Telefone</th><th>Tipo</th><th>Ambiente</th><th>Mensagem</th><th>Ações</th></tr>
-          ${rows.map(o => `
-          <tr>
-            <td style="color:#888;white-space:nowrap">${new Date(o.criado_em).toLocaleDateString('pt-BR')} ${new Date(o.criado_em).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</td>
-            <td>${o.nome}</td>
-            <td>${o.telefone ? `<a href="https://wa.me/55${o.telefone.replace(/\D/g,'')}" target="_blank" style="color:#25D366">${o.telefone}</a>` : '-'}</td>
-            <td>${o.tipo || '-'}</td>
-            <td><span class="badge badge-red">${o.ambiente}</span></td>
-            <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#888">${o.mensagem || '-'}</td>
-            <td>
-              <form method="POST" action="/admin/orcamentos/${o.id}/deletar" style="display:inline" onsubmit="return confirm('Remover este orçamento?')">
-                <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
-              </form>
-            </td>
-          </tr>`).join('')}
-        </table>`
-      }
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Orçamentos</div>
+        <div class="topbar-sub">${rows.length} orçamento(s) recebido(s)</div>
+      </div>
     </div>
-  `);
+    <div class="content">
+      <div class="card">
+        ${rows.length === 0
+          ? `<div class="empty">
+              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              <p>Nenhum orçamento recebido ainda.</p>
+            </div>`
+          : `<div class="table-wrap">
+            <table>
+              <thead><tr><th>Data</th><th>Nome</th><th>Telefone</th><th>Tipo</th><th>Ambiente</th><th>Mensagem</th><th style="text-align:right">Ação</th></tr></thead>
+              <tbody>
+              ${rows.map(o => `
+              <tr>
+                <td style="color:var(--muted);white-space:nowrap;font-size:.75rem">${new Date(o.criado_em).toLocaleDateString('pt-BR')} ${new Date(o.criado_em).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</td>
+                <td style="font-weight:500">${o.nome}</td>
+                <td>${o.telefone ? `<a href="https://wa.me/55${o.telefone.replace(/\D/g,'')}" target="_blank" style="color:#22c55e;text-decoration:none;display:flex;align-items:center;gap:.3rem;font-size:.78rem"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>${o.telefone}</a>` : '<span style="color:var(--subtle)">—</span>'}</td>
+                <td>${o.tipo ? `<span class="badge badge-gray">${o.tipo}</span>` : '<span style="color:var(--subtle)">—</span>'}</td>
+                <td><span class="badge badge-red">${o.ambiente || '—'}</span></td>
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:.78rem">${o.mensagem || '—'}</td>
+                <td style="text-align:right">
+                  <form method="POST" action="/admin/orcamentos/${o.id}/deletar" style="display:inline" onsubmit="return confirm('Remover este orçamento?')">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                    </button>
+                  </form>
+                </td>
+              </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>`
+        }
+      </div>
+    </div>
+  `, '', 'orcamentos');
 }
 
 module.exports = router;
