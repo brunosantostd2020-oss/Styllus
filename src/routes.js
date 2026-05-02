@@ -4,7 +4,7 @@ const router = express.Router();
 const { pool } = require('./db');
 const { requireAuth } = require('./auth');
 const upload = require('./upload');
-const { uploadVideo } = require('./upload');
+const { uploadVideoMiddleware, uploadVideoToCloudinary } = require('./upload');
 
 // ─── API PÚBLICA ─────────────────────────────────────────────────────────────
 
@@ -219,23 +219,38 @@ router.post('/admin/midia/upload-foto', requireAuth, upload.single('foto'), asyn
 });
 
 // Upload vídeo direto (arquivo MP4)
-router.post('/admin/midia/upload-video', requireAuth, uploadVideo.single('video'), async (req, res) => {
+router.post('/admin/midia/upload-video', requireAuth, uploadVideoMiddleware.single('video'), async (req, res) => {
   try {
     const { titulo, descricao, destaque, ordem } = req.body;
     if (!req.file) return res.redirect('/admin/midia?erro=Nenhum vídeo enviado');
-    const url = req.file.path || `/uploads/${req.file.filename}`;
-    const filename = req.file.filename || req.file.originalname;
-    // Cloudinary gera thumb automático para vídeo
-    let thumb = '';
-    if (url.startsWith('http') && url.includes('cloudinary')) {
-      thumb = url.replace('/upload/', '/upload/so_0,w_400,h_300,c_fill/').replace('.mp4', '.jpg').replace('.mov', '.jpg');
+
+    let url, thumb = '', filename = `vid_${Date.now()}.mp4`;
+
+    if (process.env.CLOUDINARY_CLOUD_NAME) {
+      // Faz upload para o Cloudinary via stream
+      const result = await uploadVideoToCloudinary(req.file.buffer, req.file.originalname);
+      url = result.secure_url;
+      filename = result.public_id;
+      // Gera thumbnail do frame inicial
+      thumb = result.secure_url.replace('/upload/', '/upload/so_0,w_400,h_300,c_fill,f_jpg/').replace('.mp4', '.jpg');
+    } else {
+      // Fallback: salva localmente
+      const fs = require('fs');
+      const path = require('path');
+      const uploadDir = path.join(__dirname, '../public/uploads');
+      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+      const filepath = path.join(uploadDir, filename);
+      fs.writeFileSync(filepath, req.file.buffer);
+      url = `/uploads/${filename}`;
     }
+
     await pool.query(
       'INSERT INTO midia (titulo, descricao, tipo, filename, url, thumb_url, destaque, ordem) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
       [titulo || 'Vídeo', descricao || '', 'video_file', filename, url, thumb, destaque === 'on', parseInt(ordem) || 0]
     );
     res.redirect('/admin/midia?ok=Vídeo enviado com sucesso!');
   } catch (err) {
+    console.error('Erro upload video:', err);
     res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
   }
 });

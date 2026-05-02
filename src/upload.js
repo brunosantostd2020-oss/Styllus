@@ -10,10 +10,9 @@ cloudinary.config({
 });
 
 let upload;
-let uploadVideo;
 
 if (process.env.CLOUDINARY_CLOUD_NAME) {
-  // Storage para imagens
+  // Imagens via CloudinaryStorage
   const imageStorage = new CloudinaryStorage({
     cloudinary,
     params: {
@@ -23,24 +22,10 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
     },
   });
   upload = multer({ storage: imageStorage, limits: { fileSize: 8 * 1024 * 1024 } });
-
-  // Storage para vídeos
-  const videoStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-      folder: 'stilus-videos',
-      resource_type: 'video',
-      allowed_formats: ['mp4', 'mov', 'avi', 'webm'],
-    },
-  });
-  uploadVideo = multer({ storage: videoStorage, limits: { fileSize: 100 * 1024 * 1024 } });
-
 } else {
-  // Fallback local
   const fs = require('fs');
   const uploadDir = path.join(__dirname, '../public/uploads');
   if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
   const imageStorage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadDir),
     filename: (req, file, cb) => {
@@ -48,24 +33,46 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
       cb(null, `img_${Date.now()}_${Math.random().toString(36).slice(2, 8)}${ext}`);
     },
   });
-  const fileFilter = (req, file, cb) => {
-    const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
-    if (allowed.includes(path.extname(file.originalname).toLowerCase())) cb(null, true);
-    else cb(new Error('Apenas imagens sao permitidas'), false);
-  };
-  upload = multer({ storage: imageStorage, fileFilter, limits: { fileSize: 8 * 1024 * 1024 } });
+  upload = multer({ storage: imageStorage, limits: { fileSize: 8 * 1024 * 1024 } });
+}
 
-  const videoStorage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase();
-      cb(null, `vid_${Date.now()}${ext}`);
-    },
+// Vídeo: usa memória e faz upload manual para o Cloudinary
+const uploadVideoMiddleware = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 100 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowed = ['.mp4', '.mov', '.avi', '.webm'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowed.includes(ext)) cb(null, true);
+    else cb(new Error('Apenas vídeos MP4, MOV, AVI, WEBM'), false);
+  },
+});
+
+// Função auxiliar para fazer upload de buffer para o Cloudinary
+function uploadVideoToCloudinary(buffer, filename) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: 'stilus-videos',
+        resource_type: 'video',
+        public_id: `vid_${Date.now()}`,
+        eager: [{ format: 'mp4', transformation: [{ quality: 'auto' }] }],
+      },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+    const { Readable } = require('stream');
+    const readable = new Readable();
+    readable.push(buffer);
+    readable.push(null);
+    readable.pipe(stream);
   });
-  uploadVideo = multer({ storage: videoStorage, limits: { fileSize: 100 * 1024 * 1024 } });
 }
 
 module.exports = upload;
-module.exports.uploadVideo = uploadVideo;
+module.exports.uploadVideoMiddleware = uploadVideoMiddleware;
+module.exports.uploadVideoToCloudinary = uploadVideoToCloudinary;
 module.exports.cloudinary = cloudinary;
 
