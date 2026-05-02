@@ -111,10 +111,13 @@ router.post('/admin/imagens/upload', requireAuth, upload.array('fotos', 20), asy
     const files = req.files || [];
     if (files.length === 0) return res.redirect('/admin/imagens?erro=Nenhum arquivo enviado');
     for (const file of files) {
-      const url = `/uploads/${file.filename}`;
+      // Cloudinary retorna file.path como URL e file.filename como public_id
+      // Fallback local retorna file.filename e monta URL local
+      const url = file.path || `/uploads/${file.filename}`;
+      const filename = file.filename || file.originalname;
       await pool.query(
         'INSERT INTO imagens (titulo, descricao, categoria, secao, filename, url, destaque, ordem) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
-        [titulo || file.originalname, descricao || '', categoria || 'geral', secao || 'portfolio', file.filename, url, destaque === 'on', parseInt(ordem) || 0]
+        [titulo || file.originalname, descricao || '', categoria || 'geral', secao || 'portfolio', filename, url, destaque === 'on', parseInt(ordem) || 0]
       );
     }
     res.redirect('/admin/imagens?ok=Imagens enviadas com sucesso!');
@@ -136,12 +139,24 @@ router.post('/admin/imagens/:id/editar', requireAuth, async (req, res) => {
 // Deletar imagem
 router.post('/admin/imagens/:id/deletar', requireAuth, async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT filename FROM imagens WHERE id=$1', [req.params.id]);
+    const { rows } = await pool.query('SELECT filename, url FROM imagens WHERE id=$1', [req.params.id]);
     if (rows.length > 0) {
-      const fs = require('fs');
-      const path = require('path');
-      const filePath = path.join(__dirname, '../public/uploads', rows[0].filename);
-      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      const { filename, url } = rows[0];
+      // Se for Cloudinary (URL começa com http), remove da nuvem
+      if (url && url.startsWith('http')) {
+        try {
+          const { cloudinary } = require('./upload');
+          // public_id no Cloudinary é o filename sem extensão para uploads via multer-storage-cloudinary
+          const publicId = filename.includes('/') ? filename : `stilus-planejados/${filename.replace(/\.[^.]+$/, '')}`;
+          await cloudinary.uploader.destroy(publicId);
+        } catch (e) { /* ignora erro de remoção na nuvem */ }
+      } else {
+        // Remove arquivo local
+        const fs = require('fs');
+        const path = require('path');
+        const filePath = path.join(__dirname, '../public/uploads', filename);
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      }
     }
     await pool.query('DELETE FROM imagens WHERE id=$1', [req.params.id]);
     res.redirect('/admin/imagens?ok=Imagem deletada.');

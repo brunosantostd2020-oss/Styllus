@@ -3,152 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stilus Planejados — Móveis Sob Medida · Cataguases MG</title>
+<title>Stilus Planejados — Moveis Sob Medida · Cataguases MG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --red: #C8000B; --red2: #E8000D; --dark: #0f0f0f; --dark2: #1a1a1a;
-  --gray: #555; --gray2: #888; --light: #f8f6f3; --white: #fff;
-  --wpp: #25D366; --border: #e5e5e5;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C8000B;--red2:#E8000D;--dark:#0f0f0f;--dark2:#1a1a1a;
+  --gray:#555;--light:#f8f6f3;--white:#fff;--wpp:#25D366;--border:#e5e5e5;
 }
-html { scroll-behavior: smooth; }
-body { font-family: "DM Sans", sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
 
 /* TOPBAR */
-.topbar { background: var(--dark); padding: .45rem 5vw; display: flex; justify-content: space-between; align-items: center; font-size: .75rem; color: rgba(255,255,255,.6); }
-.topbar-left { display: flex; align-items: center; gap: .4rem; }
-.topbar-right { display: flex; align-items: center; gap: 1.4rem; }
-.topbar-right a { color: rgba(255,255,255,.7); text-decoration: none; display: flex; align-items: center; gap: .35rem; transition: color .2s; }
-.topbar-right a:hover { color: var(--red2); }
+.topbar{background:var(--dark);padding:.45rem 5vw;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.6)}
+.topbar-left{display:flex;align-items:center;gap:.4rem}
+.topbar-right{display:flex;align-items:center;gap:1.4rem}
+.topbar-right a{color:rgba(255,255,255,.7);text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .2s}
+.topbar-right a:hover{color:var(--red2)}
 
 /* NAV */
-nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 2px solid var(--border); padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 68px; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
-.nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-.nav-logo-icon { width: 42px; height: 42px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; }
-.nav-logo-text { font-family: "Playfair Display", serif; font-size: 1.35rem; font-weight: 700; color: var(--dark); }
-.nav-logo-text span { color: var(--red); }
-.nav-links { display: flex; align-items: center; list-style: none; }
-.nav-links a { font-size: .83rem; font-weight: 500; color: var(--dark); text-decoration: none; padding: 0 1.1rem; height: 68px; display: flex; align-items: center; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--red); border-bottom-color: var(--red); }
-.nav-cta { background: var(--wpp); color: white; padding: .6rem 1.3rem; border-radius: 6px; text-decoration: none; font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: .45rem; transition: filter .2s; margin-left: .8rem; }
-.nav-cta:hover { filter: brightness(1.1); }
-.menu-btn { display: none; background: none; border: none; cursor: pointer; padding: .4rem; flex-direction: column; gap: 5px; }
-.menu-btn span { width: 22px; height: 2px; background: var(--dark); border-radius: 2px; display: block; }
+nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:2px solid var(--border);padding:0 5vw;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.nav-logo-icon{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-logo-text{font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:700;color:var(--dark)}
+.nav-logo-text span{color:var(--red)}
+.nav-links{display:flex;align-items:center;list-style:none}
+.nav-links a{font-size:.83rem;font-weight:500;color:var(--dark);text-decoration:none;padding:0 1rem;height:64px;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--red);border-bottom-color:var(--red)}
+.nav-cta{background:var(--wpp);color:white;padding:.6rem 1.2rem;border-radius:6px;text-decoration:none;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:.4rem;transition:filter .2s;margin-left:.5rem;white-space:nowrap}
+.nav-cta:hover{filter:brightness(1.1)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:5px}
+.menu-btn span{width:24px;height:2px;background:var(--dark);border-radius:2px;display:block;transition:.3s}
 
 /* HERO */
-#hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 100px); background: var(--light); }
-.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 5rem 5vw 5rem 8vw; }
-.hero-tag { font-family: "Playfair Display", serif; font-style: italic; font-size: 1.4rem; color: var(--red); margin-bottom: .6rem; }
-.hero-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; color: var(--dark); margin-bottom: 1.4rem; }
-.hero-title strong { color: var(--red); display: block; font-size: clamp(2.4rem, 5vw, 3.8rem); }
-.hero-line { width: 48px; height: 3px; background: var(--red); margin-bottom: 1.4rem; border-radius: 2px; }
-.hero-desc { font-size: .95rem; color: var(--gray); line-height: 1.8; max-width: 380px; margin-bottom: 2.2rem; }
-.hero-btns { display: flex; gap: .8rem; flex-wrap: wrap; }
-.btn-wpp { background: var(--wpp); color: white; padding: .75rem 1.5rem; border-radius: 6px; text-decoration: none; font-size: .85rem; font-weight: 600; display: inline-flex; align-items: center; gap: .45rem; transition: filter .2s; }
-.btn-wpp:hover { filter: brightness(1.1); }
-.btn-outline { background: transparent; color: var(--dark); padding: .75rem 1.5rem; border: 2px solid var(--dark); border-radius: 6px; text-decoration: none; font-size: .85rem; font-weight: 500; display: inline-flex; align-items: center; gap: .45rem; transition: all .2s; }
-.btn-outline:hover { border-color: var(--red); color: var(--red); }
-.hero-right { position: relative; overflow: hidden; clip-path: polygon(6% 0, 100% 0, 100% 100%, 0% 100%); }
-.hero-right img { width: 100%; height: 100%; object-fit: cover; }
-.hero-right::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 80px; background: linear-gradient(to right, var(--light), transparent); z-index: 1; }
+#hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 100px);background:var(--light)}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 4vw 4rem 8vw}
+.hero-tag{font-family:"Playfair Display",serif;font-style:italic;font-size:1.35rem;color:var(--red);margin-bottom:.5rem}
+.hero-title{font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;color:var(--dark);margin-bottom:1.2rem}
+.hero-title strong{color:var(--red);display:block;font-size:clamp(2.2rem,4.5vw,3.5rem)}
+.hero-line{width:44px;height:3px;background:var(--red);margin-bottom:1.2rem;border-radius:2px}
+.hero-desc{font-size:.93rem;color:var(--gray);line-height:1.8;max-width:360px;margin-bottom:2rem}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn-wpp{background:var(--wpp);color:white;padding:.8rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:.45rem;transition:filter .2s;box-shadow:0 4px 14px rgba(37,211,102,.3)}
+.btn-wpp:hover{filter:brightness(1.08)}
+.btn-outline{background:transparent;color:var(--dark);padding:.8rem 1.4rem;border:2px solid var(--dark);border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:500;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.hero-right{position:relative;overflow:hidden;clip-path:polygon(6% 0,100% 0,100% 100%,0% 100%)}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+.hero-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:80px;background:linear-gradient(to right,var(--light),transparent);z-index:1}
 
 /* SLOGAN */
-.slogan-bar { background: var(--dark); padding: 2rem 5vw; text-align: center; }
-.slogan-bar p { font-family: "Playfair Display", serif; font-size: clamp(1.2rem, 3vw, 1.8rem); color: white; display: flex; align-items: center; justify-content: center; gap: .5rem; flex-wrap: wrap; }
-.slogan-bar .q { color: var(--red2); font-size: 2.5rem; line-height: .6; }
-.slogan-bar strong { color: var(--red2); }
+.slogan-bar{background:var(--dark);padding:1.8rem 5vw;text-align:center}
+.slogan-bar p{font-family:"Playfair Display",serif;font-size:clamp(1.1rem,2.8vw,1.7rem);color:white;display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap}
+.slogan-bar .q{color:var(--red2);font-size:2.2rem;line-height:.6}
+.slogan-bar strong{color:var(--red2)}
 
 /* DIFERENCIAIS */
-#diferenciais { padding: 5rem 8vw; background: var(--white); }
-.dif-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
-.dif-card { text-align: center; padding: 2rem 1.5rem; }
-.dif-icon { width: 72px; height: 72px; border-radius: 14px; background: rgba(200,0,11,.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; }
-.dif-title { font-size: 1rem; font-weight: 700; color: var(--red); letter-spacing: .04em; text-transform: uppercase; margin-bottom: .5rem; }
-.dif-desc { font-size: .88rem; color: var(--gray); line-height: 1.75; }
-.dif-line { width: 32px; height: 2px; background: var(--red); margin: .75rem auto 0; border-radius: 2px; }
+#diferenciais{padding:4rem 8vw;background:var(--white)}
+.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.dif-card{text-align:center;padding:2rem 1.2rem;border-radius:12px;border:1px solid var(--border);transition:box-shadow .2s}
+.dif-card:hover{box-shadow:0 8px 32px rgba(200,0,11,.08)}
+.dif-icon{width:68px;height:68px;border-radius:14px;background:rgba(200,0,11,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem}
+.dif-title{font-size:.95rem;font-weight:700;color:var(--red);letter-spacing:.03em;text-transform:uppercase;margin-bottom:.5rem}
+.dif-desc{font-size:.86rem;color:var(--gray);line-height:1.75}
+.dif-line{width:28px;height:2px;background:var(--red);margin:.7rem auto 0;border-radius:2px}
 
 /* PROJETOS */
-#projetos { padding: 5rem 8vw; background: var(--light); }
-.section-label { text-align: center; margin-bottom: .4rem; font-family: "Playfair Display", serif; font-style: italic; font-size: 1.3rem; color: var(--red); display: flex; align-items: center; justify-content: center; gap: .6rem; }
-.section-label::before, .section-label::after { content: ""; height: 1px; width: 40px; background: var(--red); }
-.section-title { text-align: center; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 700; color: var(--dark); margin-bottom: 2.5rem; }
-.carousel-wrap { position: relative; }
-.carousel-slide { display: none; grid-template-columns: repeat(3,1fr); gap: 1rem; }
-.carousel-slide.active { display: grid; }
-.carousel-item { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; background: #ddd; }
-.carousel-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-.carousel-item:hover img { transform: scale(1.05); }
-.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; background: var(--white); border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,.12); transition: all .2s; color: var(--dark); }
-.carousel-arrow:hover { background: var(--red); border-color: var(--red); color: white; }
-.carousel-arrow.prev { left: -20px; }
-.carousel-arrow.next { right: -20px; }
-.carousel-dots { display: flex; gap: .4rem; justify-content: center; margin-top: 1.2rem; }
-.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: .2s; border: none; padding: 0; }
-.carousel-dot.active { background: var(--red); width: 20px; border-radius: 4px; }
-.proj-cta { text-align: center; margin-top: 2rem; }
-.btn-proj { display: inline-block; padding: .75rem 2rem; border: 2px solid var(--dark); border-radius: 99px; font-size: .85rem; font-weight: 500; color: var(--dark); text-decoration: none; transition: all .2s; }
-.btn-proj:hover { background: var(--dark); color: white; }
+#projetos{padding:4rem 8vw;background:var(--light)}
+.section-label{text-align:center;margin-bottom:.4rem;font-family:"Playfair Display",serif;font-style:italic;font-size:1.25rem;color:var(--red);display:flex;align-items:center;justify-content:center;gap:.6rem}
+.section-label::before,.section-label::after{content:"";height:1px;width:36px;background:var(--red)}
+.section-title{text-align:center;font-size:clamp(1.2rem,2.3vw,1.7rem);font-weight:700;color:var(--dark);margin-bottom:2rem}
+.carousel-wrap{position:relative}
+.carousel-slide{display:none;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.carousel-slide.active{display:grid}
+.carousel-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:#e5e5e5;position:relative}
+.carousel-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.carousel-item:hover img{transform:scale(1.05)}
+.carousel-item .img-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:white;font-size:.75rem;padding:.6rem .8rem;font-weight:500;letter-spacing:.03em;text-transform:capitalize}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:var(--white);border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 10px rgba(0,0,0,.12);transition:all .2s;color:var(--dark)}
+.carousel-arrow:hover{background:var(--red);border-color:var(--red);color:white}
+.carousel-arrow.prev{left:-22px}
+.carousel-arrow.next{right:-22px}
+.carousel-dots{display:flex;gap:.4rem;justify-content:center;margin-top:1.1rem}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none;padding:0}
+.carousel-dot.active{background:var(--red);width:22px;border-radius:4px}
+.proj-cta{text-align:center;margin-top:1.8rem}
+.btn-proj{display:inline-block;padding:.75rem 2rem;border:2px solid var(--dark);border-radius:99px;font-size:.85rem;font-weight:500;color:var(--dark);text-decoration:none;transition:all .2s}
+.btn-proj:hover{background:var(--dark);color:white}
+.no-imgs{text-align:center;padding:2.5rem;color:#aaa;font-size:.88rem;border:2px dashed var(--border);border-radius:12px}
 
 /* CTA */
-#cta { padding: 3.5rem 8vw; background: var(--dark2); display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
-.cta-left h2 { font-family: "Playfair Display", serif; font-style: italic; font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: white; margin-bottom: .4rem; }
-.cta-left h2 strong { color: var(--red2); font-style: normal; display: block; }
-.cta-left p { font-size: .88rem; color: rgba(255,255,255,.5); line-height: 1.7; max-width: 340px; margin-top: .5rem; }
-.cta-right { text-align: center; }
-.cta-phone { display: flex; align-items: center; gap: .6rem; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 700; color: white; margin-bottom: 1rem; white-space: nowrap; }
-.btn-wpp-lg { background: var(--wpp); color: white; padding: .85rem 2rem; border-radius: 8px; text-decoration: none; font-size: .9rem; font-weight: 600; display: inline-flex; align-items: center; gap: .5rem; transition: filter .2s; }
-.btn-wpp-lg:hover { filter: brightness(1.1); }
+#cta{padding:3.5rem 8vw;background:var(--dark2);display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.cta-left h2{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(1.2rem,2.2vw,1.7rem);color:white;margin-bottom:.4rem}
+.cta-left h2 strong{color:var(--red2);font-style:normal;display:block}
+.cta-left p{font-size:.86rem;color:rgba(255,255,255,.45);line-height:1.7;max-width:320px;margin-top:.5rem}
+.cta-right{text-align:center}
+.cta-phone{display:flex;align-items:center;gap:.6rem;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;color:white;margin-bottom:.9rem;white-space:nowrap}
+.btn-wpp-lg{background:var(--wpp);color:white;padding:.85rem 1.8rem;border-radius:8px;text-decoration:none;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:filter .2s;box-shadow:0 4px 14px rgba(37,211,102,.35)}
+.btn-wpp-lg:hover{filter:brightness(1.08)}
 
 /* VANTAGENS */
-.vantagens { background: var(--dark); padding: 2.5rem 8vw; display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; border-bottom: 1px solid rgba(255,255,255,.06); }
-.van-item { display: flex; align-items: flex-start; gap: 1rem; }
-.van-title { font-size: .82rem; font-weight: 600; color: white; margin-bottom: .25rem; }
-.van-sub { font-size: .75rem; color: rgba(255,255,255,.4); line-height: 1.6; }
+.vantagens{background:var(--dark);padding:2.2rem 8vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.van-item{display:flex;align-items:flex-start;gap:.9rem}
+.van-title{font-size:.82rem;font-weight:600;color:white;margin-bottom:.2rem}
+.van-sub{font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.6}
 
-/* FOOTER */
-footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,.07); }
-.footer-logo { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
-.footer-logo-icon { width: 38px; height: 38px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; }
-.footer-logo-name { font-family: "Playfair Display", serif; font-size: 1.2rem; font-weight: 700; color: white; }
-.footer-desc { font-size: .78rem; color: rgba(255,255,255,.35); line-height: 1.9; max-width: 220px; }
-.footer-col h4 { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: white; font-weight: 600; margin-bottom: 1.1rem; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-.footer-col ul a { font-size: .8rem; color: rgba(255,255,255,.35); text-decoration: none; transition: color .2s; }
-.footer-col ul a:hover { color: var(--red2); }
-.footer-col ul li { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: rgba(255,255,255,.4); }
-.footer-bottom { display: flex; justify-content: center; padding-top: 1.5rem; font-size: .72rem; color: rgba(255,255,255,.2); }
+/* COMO CHEGAR */
+#endereco{padding:5rem 8vw;background:var(--white)}
+.endereco-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:start}
+.endereco-info{}
+.endereco-tag{font-family:"Playfair Display",serif;font-style:italic;font-size:1.25rem;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem}
+.endereco-tag::before{content:"";height:1px;width:36px;background:var(--red)}
+.endereco-title{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;color:var(--dark);margin-bottom:1.5rem;line-height:1.2}
+.endereco-cards{display:flex;flex-direction:column;gap:.9rem}
+.end-card{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.1rem;border-radius:10px;border:1px solid var(--border);background:var(--light);transition:box-shadow .2s}
+.end-card:hover{box-shadow:0 4px 18px rgba(200,0,11,.07)}
+.end-card-icon{width:42px;height:42px;border-radius:9px;background:rgba(200,0,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.end-card-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:#aaa;font-weight:600;margin-bottom:.2rem}
+.end-card-value{font-size:.9rem;font-weight:600;color:var(--dark);line-height:1.4}
+.end-card-sub{font-size:.75rem;color:var(--gray);margin-top:.15rem}
+.horarios-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem .8rem;margin-top:.3rem}
+.horario-row{display:flex;justify-content:space-between;font-size:.78rem;color:var(--gray);padding:.2rem 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.horario-row span:first-child{font-weight:500;color:var(--dark)}
+.horario-row.fechado span:last-child{color:#e55}
+.btn-maps{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:white;padding:.75rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.84rem;font-weight:600;margin-top:1.2rem;transition:background .2s;box-shadow:0 4px 14px rgba(200,0,11,.25)}
+.btn-maps:hover{background:var(--red2)}
+.mapa-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid var(--border);position:relative}
+.mapa-wrap iframe{display:block;width:100%;height:380px;border:none}
+
+/* FOOTER novo */
+footer{background:#080808;padding:0}
+.footer-top{padding:3.5rem 8vw 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:2.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.footer-brand{}
+.footer-logo{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.footer-logo-icon{width:38px;height:38px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.footer-logo-name{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:white}
+.footer-desc{font-size:.77rem;color:rgba(255,255,255,.3);line-height:1.95;max-width:220px;margin-bottom:1.2rem}
+.footer-social{display:flex;gap:.5rem}
+.soc-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);text-decoration:none;transition:all .2s}
+.soc-btn:hover{border-color:var(--red2);color:var(--red2)}
+.footer-col h4{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-col ul a{font-size:.78rem;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.4rem}
+.footer-col ul a:hover{color:white}
+.footer-col ul li{font-size:.78rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.footer-col ul li svg{flex-shrink:0;margin-top:1px}
+.footer-col ul li a{color:rgba(255,255,255,.35)}
+.footer-col ul li a:hover{color:var(--red2)}
+.footer-horarios{}
+.footer-horarios h4{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:.9rem}
+.fh-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.76rem}
+.fh-row span:first-child{color:rgba(255,255,255,.4)}
+.fh-row span:last-child{color:white;font-weight:500}
+.fh-row.fh-fechado span:last-child{color:#e55;font-weight:400}
+.footer-bottom{padding:1.2rem 8vw;display:flex;justify-content:space-between;align-items:center;font-size:.68rem;color:rgba(255,255,255,.15)}
+.footer-bottom a{color:rgba(255,255,255,.12);text-decoration:none;transition:color .2s}
+.footer-bottom a:hover{color:rgba(255,255,255,.4)}
 
 /* FLOAT WPP */
-.wpp-float { position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200; width: 56px; height: 56px; border-radius: 50%; background: var(--wpp); display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,.45); animation: pulse 2.5s infinite; transition: transform .25s; }
-.wpp-float:hover { transform: scale(1.12); }
-@keyframes pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)} 50%{box-shadow:0 4px 32px rgba(37,211,102,.7)} }
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:200;width:58px;height:58px;border-radius:50%;background:var(--wpp);display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.45);animation:pulse 2.5s infinite;transition:transform .25s}
+.wpp-float:hover{transform:scale(1.1)}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,.7)}}
 
-/* RESPONSIVE */
+/* ===================== MOBILE ===================== */
 @media(max-width:900px){
-  #hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 3.5rem 5vw; }
-  .hero-right { height: 280px; clip-path: none; }
-  .dif-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-  .dif-card { padding: 1.2rem 1rem; display: flex; text-align: left; gap: 1rem; align-items: flex-start; }
-  .dif-icon { width: 52px; height: 52px; flex-shrink: 0; margin: 0; }
-  .dif-line { margin: .5rem 0 0; }
-  .carousel-slide { grid-template-columns: 1fr; }
-  .carousel-item:not(:first-child) { display: none; }
-  #cta { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
-  .cta-phone { justify-content: center; }
-  .vantagens { grid-template-columns: 1fr; gap: 1.5rem; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .footer-desc { max-width: 100%; }
-  .nav-links { display: none; }
-  .menu-btn { display: flex; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 2px solid var(--border); padding: 1rem 5vw; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
-  .nav-links.open a { height: 48px; border-bottom: 1px solid var(--border); padding: 0; }
-  .nav-cta { display: none; }
+  /* Topbar compacto */
+  .topbar{padding:.4rem 4vw;font-size:.7rem}
+  .topbar-left{display:none}
+  .topbar-right{gap:1rem;width:100%;justify-content:center}
+
+  /* Nav mobile */
+  nav{height:60px;padding:0 4vw}
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:white;border-bottom:2px solid var(--border);flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{height:52px;padding:0 5vw;border-bottom:1px solid var(--border);border-left:none;margin:0;font-size:.9rem}
+  .nav-links a:last-child{border-bottom:none}
+  .nav-links a:hover,.nav-links a.active{background:rgba(200,0,11,.04)}
+  .nav-cta{display:none}
+  .menu-btn{display:flex}
+
+  /* Hero mobile */
+  #hero{grid-template-columns:1fr;min-height:auto}
+  .hero-right{height:260px;clip-path:none;order:-1}
+  .hero-right::before{display:none}
+  .hero-left{padding:2rem 5vw 2.5rem}
+  .hero-tag{font-size:1.2rem}
+  .hero-title{font-size:1.9rem}
+  .hero-title strong{font-size:2.4rem}
+  .hero-desc{max-width:100%;font-size:.92rem}
+  .hero-btns{gap:.6rem}
+  .btn-wpp,.btn-outline{flex:1;justify-content:center;font-size:.88rem;padding:.85rem .8rem}
+
+  /* Slogan */
+  .slogan-bar{padding:1.5rem 4vw}
+  .slogan-bar .q{font-size:1.8rem}
+
+  /* Diferenciais mobile */
+  #diferenciais{padding:2.5rem 5vw}
+  .dif-grid{grid-template-columns:1fr;gap:.8rem}
+  .dif-card{display:flex;text-align:left;align-items:flex-start;gap:1rem;padding:1.2rem 1.1rem}
+  .dif-icon{width:52px;height:52px;flex-shrink:0;margin:0}
+  .dif-line{margin:.4rem 0 0}
+
+  /* Projetos mobile */
+  #projetos{padding:2.5rem 5vw}
+  .carousel-slide{grid-template-columns:1fr 1fr;gap:.6rem}
+  .carousel-item:nth-child(3){display:none}
+  .carousel-arrow{width:36px;height:36px}
+  .carousel-arrow.prev{left:-14px}
+  .carousel-arrow.next{right:-14px}
+
+  /* CTA mobile */
+  #cta{grid-template-columns:1fr;gap:1.5rem;padding:2.5rem 5vw;text-align:center}
+  .cta-left p{max-width:100%;margin:0 auto}
+  .cta-phone{justify-content:center;font-size:1.6rem}
+  .btn-wpp-lg{width:100%;justify-content:center;font-size:.95rem;padding:1rem}
+
+  /* Vantagens mobile */
+  .vantagens{grid-template-columns:1fr;gap:1.2rem;padding:2rem 5vw}
+
+  /* Como chegar mobile */
+  #endereco{padding:2.5rem 5vw}
+  .endereco-grid{grid-template-columns:1fr;gap:2rem}
+  .mapa-wrap iframe{height:280px}
+
+  /* Footer mobile */
+  .footer-top{grid-template-columns:1fr 1fr;gap:2rem;padding:2.5rem 5vw}
+  .footer-brand{grid-column:span 2}
+  .footer-desc{max-width:100%}
+  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
 }
-@media(max-width:600px){ .topbar { display: none; } .carousel-arrow { display: none; } }
+
+@media(max-width:480px){
+  .topbar{display:none}
+  .hero-right{height:220px}
+  .hero-title{font-size:1.7rem}
+  .hero-title strong{font-size:2.1rem}
+  .hero-btns{flex-direction:column}
+  .btn-wpp,.btn-outline{width:100%;justify-content:center}
+  .carousel-slide{grid-template-columns:1fr}
+  .carousel-item:nth-child(2),.carousel-item:nth-child(3){display:none}
+  .carousel-arrow{display:none}
+  .slogan-bar p{font-size:1.1rem;gap:.3rem}
+  .footer-top{grid-template-columns:1fr}
+  .footer-brand{grid-column:span 1}
+  .horarios-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -160,11 +261,11 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
     Cataguases - MG
   </div>
   <div class="topbar-right">
-    <a href="tel:+5532981531411">
+    <a href="tel:+55329815314">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       (32) 9815-3141
     </a>
-    <a href="https://wa.me/5532981531411" target="_blank">
+    <a href="https://wa.me/553298153141" target="_blank">
       <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
       (32) 9815-3141
     </a>
@@ -177,19 +278,18 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
     <div class="nav-logo-icon">
-      <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     </div>
     <span class="nav-logo-text">Stilus <span>Planejados</span></span>
   </a>
   <ul class="nav-links" id="navLinks">
     <a href="#hero">Inicio</a>
-    <a href="#sobre">Sobre nos</a>
     <a href="#diferenciais">Servicos</a>
     <a href="#projetos">Projetos</a>
     <a href="#cta">Contato</a>
   </ul>
-  <a href="https://wa.me/5532981531411?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="nav-cta">
-    <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="nav-cta">
+    <svg width="15" height="15" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
     Orcamento
   </a>
   <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -199,59 +299,41 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
 <section id="hero">
   <div class="hero-left">
     <div class="hero-tag">Convite</div>
-    <h1 class="hero-title">Venha fazer seu <strong>ORCAMENTO</strong> <span>conosco!</span></h1>
+    <h1 class="hero-title">Venha fazer seu <strong>ORCAMENTO</strong> conosco!</h1>
     <div class="hero-line"></div>
     <p class="hero-desc">Moveis planejados com qualidade, design e acabamento impecavel para transformar seu ambiente.</p>
     <div class="hero-btns">
-      <a href="https://wa.me/5532981531411?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp">
-        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp">
+        <svg width="17" height="17" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
         Solicitar orcamento
       </a>
       <a href="#projetos" class="btn-outline">Ver projetos</a>
     </div>
   </div>
   <div class="hero-right">
-    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85" alt="Cozinha planejada Stilus">
+    <img id="heroImg" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85" alt="Cozinha planejada Stilus">
   </div>
 </section>
 
 <!-- SLOGAN -->
 <div class="slogan-bar">
-  <p><span class="q">"</span>&nbsp; VOCE SONHA, <strong>&nbsp;A GENTE REALIZA!&nbsp;</strong> &nbsp;<span class="q">"</span></p>
+  <p><span class="q">"</span> VOCE SONHA, <strong>A GENTE REALIZA!</strong> <span class="q">"</span></p>
 </div>
 
 <!-- DIFERENCIAIS -->
 <section id="diferenciais">
   <div class="dif-grid">
     <div class="dif-card">
-      <div class="dif-icon">
-        <svg width="32" height="32" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </div>
-      <div>
-        <div class="dif-title">Moveis Planejados</div>
-        <div class="dif-desc">com qualidade e acabamento impecavel</div>
-        <div class="dif-line"></div>
-      </div>
+      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div><div class="dif-title">Moveis Planejados</div><div class="dif-desc">com qualidade e acabamento impecavel</div><div class="dif-line"></div></div>
     </div>
     <div class="dif-card">
-      <div class="dif-icon">
-        <svg width="32" height="32" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      </div>
-      <div>
-        <div class="dif-title">Projetos Personalizados</div>
-        <div class="dif-desc">pensados para o seu espaco e seu estilo</div>
-        <div class="dif-line"></div>
-      </div>
+      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <div><div class="dif-title">Projetos Personalizados</div><div class="dif-desc">pensados para o seu espaco e seu estilo</div><div class="dif-line"></div></div>
     </div>
     <div class="dif-card">
-      <div class="dif-icon">
-        <svg width="32" height="32" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div>
-        <div class="dif-title">Atendimento Especializado</div>
-        <div class="dif-desc">do inicio ao pos-venda</div>
-        <div class="dif-line"></div>
-      </div>
+      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div><div class="dif-title">Atendimento Especializado</div><div class="dif-desc">do inicio ao pos-venda</div><div class="dif-line"></div></div>
     </div>
   </div>
 </section>
@@ -261,15 +343,9 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
   <div class="section-label">Nossos Projetos</div>
   <div class="section-title">Conheca alguns ambientes que ja transformamos</div>
   <div class="carousel-wrap">
-    <div class="carousel-slide active" id="slide0">
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Cozinha"></div>
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Closet"></div>
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Sala"></div>
-    </div>
-    <div class="carousel-slide" id="slide1">
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80" alt="Quarto"></div>
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt="Banheiro"></div>
-      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" alt="Escritorio"></div>
+    <div id="carouselContainer">
+      <!-- Fotos carregadas dinamicamente via API -->
+      <div class="no-imgs" id="noImgs" style="display:none">Nenhum projeto cadastrado ainda. <a href="/admin" style="color:var(--red)">Adicionar fotos</a></div>
     </div>
     <button class="carousel-arrow prev" id="prevBtn" aria-label="Anterior">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
@@ -277,13 +353,10 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
     <button class="carousel-arrow next" id="nextBtn" aria-label="Proximo">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
-    <div class="carousel-dots">
-      <button class="carousel-dot active" data-slide="0"></button>
-      <button class="carousel-dot" data-slide="1"></button>
-    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
   </div>
   <div class="proj-cta">
-    <a href="https://wa.me/5532981531411?text=Ola!%20Quero%20ver%20mais%20projetos." target="_blank" class="btn-proj">Ver todos os projetos</a>
+    <a href="https://wa.me/553298153141?text=Ola!%20Quero%20ver%20mais%20projetos%20da%20Stilus." target="_blank" class="btn-proj">Ver todos os projetos</a>
   </div>
 </section>
 
@@ -295,10 +368,10 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
   </div>
   <div class="cta-right">
     <div class="cta-phone">
-      <svg width="28" height="28" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      <svg width="26" height="26" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
       (32) 9815-3141
     </div>
-    <a href="https://wa.me/5532981531411?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp-lg">
+    <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp-lg">
       <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
       Solicitar orcamento
     </a>
@@ -321,63 +394,226 @@ footer { background: var(--dark); padding: 3rem 8vw 1.5rem; }
   </div>
 </div>
 
+<!-- COMO CHEGAR -->
+<section id="endereco">
+  <div class="endereco-grid">
+    <div class="endereco-info">
+      <div class="endereco-tag">Como Chegar</div>
+      <h2 class="endereco-title">Venha nos visitar em Cataguases</h2>
+      <div class="endereco-cards">
+        <div class="end-card">
+          <div class="end-card-icon">
+            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="end-card-label">Endereco</div>
+            <div class="end-card-value">Rua Joaquim Peixoto Ramos, 59 — Sala 29</div>
+            <div class="end-card-sub">Centro · Cataguases — MG · CEP 36777-066</div>
+          </div>
+        </div>
+        <div class="end-card">
+          <div class="end-card-icon">
+            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="end-card-label">Horario de Funcionamento</div>
+            <div class="horarios-grid">
+              <div class="horario-row"><span>Segunda</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+              <div class="horario-row"><span>Terca</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+              <div class="horario-row"><span>Quarta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+              <div class="horario-row"><span>Quinta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+              <div class="horario-row"><span>Sexta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+              <div class="horario-row"><span>Sabado</span><span>8h – 12h</span></div>
+              <div class="horario-row fechado"><span>Domingo</span><span>Fechado</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="end-card">
+          <div class="end-card-icon">
+            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="end-card-label">Telefone / WhatsApp</div>
+            <div class="end-card-value">(32) 9815-3141</div>
+            <div class="end-card-sub">Atendemos pelo WhatsApp tambem</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://www.google.com/maps/place/Stilus+M%C3%B3veis+Planejados/@-21.3887772,-42.6925877,17z" target="_blank" class="btn-maps">
+        <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Abrir no Google Maps
+      </a>
+    </div>
+    <div class="mapa-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3758.8!2d-42.6947!3d-21.3888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa2d782091f020d%3A0xc35b5aca9c9e0c4!2sStilus%20M%C3%B3veis%20Planejados!5e0!3m2!1spt-BR!2sbr!4v1"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Localizacao Stilus Planejados">
+      </iframe>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer id="sobre">
-  <div class="footer-grid">
-    <div>
+  <div class="footer-top">
+    <div class="footer-brand">
       <div class="footer-logo">
-        <div class="footer-logo-icon"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="footer-logo-icon"><svg width="17" height="17" fill="none" stroke="white" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <span class="footer-logo-name">Stilus Planejados</span>
       </div>
-      <p class="footer-desc">Moveis planejados com qualidade e design para transformar seu ambiente em Cataguases e regiao.</p>
+      <p class="footer-desc">Moveis planejados com qualidade, design e acabamento impecavel para transformar seu lar em Cataguases e regiao. Faca um orcamento sem compromisso.</p>
+      <div class="footer-social">
+        <a href="https://wa.me/553298153141" target="_blank" class="soc-btn" title="WhatsApp">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <a href="https://instagram.com/stilusplanejados" target="_blank" class="soc-btn" title="Instagram">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="soc-btn" title="Facebook">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Navegacao</h4>
       <ul>
-        <li><a href="#hero">Inicio</a></li>
-        <li><a href="#sobre">Sobre nos</a></li>
-        <li><a href="#diferenciais">Servicos</a></li>
-        <li><a href="#projetos">Projetos</a></li>
-        <li><a href="#cta">Contato</a></li>
+        <li><a href="#hero"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Inicio</a></li>
+        <li><a href="#diferenciais"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Servicos</a></li>
+        <li><a href="#projetos"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Projetos</a></li>
+        <li><a href="#endereco"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Como Chegar</a></li>
+        <li><a href="#cta"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Contato</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Contato</h4>
       <ul>
-        <li><svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Cataguases - MG</li>
-        <li><svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:+5532981531411">(32) 9815-3141</a></li>
-        <li><svg width="13" height="13" fill="#E8000D" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg> <a href="https://wa.me/5532981531411" target="_blank">(32) 9815-3141</a></li>
-        <li><svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg> <a href="https://instagram.com" target="_blank">@stilusplanejados</a></li>
+        <li>
+          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Rua Joaquim Peixoto Ramos, 59 — Sala 29, Centro, Cataguases MG
+        </li>
+        <li>
+          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+55329815314">(32) 9815-3141</a>
+        </li>
+        <li>
+          <svg width="13" height="13" fill="#E8000D" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          <a href="https://wa.me/553298153141" target="_blank">(32) 9815-3141</a>
+        </li>
+        <li>
+          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+          <a href="https://instagram.com/stilusplanejados" target="_blank">@stilusplanejados</a>
+        </li>
       </ul>
     </div>
+    <div class="footer-horarios">
+      <h4>Funcionamento</h4>
+      <div class="fh-row"><span>Seg — Sex</span><span>8h – 11h30 / 13h30 – 18h</span></div>
+      <div class="fh-row"><span>Sabado</span><span>8h – 12h</span></div>
+      <div class="fh-row fh-fechado"><span>Domingo</span><span>Fechado</span></div>
+    </div>
   </div>
-  <div class="footer-bottom">2025 Stilus Planejados. Todos os direitos reservados.</div>
+  <div class="footer-bottom">
+    <span>2025 Stilus Planejados · Cataguases MG · Todos os direitos reservados.</span>
+    <a href="/admin">Painel Admin</a>
+  </div>
 </footer>
 
 <!-- FLOAT WPP -->
-<a href="https://wa.me/5532981531411?text=Ola!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orcamento." target="_blank" class="wpp-float" title="Falar no WhatsApp">
+<a href="https://wa.me/553298153141?text=Ola!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orcamento." target="_blank" class="wpp-float" title="Falar no WhatsApp">
   <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
 </a>
 
 <script>
+// ── CARREGA FOTOS DO BANCO VIA API ──────────────────────────────────────────
+var allSlides = [];
 var currentSlide = 0;
-var slides = document.querySelectorAll(".carousel-slide");
-var dots = document.querySelectorAll(".carousel-dot");
-var totalSlides = slides.length;
-function goToSlide(n) {
-  slides[currentSlide].classList.remove("active");
-  dots[currentSlide].classList.remove("active");
-  currentSlide = (n + totalSlides) % totalSlides;
-  slides[currentSlide].classList.add("active");
-  dots[currentSlide].classList.add("active");
+
+function buildCarousel(imgs) {
+  var container = document.getElementById('carouselContainer');
+  var dotsEl = document.getElementById('carouselDots');
+  container.innerHTML = '';
+  dotsEl.innerHTML = '';
+
+  if (!imgs || imgs.length === 0) {
+    // Usa fotos de placeholder enquanto nao ha fotos cadastradas
+    imgs = [
+      {url:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80', titulo:'Cozinha'},
+      {url:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', titulo:'Closet'},
+      {url:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80', titulo:'Sala'},
+      {url:'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80', titulo:'Quarto'},
+      {url:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80', titulo:'Banheiro'},
+      {url:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80', titulo:'Escritorio'},
+    ];
+  }
+
+  // Agrupa em slides de 3
+  var perSlide = 3;
+  allSlides = [];
+  for (var i = 0; i < imgs.length; i += perSlide) {
+    allSlides.push(imgs.slice(i, i + perSlide));
+  }
+
+  allSlides.forEach(function(group, idx) {
+    var slide = document.createElement('div');
+    slide.className = 'carousel-slide' + (idx === 0 ? ' active' : '');
+    group.forEach(function(img) {
+      var item = document.createElement('div');
+      item.className = 'carousel-item';
+      item.innerHTML = '<img src="' + img.url + '" alt="' + (img.titulo||'Projeto') + '" loading="lazy"><div class="img-label">' + (img.titulo||'') + '</div>';
+      slide.appendChild(item);
+    });
+    container.appendChild(slide);
+
+    var dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
+    dot.dataset.slide = idx;
+    dot.addEventListener('click', function() { goToSlide(+this.dataset.slide); });
+    dotsEl.appendChild(dot);
+  });
+
+  currentSlide = 0;
 }
-document.getElementById("nextBtn").addEventListener("click", function(){ goToSlide(currentSlide + 1); });
-document.getElementById("prevBtn").addEventListener("click", function(){ goToSlide(currentSlide - 1); });
-dots.forEach(function(d){ d.addEventListener("click", function(){ goToSlide(+d.dataset.slide); }); });
-setInterval(function(){ goToSlide(currentSlide + 1); }, 5000);
-document.getElementById("menuBtn").addEventListener("click", function(){
-  document.getElementById("navLinks").classList.toggle("open");
+
+function goToSlide(n) {
+  var slides = document.querySelectorAll('.carousel-slide');
+  var dots = document.querySelectorAll('.carousel-dot');
+  if (!slides.length) return;
+  slides[currentSlide].classList.remove('active');
+  if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+  currentSlide = (n + allSlides.length) % allSlides.length;
+  slides[currentSlide].classList.add('active');
+  if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+}
+
+document.getElementById('nextBtn').addEventListener('click', function() { goToSlide(currentSlide + 1); });
+document.getElementById('prevBtn').addEventListener('click', function() { goToSlide(currentSlide - 1); });
+setInterval(function() { if (allSlides.length > 1) goToSlide(currentSlide + 1); }, 5000);
+
+// Carrega fotos da API
+fetch('/api/imagens?secao=portfolio')
+  .then(function(r) { return r.json(); })
+  .then(function(data) { buildCarousel(data); })
+  .catch(function() { buildCarousel([]); });
+
+// ── MENU MOBILE ──────────────────────────────────────────────────────────────
+document.getElementById('menuBtn').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('open');
 });
+document.querySelectorAll('#navLinks a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// ── NAV ATIVO ────────────────────────────────────────────────────────────────
+var sections = document.querySelectorAll('section[id],footer[id]');
+var navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', function() {
+  var cur = '';
+  sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  navAs.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+}, {passive:true});
 </script>
 </body>
 </html>
