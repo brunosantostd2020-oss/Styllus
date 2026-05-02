@@ -1,0 +1,8 @@
+node_modules/
+.env
+public/uploads/*.jpg
+public/uploads/*.jpeg
+public/uploads/*.png
+public/uploads/*.webp
+public/uploads/*.gif
+!public/uploads/.gitkeep

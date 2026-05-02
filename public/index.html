@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stilus Planejados — Móveis Sob Medida · Cataguases MG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E8000D;
+    --red-dark: #B50009;
+    --black: #0D0D0D;
+    --black-mid: #1A1A1A;
+    --gray: #3D3D3D;
+    --gray-light: #888;
+    --off-white: #F8F6F3;
+    --warm-white: #FDFCFB;
+    --sand: #EDE9E3;
+    --sand-dark: #D6D0C8;
+    --wpp: #25D366;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--warm-white); color: var(--black); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(13,13,13,0.96); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,0,13,0.2);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .nav-logo-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--black-mid); border: 2px solid var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1rem; color: white;
+  }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; color: white; letter-spacing: 0.04em; }
+  .nav-logo-text span { color: var(--red); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+  .nav-cta { background: var(--red) !important; color: white !important; padding: 0.5rem 1.3rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--red-dark) !important; }
+  .menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .menu-btn span { width: 24px; height: 1.5px; background: white; }
+
+  #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; background: var(--black); overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 8rem 5vw 5rem 8vw; z-index: 2; position: relative; }
+  .hero-left::after { content: ''; position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(232,0,13,0.5), transparent); }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); margin-bottom: 1.5rem; }
+  .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--red); }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 4.5vw, 4.2rem); font-weight: 300; line-height: 1.08; color: white; margin-bottom: 1.6rem; }
+  .hero-title em { font-style: italic; color: var(--red); }
+  .hero-desc { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.9; max-width: 370px; margin-bottom: 2.5rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--red); color: white; padding: 0.85rem 2rem; border: none; font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.25s; display: inline-block; border-radius: 2px; }
+  .btn-primary:hover { background: var(--red-dark); }
+  .btn-outline { background: transparent; color: rgba(255,255,255,0.7); padding: 0.85rem 2rem; border: 1px solid rgba(255,255,255,0.2); font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: all 0.25s; display: inline-block; border-radius: 2px; }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--red); display: block; line-height: 1; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.3rem; display: block; }
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-img-grid { display: grid; grid-template-rows: 60% 40%; height: 100%; gap: 3px; }
+  .hero-img-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
+  .hero-img-grid img:hover { transform: scale(1.04); }
+  .hero-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--black) 0%, transparent 28%); pointer-events: none; }
+
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-tag { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--red); display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; }
+  .section-tag::before, .section-tag::after { content: ''; width: 20px; height: 1px; background: var(--red); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 300; color: var(--black); line-height: 1.2; }
+  .section-desc { font-size: 0.88rem; color: var(--gray-light); line-height: 1.9; max-width: 500px; margin: 1rem auto 0; }
+
+  #sobre { padding: 7rem 8vw; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-img-wrap { position: relative; }
+  .about-img-main { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px; }
+  .about-img-accent { position: absolute; width: 52%; aspect-ratio: 1; object-fit: cover; bottom: -2rem; right: -2rem; border: 6px solid var(--warm-white); border-radius: 2px; }
+  .about-badge { position: absolute; top: 2rem; left: -1.5rem; background: var(--red); padding: 1.2rem 1.5rem; text-align: center; color: white; }
+  .about-badge strong { font-family: 'Cormorant Garamond', serif; font-size: 2rem; display: block; line-height: 1; }
+  .about-badge span { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .about-text .section-header { text-align: left; }
+  .about-text .section-tag { justify-content: flex-start; }
+  .about-text .section-tag::before { display: none; }
+  .about-text p { font-size: 0.9rem; color: var(--gray); line-height: 1.95; margin-top: 1.2rem; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 2rem; }
+  .feature-item { display: flex; align-items: flex-start; gap: 0.6rem; }
+  .feature-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 0.4rem; }
+  .feature-item span { font-size: 0.82rem; color: var(--gray); }
+
+  #categorias { padding: 5rem 8vw 7rem; background: var(--black); }
+  #categorias .section-title { color: white; }
+  #categorias .section-desc { color: rgba(255,255,255,0.4); }
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.2rem; }
+  .cat-card { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; border-radius: 2px; }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .cat-card:hover img { transform: scale(1.08); }
+  .cat-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,0.85) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.3rem; transition: all 0.3s; }
+  .cat-card:hover .cat-overlay { background: linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(232,0,13,0.1) 100%); }
+  .cat-label { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: white; display: block; margin-bottom: 0.2rem; }
+  .cat-sub { font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  #portfolio { padding: 6rem 8vw; }
+  .gallery-filter { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .filter-btn { padding: 0.5rem 1.3rem; border: 1px solid var(--sand-dark); background: transparent; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.73rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); transition: all 0.2s; border-radius: 2px; }
+  .filter-btn.active, .filter-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; }
+  .gal-item { overflow: hidden; cursor: pointer; position: relative; border-radius: 2px; }
+  .gal-item:nth-child(1) { grid-column: span 8; grid-row: span 2; }
+  .gal-item:nth-child(2) { grid-column: span 4; }
+  .gal-item:nth-child(3) { grid-column: span 4; }
+  .gal-item:nth-child(4) { grid-column: span 4; }
+  .gal-item:nth-child(5) { grid-column: span 4; }
+  .gal-item:nth-child(6) { grid-column: span 4; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; min-height: 200px; transition: transform 0.5s ease; display: block; }
+  .gal-item:hover img { transform: scale(1.06); }
+  .gal-hover { position: absolute; inset: 0; background: rgba(13,13,13,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+  .gal-item:hover .gal-hover { opacity: 1; }
+  .gal-hover-icon { width: 44px; height: 44px; border: 1px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+  .gallery-insta { text-align: center; margin-top: 1.8rem; font-size: 0.82rem; color: var(--gray-light); }
+  .gallery-insta a { color: var(--red); text-decoration: none; }
+
+  #processo { padding: 6rem 8vw; background: var(--off-white); }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .step-card { padding: 2rem 1.4rem; border-top: 2px solid var(--red); background: white; }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; line-height: 1; color: rgba(232,0,13,0.1); display: block; margin-bottom: 1rem; }
+  .step-icon { font-size: 1.5rem; margin-bottom: 0.8rem; display: block; }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--black); margin-bottom: 0.6rem; }
+  .step-desc { font-size: 0.82rem; color: var(--gray-light); line-height: 1.8; }
+
+  #depoimentos { padding: 6rem 8vw; }
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .testi-card { background: var(--off-white); padding: 2rem 1.8rem; border-radius: 2px; border-left: 3px solid var(--red); }
+  .testi-quote { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 0.6; color: var(--red); display: block; margin-bottom: 1rem; }
+  .testi-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gray); line-height: 1.85; font-style: italic; }
+  .testi-author { margin-top: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+  .testi-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 0.9rem; color: white; flex-shrink: 0; border: 2px solid var(--red); }
+  .testi-name { font-size: 0.82rem; font-weight: 500; color: var(--black); display: block; }
+  .testi-city { font-size: 0.72rem; color: var(--gray-light); }
+  .testi-stars { color: var(--red); font-size: 0.75rem; margin-top: 0.2rem; }
+
+  #orcamento { padding: 7rem 8vw; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; background: var(--black); }
+  .orc-left .section-tag { justify-content: flex-start; color: var(--red); }
+  .orc-left .section-tag::before { display: none; }
+  .orc-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 300; color: white; line-height: 1.2; margin: 0.6rem 0 1rem; }
+  .orc-left p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.9; }
+  .contact-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+  .contact-icon { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(232,0,13,0.4); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .contact-item strong { display: block; color: white; font-size: .85rem; }
+  .form-box { background: white; padding: 2.5rem; border-radius: 4px; }
+  .form-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--black); margin-bottom: 1.5rem; }
+  .orcamento-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-group label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); }
+  .form-group input, .form-group select, .form-group textarea { border: 1px solid var(--sand-dark); background: var(--off-white); padding: 0.75rem 0.9rem; font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--black); outline: none; border-radius: 2px; transition: border-color 0.2s; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--red); background: white; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .wpp-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; background: var(--wpp); color: white; padding: 0.9rem 2rem; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px; width: 100%; font-weight: 500; margin-top: 0.5rem; transition: filter 0.2s; }
+  .wpp-btn:hover { filter: brightness(1.08); }
+  .wpp-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+  footer { background: #070707; color: rgba(255,255,255,0.35); padding: 4rem 8vw 2rem; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .footer-logo { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+  .footer-logo-icon { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--red); background: var(--black-mid); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: white; }
+  .footer-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: white; }
+  .footer-logo-name span { color: var(--red); }
+  .footer-desc { font-size: 0.8rem; line-height: 1.9; max-width: 240px; }
+  .footer-col h4 { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: white; margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .footer-col ul a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--red); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; font-size: 0.73rem; }
+  .social-links { display: flex; gap: 0.8rem; }
+  .social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.35); font-size: 0.8rem; text-decoration: none; transition: all 0.2s; }
+  .social-link:hover { border-color: var(--red); color: var(--red); }
+
+  .wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; width: 56px; height: 56px; border-radius: 50%; background: var(--wpp); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.25s; animation: pulse 2.5s infinite; }
+  .wpp-float:hover { transform: scale(1.1); }
+  @keyframes pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.35)} 50%{box-shadow:0 4px 32px rgba(37,211,102,0.65)} }
+
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.93); align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+  .lb-close { position: absolute; top: 1.5rem; right: 2rem; color: white; font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.65s, transform 0.65s; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 6vw 4rem; }
+    #sobre, #orcamento { grid-template-columns: 1fr; gap: 3rem; }
+    .about-img-wrap { display: none; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .menu-btn { display: flex; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gal-item:nth-child(n) { grid-column: span 1; grid-row: span 1; }
+  }
+  @media (max-width: 600px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">S</div>
+    <span class="nav-logo-text">Stilus <span>Planejados</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#categorias">Ambientes</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#orcamento" class="nav-cta">Orçamento</a></li>
+  </ul>
+  <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
+</nav>
+
+<section id="hero">
+  <div class="hero-left fade-up">
+    <p class="hero-tag">Móveis Sob Medida · Cataguases, MG</p>
+    <h1 class="hero-title">Solução inteligente<br>para o seu<br><em>ambiente</em></h1>
+    <p class="hero-desc">Projetos comerciais e residenciais planejados sob medida. Cada detalhe pensado para transformar seu espaço com qualidade e estilo.</p>
+    <div class="hero-btns">
+      <a href="#orcamento" class="btn-primary">Solicitar Orçamento</a>
+      <a href="#portfolio" class="btn-outline">Ver Portfólio</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">248+</span><span class="stat-label">Projetos realizados</span></div>
+      <div><span class="stat-num">3.6K</span><span class="stat-label">Seguidores</span></div>
+      <div><span class="stat-num">100%</span><span class="stat-label">Sob Medida</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-overlay"></div>
+    <div class="hero-img-grid">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85" alt="Cozinha planejada">
+      <div class="hero-sub-grid">
+        <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&q=85" alt="Quarto planejado">
+        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=400&q=85" alt="Closet planejado">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="about-img-wrap fade-up">
+    <img class="about-img-main" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=85" alt="Sala planejada Stilus">
+    <img class="about-img-accent" src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=300&q=85" alt="Escritório planejado">
+    <div class="about-badge"><strong>+</strong><span>Anos de mercado</span></div>
+  </div>
+  <div class="about-text fade-up">
+    <div class="section-header">
+      <span class="section-tag">Quem Somos</span>
+      <h2 class="section-title">Stilus Planejados<br>Cataguases, MG</h2>
+    </div>
+    <p>Somos especialistas em móveis sob medida para projetos comerciais e residenciais. Na Stilus, cada projeto é tratado de forma única — do primeiro atendimento à instalação final, com dedicação total ao seu espaço.</p>
+    <p>Com presença consolidada em Cataguases e região, unimos design moderno, materiais de qualidade e atendimento personalizado para entregar ambientes que superam expectativas.</p>
+    <div class="about-features">
+      <div class="feature-item"><div class="feature-dot"></div><span>Móveis Sob Medida</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Projetos Residenciais</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Projetos Comerciais</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Projeto 3D Gratuito</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Materiais Premium</span></div>
+      <div class="feature-item"><div class="feature-dot"></div><span>Instalação Inclusa</span></div>
+    </div>
+    <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="#orcamento" class="btn-primary">Solicitar Orçamento</a>
+      <a href="https://instagram.com/stilusplanejados" target="_blank" style="background:transparent;color:var(--black);padding:.85rem 2rem;border:1px solid rgba(0,0,0,0.2);font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all .25s;display:inline-block;">@stilusplanejados</a>
+    </div>
+  </div>
+</section>
+
+<section id="categorias">
+  <div class="section-header fade-up">
+    <span class="section-tag">Ambientes</span>
+    <h2 class="section-title">Criamos para todos os espaços</h2>
+    <p class="section-desc">Cozinhas, quartos, banheiros, closets e escritórios — soluções planejadas para cada canto da sua vida.</p>
+  </div>
+  <div class="cat-grid fade-up">
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=85" alt="Cozinha">
+      <div class="cat-overlay"><span class="cat-label">Cozinha</span><span class="cat-sub">Planejada sob medida</span></div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&q=85" alt="Quarto">
+      <div class="cat-overlay"><span class="cat-label">Quarto</span><span class="cat-sub">Conforto & organização</span></div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&q=85" alt="Banheiro">
+      <div class="cat-overlay"><span class="cat-label">Banheiro</span><span class="cat-sub">Design & funcionalidade</span></div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=400&q=85" alt="Closet">
+      <div class="cat-overlay"><span class="cat-label">Closet</span><span class="cat-sub">Estilo & praticidade</span></div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=85" alt="Escritório">
+      <div class="cat-overlay"><span class="cat-label">Escritório</span><span class="cat-sub">Comercial & home office</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-header fade-up">
+    <span class="section-tag">Portfólio</span>
+    <h2 class="section-title">Projetos realizados</h2>
+    <p class="section-desc">Acompanhe mais projetos no Instagram <a href="https://instagram.com/stilusplanejados" target="_blank" style="color:var(--red);text-decoration:none;">@stilusplanejados</a></p>
+  </div>
+  <div class="gallery-filter fade-up">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="cozinha">Cozinha</button>
+    <button class="filter-btn" data-filter="quarto">Quarto</button>
+    <button class="filter-btn" data-filter="banheiro">Banheiro</button>
+    <button class="filter-btn" data-filter="closet">Closet</button>
+    <button class="filter-btn" data-filter="escritorio">Escritório</button>
+  </div>
+  <div class="gallery-grid fade-up">
+    <div class="gal-item" data-cat="cozinha" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85" alt="Cozinha">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+    <div class="gal-item" data-cat="banheiro" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&q=85" alt="Banheiro">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+    <div class="gal-item" data-cat="quarto" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&q=85" alt="Quarto">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+    <div class="gal-item" data-cat="closet" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=400&q=85" alt="Closet">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+    <div class="gal-item" data-cat="escritorio" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=85" alt="Escritório">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+    <div class="gal-item" data-cat="cozinha" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1565183997392-2f6f122e5912?w=400&q=85" alt="Cozinha moderna">
+      <div class="gal-hover"><div class="gal-hover-icon">+</div></div>
+    </div>
+  </div>
+  <p class="gallery-insta fade-up">Ver mais de 248 projetos → <a href="https://instagram.com/stilusplanejados" target="_blank">@stilusplanejados no Instagram</a></p>
+</section>
+
+<section id="processo">
+  <div class="section-header fade-up">
+    <span class="section-tag">Como Trabalhamos</span>
+    <h2 class="section-title">Do projeto à entrega</h2>
+    <p class="section-desc">Um processo transparente para você ter o ambiente dos sonhos sem complicação.</p>
+  </div>
+  <div class="process-steps fade-up">
+    <div class="step-card"><span class="step-num">01</span><span class="step-icon">📐</span><h3 class="step-title">Visita & Medição</h3><p class="step-desc">Nossa equipe vai até você, entende suas necessidades e realiza a medição precisa do ambiente.</p></div>
+    <div class="step-card"><span class="step-num">02</span><span class="step-icon">🖥️</span><h3 class="step-title">Projeto 3D</h3><p class="step-desc">Desenvolvemos um projeto 3D para você visualizar cada detalhe antes de qualquer aprovação.</p></div>
+    <div class="step-card"><span class="step-num">03</span><span class="step-icon">🔨</span><h3 class="step-title">Fabricação</h3><p class="step-desc">Produção com materiais de alta qualidade e rigoroso controle em cada peça fabricada.</p></div>
+    <div class="step-card"><span class="step-num">04</span><span class="step-icon">✅</span><h3 class="step-title">Instalação</h3><p class="step-desc">Instalação profissional com acompanhamento completo até sua total satisfação.</p></div>
+  </div>
+</section>
+
+<section id="depoimentos">
+  <div class="section-header fade-up">
+    <span class="section-tag">Depoimentos</span>
+    <h2 class="section-title">O que nossos clientes dizem</h2>
+  </div>
+  <div class="testi-grid fade-up">
+    <div class="testi-card">
+      <span class="testi-quote">"</span>
+      <p class="testi-text">A Stilus transformou minha cozinha completamente. Atendimento impecável, prazo cumprido e o resultado ficou incrível. Super recomendo!</p>
+      <div class="testi-author"><div class="testi-avatar">AM</div><div><span class="testi-name">Ana Maria Silva</span><span class="testi-city">Cataguases, MG</span><div class="testi-stars">★★★★★</div></div></div>
+    </div>
+    <div class="testi-card">
+      <span class="testi-quote">"</span>
+      <p class="testi-text">Fiz meu closet e banheiro com a Stilus. Profissionais competentes, material de qualidade e tudo entregue no prazo. Perfeito!</p>
+      <div class="testi-author"><div class="testi-avatar">RF</div><div><span class="testi-name">Roberto Figueiredo</span><span class="testi-city">Leopoldina, MG</span><div class="testi-stars">★★★★★</div></div></div>
+    </div>
+    <div class="testi-card">
+      <span class="testi-quote">"</span>
+      <p class="testi-text">O projeto 3D ajudou demais na escolha. Ficou exatamente como eu queria. Equipe muito atenciosa do início ao fim.</p>
+      <div class="testi-author"><div class="testi-avatar">CB</div><div><span class="testi-name">Carla Beatriz Souza</span><span class="testi-city">Cataguases, MG</span><div class="testi-stars">★★★★★</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="orcamento">
+  <div class="orc-left fade-up">
+    <span class="section-tag">Fale Conosco</span>
+    <h2>Solicite seu orçamento<br>sem compromisso</h2>
+    <p>Preencha o formulário e nossa equipe entra em contato rapidamente pelo WhatsApp.</p>
+    <div class="contact-items">
+      <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Cataguases, Minas Gerais</strong><span>Atendemos toda a região</span></div></div>
+      <div class="contact-item"><div class="contact-icon">📱</div><div><strong>WhatsApp — atendimento rápido</strong><span>Resposta em horário comercial</span></div></div>
+      <div class="contact-item"><div class="contact-icon">📸</div><div><strong>@stilusplanejados</strong><a href="https://instagram.com/stilusplanejados" target="_blank" style="display:block;color:rgba(255,255,255,0.35);font-size:.8rem;text-decoration:none;">Ver no Instagram →</a></div></div>
+      <div class="contact-item"><div class="contact-icon">🔗</div><div><strong>linkme.bio/stilusplanejados</strong><a href="https://linkme.bio/stilusplanejados" target="_blank" style="display:block;color:rgba(255,255,255,0.35);font-size:.8rem;text-decoration:none;">Todos os links →</a></div></div>
+      <div class="contact-item"><div class="contact-icon">🕐</div><div><strong>Seg–Sex 8h–18h · Sáb 8h–12h</strong><span>Horário de atendimento</span></div></div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <div class="form-box">
+      <h3>Solicitar Orçamento</h3>
+      <div class="orcamento-form">
+        <div class="form-row">
+          <div class="form-group"><label>Nome completo</label><input type="text" id="nome" placeholder="Seu nome"></div>
+          <div class="form-group"><label>WhatsApp</label><input type="tel" id="tel" placeholder="(32) 99999-0000"></div>
+        </div>
+        <div class="form-group"><label>E-mail (opcional)</label><input type="email" id="email" placeholder="seu@email.com"></div>
+        <div class="form-group">
+          <label>Tipo de projeto</label>
+          <select id="tipo"><option value="">Selecione</option><option>Residencial</option><option>Comercial</option></select>
+        </div>
+        <div class="form-group">
+          <label>Ambiente desejado</label>
+          <select id="ambiente">
+            <option value="">Selecione o ambiente</option>
+            <option>Cozinha Planejada</option>
+            <option>Quarto Planejado</option>
+            <option>Closet</option>
+            <option>Banheiro / Lavabo</option>
+            <option>Sala de Estar</option>
+            <option>Escritório / Home Office</option>
+            <option>Projeto Completo</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Mensagem (opcional)</label><textarea id="mensagem" placeholder="Conte sobre seu projeto, metragem, estilo preferido..."></textarea></div>
+        <button class="wpp-btn" onclick="enviarWhatsApp()">
+          <svg class="wpp-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Enviar pelo WhatsApp
+        </button>
+        <p style="font-size:.73rem;color:#999;text-align:center;margin-top:.4rem;">Você será redirecionado ao WhatsApp com sua mensagem pronta ✓</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">S</div>
+        <span class="footer-logo-name">Stilus <span>Planejados</span></span>
+      </div>
+      <p class="footer-desc">Móveis sob medida para projetos comerciais e residenciais. Solução inteligente para o seu ambiente. Cataguases, MG.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ambientes</h4>
+      <ul>
+        <li><a href="#categorias">Cozinha</a></li>
+        <li><a href="#categorias">Quarto</a></li>
+        <li><a href="#categorias">Closet</a></li>
+        <li><a href="#categorias">Banheiro</a></li>
+        <li><a href="#categorias">Escritório</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#portfolio">Portfólio</a></li>
+        <li><a href="#processo">Como trabalhamos</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#orcamento">Solicitar Orçamento</a></li>
+        <li><a href="https://wa.me/553299990000" target="_blank">WhatsApp</a></li>
+        <li><a href="https://instagram.com/stilusplanejados" target="_blank">@stilusplanejados</a></li>
+        <li><a href="https://linkme.bio/stilusplanejados" target="_blank">linkme.bio/stilusplanejados</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Stilus Planejados · Cataguases, MG</p>
+    <div class="social-links">
+      <a href="https://instagram.com/stilusplanejados" target="_blank" class="social-link" title="Instagram">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://wa.me/553299990000" target="_blank" class="social-link" title="WhatsApp">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/553299990000?text=Olá!%20Vim%20pelo%20site%20da%20Stilus%20Planejados%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="wpp-float" title="Chamar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close">&times;</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.gal-item').forEach(item => { item.style.display = (f==='all'||item.dataset.cat===f)?'':'none'; });
+  });
+});
+
+function openLightbox(el) { document.getElementById('lb-img').src = el.querySelector('img').src; document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+async function enviarWhatsApp() {
+  const nome = document.getElementById('nome').value.trim();
+  const tel = document.getElementById('tel').value.trim();
+  const tipo = document.getElementById('tipo').value;
+  const ambiente = document.getElementById('ambiente').value;
+  const mensagem = document.getElementById('mensagem').value.trim();
+  if(!nome || !tel || !ambiente) { alert('Por favor, preencha nome, telefone e o ambiente desejado.'); return; }
+
+  // Salva no banco de dados
+  try {
+    await fetch('/api/orcamento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, telefone: tel, tipo, ambiente, mensagem }),
+    });
+  } catch(e) { /* segue mesmo se falhar */ }
+
+  // ⚠️ SUBSTITUA pelo número real: 55 + DDD + número (sem traços ou espaços)
+  const numero = '5532999990000';
+  let msg = `Olá, Stilus Planejados! 👋%0AMe chamo *${nome}* e vim pelo site de vocês.%0A%0A`;
+  if(tipo) msg += `🏢 Tipo: *${tipo}*%0A`;
+  msg += `🏠 Ambiente: *${ambiente}*%0A📱 WhatsApp: ${tel}%0A`;
+  if(mensagem) msg += `%0A💬 ${mensagem}%0A`;
+  msg += `%0AGostaria de um orçamento sem compromisso! 😊`;
+  window.open(`https://wa.me/${numero}?text=${msg}`, '_blank');
+}
+
+// ── Galeria dinâmica: carrega imagens do banco se houver ──────────────────────
+async function carregarGaleriaDinamica() {
+  try {
+    const res = await fetch('/api/imagens?secao=portfolio');
+    const imgs = await res.json();
+    if (!imgs || imgs.length === 0) return; // mantém imagens estáticas
+
+    const container = document.querySelector('.gal-grid');
+    if (!container) return;
+    container.innerHTML = '';
+    imgs.forEach(img => {
+      const div = document.createElement('div');
+      div.className = 'gal-item fade-up';
+      div.dataset.cat = img.categoria;
+      div.setAttribute('onclick', 'openLightbox(this)');
+      div.innerHTML = `<img src="${img.url}" alt="${img.titulo}" loading="lazy"><div class="gal-overlay"><span>${img.titulo}</span></div>`;
+      container.appendChild(div);
+    });
+    // Reobserva para animação
+    document.querySelectorAll('.gal-item.fade-up').forEach(el => obs.observe(el));
+  } catch(e) { /* mantém estático se API falhar */ }
+}
+carregarGaleriaDinamica();
+
+document.getElementById('menuBtn').addEventListener('click', function() {
+  const links = document.querySelector('.nav-links');
+  links.style.cssText = links.style.display==='flex' ? '' : 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(13,13,13,0.98);padding:1.5rem 5vw;gap:1.2rem;border-bottom:1px solid rgba(232,0,13,0.2);';
+});
+</script>
+</body>
+</html>
