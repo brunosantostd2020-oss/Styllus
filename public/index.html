@@ -286,6 +286,7 @@ footer{background:#080808;padding:0}
     <a href="#hero">Inicio</a>
     <a href="#diferenciais">Servicos</a>
     <a href="#projetos">Projetos</a>
+    <a href="#servico">Nosso Trabalho</a>
     <a href="#cta">Contato</a>
   </ul>
   <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="nav-cta">
@@ -359,6 +360,32 @@ footer{background:#080808;padding:0}
     <a href="https://wa.me/553298153141?text=Ola!%20Quero%20ver%20mais%20projetos%20da%20Stilus." target="_blank" class="btn-proj">Ver todos os projetos</a>
   </div>
 </section>
+
+<!-- SOBRE O SERVIÇO -->
+<section id="servico" style="padding:4.5rem 8vw;background:var(--white)">
+  <div class="section-label">Nosso Trabalho</div>
+  <div class="section-title" style="margin-bottom:2rem">Veja como transformamos ambientes</div>
+  <div id="midiaContainer" style="display:none">
+    <!-- Vídeos -->
+    <div id="videoSection" style="display:none;margin-bottom:2rem">
+      <h3 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:#aaa;margin-bottom:1rem">Vídeos</h3>
+      <div id="videoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem"></div>
+    </div>
+    <!-- Fotos -->
+    <div id="fotoSection" style="display:none">
+      <h3 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:#aaa;margin-bottom:1rem">Fotos</h3>
+      <div id="fotoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem"></div>
+    </div>
+  </div>
+  <div id="midiaVazio" style="text-align:center;padding:2rem;display:none">
+    <p style="color:#aaa;font-size:.88rem">Em breve adicionaremos fotos e vídeos do nosso trabalho.</p>
+  </div>
+</section>
+
+<!-- lightbox simples -->
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out" onclick="this.style.display='none'">
+  <img id="lightboxImg" src="" style="max-width:92vw;max-height:88vh;border-radius:8px;box-shadow:0 8px 48px rgba(0,0,0,.5)">
+</div>
 
 <!-- CTA -->
 <section id="cta">
@@ -525,6 +552,52 @@ footer{background:#080808;padding:0}
 </a>
 
 <script>
+// ── CARREGA MÍDIA (FOTO & VÍDEO) ─────────────────────────────────────────────
+fetch('/api/midia')
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(!data || data.length === 0){
+      document.getElementById('midiaVazio').style.display = 'block';
+      return;
+    }
+    document.getElementById('midiaContainer').style.display = 'block';
+    var videos = data.filter(function(m){ return m.tipo === 'video'; });
+    var fotos  = data.filter(function(m){ return m.tipo === 'foto'; });
+
+    if(videos.length > 0){
+      document.getElementById('videoSection').style.display = 'block';
+      var vg = document.getElementById('videoGrid');
+      videos.forEach(function(v){
+        var div = document.createElement('div');
+        div.style.cssText = 'border-radius:12px;overflow:hidden;background:#f0eeeb;box-shadow:0 2px 12px rgba(0,0,0,.08)';
+        div.innerHTML = '<div style="aspect-ratio:16/9"><iframe src="'+v.url+'?rel=0" title="'+v.titulo+'" style="width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe></div>'
+          + (v.titulo ? '<div style="padding:.6rem .8rem;font-size:.82rem;font-weight:600;color:#1a1a1a">'+v.titulo+'</div>' : '');
+        vg.appendChild(div);
+      });
+    }
+
+    if(fotos.length > 0){
+      document.getElementById('fotoSection').style.display = 'block';
+      var fg = document.getElementById('fotoGrid');
+      fotos.forEach(function(f){
+        var div = document.createElement('div');
+        div.style.cssText = 'border-radius:10px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in;background:#e5e5e5';
+        var img = document.createElement('img');
+        img.src = f.url; img.alt = f.titulo;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform .4s';
+        img.onmouseover = function(){ this.style.transform='scale(1.05)'; };
+        img.onmouseout  = function(){ this.style.transform='scale(1)'; };
+        img.onclick = function(){
+          document.getElementById('lightboxImg').src = f.url;
+          document.getElementById('lightbox').style.display = 'flex';
+        };
+        div.appendChild(img);
+        fg.appendChild(div);
+      });
+    }
+  })
+  .catch(function(){ document.getElementById('midiaVazio').style.display='block'; });
+
 // ── CARREGA FOTOS DO BANCO VIA API ──────────────────────────────────────────
 var allSlides = [];
 var currentSlide = 0;

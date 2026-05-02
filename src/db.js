@@ -39,6 +39,19 @@ async function initDB() {
         password_hash VARCHAR(200) NOT NULL,
         criado_em TIMESTAMP DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS midia (
+        id SERIAL PRIMARY KEY,
+        titulo VARCHAR(200) NOT NULL,
+        descricao TEXT,
+        tipo VARCHAR(10) NOT NULL DEFAULT 'foto',
+        filename VARCHAR(300),
+        url VARCHAR(1000) NOT NULL,
+        thumb_url VARCHAR(1000),
+        destaque BOOLEAN DEFAULT false,
+        ordem INT DEFAULT 0,
+        criado_em TIMESTAMP DEFAULT NOW()
+      );
     `);
     console.log('✅ Banco de dados inicializado com sucesso');
   } catch (err) {

