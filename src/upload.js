@@ -3,14 +3,12 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
 const path = require('path');
 
-// Configura Cloudinary com variáveis de ambiente
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Se Cloudinary não estiver configurado, usa armazenamento local como fallback
 let upload;
 
 if (process.env.CLOUDINARY_CLOUD_NAME) {
@@ -24,7 +22,6 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
   });
   upload = multer({ storage, limits: { fileSize: 8 * 1024 * 1024 } });
 } else {
-  // Fallback local
   const fs = require('fs');
   const uploadDir = path.join(__dirname, '../public/uploads');
   if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
