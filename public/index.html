@@ -45,6 +45,18 @@
   .nav-links a:hover { color: white; }
   .nav-cta { background: var(--red) !important; color: white !important; padding: 0.5rem 1.3rem; border-radius: 2px; }
   .nav-cta:hover { background: var(--red-dark) !important; }
+  .nav-admin-link { font-size:0.75rem !important; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.35) !important; text-decoration:none; border:1px solid rgba(255,255,255,0.15); padding:0.4rem 0.9rem; border-radius:2px; transition:all .2s; }
+  .nav-admin-link:hover { color:rgba(255,255,255,0.7) !important; border-color:rgba(255,255,255,0.35); }
+  .pin-input { width:52px; height:58px; background:#111; border:2px solid #333; color:#fff; font-size:1.5rem; text-align:center; border-radius:8px; font-family:'Jost',sans-serif; transition:border-color .2s; }
+  .pin-input:focus { outline:none; border-color:#E8000D; }
+  .aba-btn { background:#2a2a2a; color:#aaa; border:1px solid #444; padding:.55rem 1.1rem; border-radius:4px; cursor:pointer; font-size:.82rem; font-family:'Jost',sans-serif; transition:all .2s; }
+  .aba-btn:hover { color:#fff; border-color:#888; }
+  .aba-ativa { background:#E8000D !important; color:#fff !important; border-color:#E8000D !important; }
+  .admin-foto-card { position:relative; border-radius:6px; overflow:hidden; background:#111; border:1px solid #2a2a2a; aspect-ratio:1; }
+  .admin-foto-card img { width:100%; height:100%; object-fit:cover; display:block; }
+  .admin-foto-card .card-del { position:absolute; top:.4rem; right:.4rem; background:rgba(0,0,0,.75); color:#fff; border:none; border-radius:4px; width:28px; height:28px; font-size:.85rem; cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:0; transition:.2s; }
+  .admin-foto-card:hover .card-del { opacity:1; }
+  .admin-foto-card .card-label { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,0,0,.8),transparent); color:#fff; font-size:.72rem; padding:.5rem .6rem .4rem; }
   .menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .menu-btn span { width: 24px; height: 1.5px; background: white; }
 
@@ -229,9 +241,64 @@
     <li><a href="#portfolio">Portfólio</a></li>
     <li><a href="#processo">Processo</a></li>
     <li><a href="#orcamento" class="nav-cta">Orçamento</a></li>
+    <li><a href="#" class="nav-admin-link" onclick="abrirLoginAdmin(event)">Admin</a></li>
   </ul>
   <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
 </nav>
+
+<!-- MODAL LOGIN ADMIN -->
+<div id="modalLoginAdmin" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+  <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:2.5rem;width:340px;max-width:92vw;text-align:center;position:relative;">
+    <button onclick="fecharLoginAdmin()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#888;font-size:1.3rem;cursor:pointer;">✕</button>
+    <div style="font-size:2rem;margin-bottom:.5rem;">🔐</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;color:#fff;font-size:1.4rem;font-weight:400;margin-bottom:.3rem;">Área Admin</h2>
+    <p style="color:#888;font-size:.8rem;margin-bottom:1.8rem;">Digite a senha de 4 dígitos</p>
+    <div style="display:flex;gap:.7rem;justify-content:center;margin-bottom:1.2rem;">
+      <input type="password" maxlength="1" class="pin-input" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-input" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-input" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-input" inputmode="numeric">
+    </div>
+    <p id="pinErro" style="color:#E8000D;font-size:.8rem;min-height:1.2rem;margin-bottom:.5rem;"></p>
+    <button onclick="verificarPin()" style="background:#E8000D;color:#fff;border:none;padding:.75rem 2rem;border-radius:4px;font-size:.88rem;cursor:pointer;width:100%;font-weight:600;">Entrar</button>
+  </div>
+</div>
+
+<!-- PAINEL ADMIN -->
+<div id="painelAdmin" style="display:none;position:fixed;inset:0;background:#0f0f0f;z-index:9998;overflow-y:auto;">
+  <div style="max-width:960px;margin:0 auto;padding:2rem 1.5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid #2a2a2a;">
+      <div>
+        <h1 style="font-family:'Cormorant Garamond',serif;color:#fff;font-size:1.6rem;font-weight:400;">🪵 Painel Admin</h1>
+        <p style="color:#888;font-size:.78rem;margin-top:.2rem;">Stilus Planejados — Gerenciar Fotos</p>
+      </div>
+      <button onclick="fecharPainelAdmin()" style="background:#2a2a2a;color:#ccc;border:1px solid #444;padding:.6rem 1.2rem;border-radius:4px;cursor:pointer;font-size:.85rem;">✕ Fechar</button>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;" id="abasBtns">
+      <button class="aba-btn aba-ativa" onclick="trocarAba('cozinha',this)">🍳 Cozinha</button>
+      <button class="aba-btn" onclick="trocarAba('quarto',this)">🛏️ Quarto</button>
+      <button class="aba-btn" onclick="trocarAba('banheiro',this)">🚿 Banheiro</button>
+      <button class="aba-btn" onclick="trocarAba('closet',this)">👗 Closet</button>
+      <button class="aba-btn" onclick="trocarAba('escritorio',this)">💼 Escritório</button>
+    </div>
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;">
+      <h3 style="color:#fff;font-size:.95rem;margin-bottom:1rem;">📤 Adicionar Fotos — <span id="abaAtualLabel" style="color:#E8000D;">Cozinha</span></h3>
+      <div id="uploadDropArea" style="border:2px dashed #444;border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:.2s;" onclick="document.getElementById('adminFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='#E8000D'" ondragleave="this.style.borderColor='#444'" ondrop="handleDrop(event)">
+        <input type="file" id="adminFileInput" accept="image/*" multiple style="display:none" onchange="previsualizarFotos(this.files)">
+        <p style="font-size:2rem;margin-bottom:.5rem;">📁</p>
+        <p style="color:#aaa;font-size:.88rem;">Clique ou arraste as fotos aqui</p>
+        <p style="color:#666;font-size:.75rem;margin-top:.3rem;">JPG, PNG, WEBP · até 8MB cada</p>
+      </div>
+      <div id="previewContainer" style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem;"></div>
+      <button id="btnEnviarFotos" onclick="enviarFotosAdmin()" style="display:none;background:#E8000D;color:#fff;border:none;padding:.75rem 2rem;border-radius:4px;font-size:.88rem;cursor:pointer;margin-top:1rem;width:100%;font-weight:600;">📤 Enviar Fotos</button>
+      <div id="uploadStatus" style="margin-top:.75rem;font-size:.82rem;color:#25D366;text-align:center;"></div>
+    </div>
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:1.5rem;">
+      <h3 style="color:#fff;font-size:.95rem;margin-bottom:1rem;">🖼️ Fotos Cadastradas — <span id="abaAtualLabel2" style="color:#E8000D;">Cozinha</span></h3>
+      <div id="adminGaleria" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;"></div>
+    </div>
+  </div>
+</div>
 
 <section id="hero">
   <div class="hero-left fade-up">
@@ -577,6 +644,173 @@ async function carregarGaleriaDinamica() {
   } catch(e) { /* mantém estático se API falhar */ }
 }
 carregarGaleriaDinamica();
+
+// ═══════════════════════════════════════════
+// PAINEL ADMIN — LÓGICA COMPLETA
+// ═══════════════════════════════════════════
+const PIN_CORRETO = '9966';
+let abaAtual = 'cozinha';
+let arquivosSelecionados = [];
+
+function abrirLoginAdmin(e) {
+  e.preventDefault();
+  document.getElementById('modalLoginAdmin').style.display = 'flex';
+  document.querySelectorAll('.pin-input').forEach((el, i) => { el.value = ''; if(i===0) setTimeout(()=>el.focus(),100); });
+  document.getElementById('pinErro').textContent = '';
+}
+function fecharLoginAdmin() {
+  document.getElementById('modalLoginAdmin').style.display = 'none';
+}
+function verificarPin() {
+  const pin = [...document.querySelectorAll('.pin-input')].map(i=>i.value).join('');
+  if(pin === PIN_CORRETO) {
+    fecharLoginAdmin();
+    abrirPainelAdmin();
+  } else {
+    document.getElementById('pinErro').textContent = 'Senha incorreta. Tente novamente.';
+    document.querySelectorAll('.pin-input').forEach(i=>i.value='');
+    document.querySelectorAll('.pin-input')[0].focus();
+  }
+}
+function abrirPainelAdmin() {
+  document.getElementById('painelAdmin').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  carregarFotosAdmin(abaAtual);
+}
+function fecharPainelAdmin() {
+  document.getElementById('painelAdmin').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Navegar entre abas
+function trocarAba(cat, btn) {
+  abaAtual = cat;
+  document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('aba-ativa'));
+  btn.classList.add('aba-ativa');
+  const labels = {'cozinha':'Cozinha','quarto':'Quarto','banheiro':'Banheiro','closet':'Closet','escritorio':'Escritório'};
+  document.getElementById('abaAtualLabel').textContent = labels[cat] || cat;
+  document.getElementById('abaAtualLabel2').textContent = labels[cat] || cat;
+  arquivosSelecionados = [];
+  document.getElementById('previewContainer').innerHTML = '';
+  document.getElementById('btnEnviarFotos').style.display = 'none';
+  document.getElementById('uploadStatus').textContent = '';
+  document.getElementById('adminFileInput').value = '';
+  carregarFotosAdmin(cat);
+}
+
+// Preview antes de enviar
+function previsualizarFotos(files) {
+  arquivosSelecionados = [...files];
+  const container = document.getElementById('previewContainer');
+  container.innerHTML = '';
+  arquivosSelecionados.forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.style.cssText = 'position:relative;width:90px;height:90px;border-radius:6px;overflow:hidden;border:1px solid #333;';
+      div.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">
+        <button onclick="removerPreview(${i})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:3px;width:22px;height:22px;font-size:.75rem;cursor:pointer;">✕</button>`;
+      container.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('btnEnviarFotos').style.display = arquivosSelecionados.length > 0 ? 'block' : 'none';
+}
+
+function removerPreview(idx) {
+  arquivosSelecionados.splice(idx, 1);
+  const dt = new DataTransfer();
+  arquivosSelecionados.forEach(f => dt.items.add(f));
+  document.getElementById('adminFileInput').files = dt.files;
+  previsualizarFotos(dt.files);
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  document.getElementById('uploadDropArea').style.borderColor = '#444';
+  previsualizarFotos(event.dataTransfer.files);
+}
+
+// Enviar fotos para o servidor
+async function enviarFotosAdmin() {
+  if(arquivosSelecionados.length === 0) return;
+  const status = document.getElementById('uploadStatus');
+  const btn = document.getElementById('btnEnviarFotos');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  status.style.color = '#aaa';
+  status.textContent = 'Aguarde, enviando fotos...';
+  const form = new FormData();
+  arquivosSelecionados.forEach(f => form.append('fotos', f));
+  form.append('categoria', abaAtual);
+  form.append('secao', 'portfolio');
+  form.append('titulo', abaAtual.charAt(0).toUpperCase() + abaAtual.slice(1));
+  try {
+    const res = await fetch('/admin/imagens/upload', { method:'POST', body:form });
+    if(res.ok || res.redirected) {
+      status.style.color = '#25D366';
+      status.textContent = '✅ ' + arquivosSelecionados.length + ' foto(s) enviada(s) com sucesso!';
+      arquivosSelecionados = [];
+      document.getElementById('previewContainer').innerHTML = '';
+      document.getElementById('adminFileInput').value = '';
+      btn.style.display = 'none';
+      carregarFotosAdmin(abaAtual);
+    } else {
+      throw new Error('Erro no servidor');
+    }
+  } catch(err) {
+    status.style.color = '#E8000D';
+    status.textContent = '❌ Erro ao enviar: ' + err.message;
+  }
+  btn.disabled = false;
+  btn.textContent = '📤 Enviar Fotos';
+}
+
+// Carregar fotos do banco por categoria
+async function carregarFotosAdmin(cat) {
+  const galeria = document.getElementById('adminGaleria');
+  galeria.innerHTML = '<p style="color:#888;font-size:.85rem;grid-column:1/-1;">Carregando...</p>';
+  try {
+    const res = await fetch('/api/imagens?categoria=' + cat);
+    const imgs = await res.json();
+    if(!imgs || imgs.length === 0) {
+      galeria.innerHTML = '<p style="color:#666;font-size:.85rem;grid-column:1/-1;text-align:center;padding:2rem 0;">Nenhuma foto nesta categoria ainda.<br>Envie a primeira foto acima! ☝️</p>';
+      return;
+    }
+    galeria.innerHTML = imgs.map(img => `
+      <div class="admin-foto-card">
+        <img src="${img.url}" alt="${img.titulo}" loading="lazy">
+        <button class="card-del" onclick="deletarFotoAdmin(${img.id},this)" title="Deletar">🗑️</button>
+        <div class="card-label">${img.titulo}</div>
+      </div>
+    `).join('');
+  } catch(e) {
+    galeria.innerHTML = '<p style="color:#E8000D;font-size:.85rem;grid-column:1/-1;">Erro ao carregar fotos.</p>';
+  }
+}
+
+// Deletar foto
+async function deletarFotoAdmin(id, btn) {
+  if(!confirm('Deletar esta foto?')) return;
+  btn.textContent = '⏳';
+  try {
+    const form = new FormData();
+    const res = await fetch('/admin/imagens/' + id + '/deletar', { method:'POST', body:form });
+    carregarFotosAdmin(abaAtual);
+  } catch(e) {
+    alert('Erro ao deletar.');
+    btn.textContent = '🗑️';
+  }
+}
+
+// PIN: navegar entre campos automaticamente
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.pin-input').forEach((el, i, arr) => {
+    el.addEventListener('input', () => { if(el.value && i < arr.length-1) arr[i+1].focus(); if(el.value && i===arr.length-1) verificarPin(); });
+    el.addEventListener('keydown', e => { if(e.key==='Backspace' && !el.value && i>0) arr[i-1].focus(); if(e.key==='Enter') verificarPin(); });
+  });
+  document.getElementById('modalLoginAdmin').addEventListener('click', function(e){ if(e.target===this) fecharLoginAdmin(); });
+});
 
 document.getElementById('menuBtn').addEventListener('click', function() {
   const links = document.querySelector('.nav-links');
