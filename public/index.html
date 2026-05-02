@@ -579,8 +579,10 @@ fetch('/api/midia')
       videos.forEach(function(v){
         var div = document.createElement('div');
         div.style.cssText = 'border-radius:12px;overflow:hidden;background:#f0eeeb;box-shadow:0 2px 12px rgba(0,0,0,.08)';
-        div.innerHTML = '<div style="aspect-ratio:16/9"><iframe src="'+v.url+'?rel=0" title="'+v.titulo+'" style="width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe></div>'
-          + (v.titulo ? '<div style="padding:.6rem .8rem;font-size:.82rem;font-weight:600;color:#1a1a1a">'+v.titulo+'</div>' : '');
+        var player = v.tipo === 'video_file'
+          ? '<video src="'+v.url+'" style="width:100%;aspect-ratio:16/9;display:block;background:#000" controls playsinline preload="metadata"></video>'
+          : '<div style="aspect-ratio:16/9"><iframe src="'+v.url+'?rel=0" title="'+v.titulo+'" style="width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe></div>';
+        div.innerHTML = player + (v.titulo ? '<div style="padding:.6rem .8rem;font-size:.82rem;font-weight:600;color:#1a1a1a">'+v.titulo+'</div>' : '');
         vg.appendChild(div);
       });
     }

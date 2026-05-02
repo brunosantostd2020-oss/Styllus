@@ -10,9 +10,11 @@ cloudinary.config({
 });
 
 let upload;
+let uploadVideo;
 
 if (process.env.CLOUDINARY_CLOUD_NAME) {
-  const storage = new CloudinaryStorage({
+  // Storage para imagens
+  const imageStorage = new CloudinaryStorage({
     cloudinary,
     params: {
       folder: 'stilus-planejados',
@@ -20,12 +22,26 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
       transformation: [{ quality: 'auto', fetch_format: 'auto' }],
     },
   });
-  upload = multer({ storage, limits: { fileSize: 8 * 1024 * 1024 } });
+  upload = multer({ storage: imageStorage, limits: { fileSize: 8 * 1024 * 1024 } });
+
+  // Storage para vídeos
+  const videoStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: 'stilus-videos',
+      resource_type: 'video',
+      allowed_formats: ['mp4', 'mov', 'avi', 'webm'],
+    },
+  });
+  uploadVideo = multer({ storage: videoStorage, limits: { fileSize: 100 * 1024 * 1024 } });
+
 } else {
+  // Fallback local
   const fs = require('fs');
   const uploadDir = path.join(__dirname, '../public/uploads');
   if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-  const storage = multer.diskStorage({
+
+  const imageStorage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, uploadDir),
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname).toLowerCase();
@@ -37,8 +53,19 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
     if (allowed.includes(path.extname(file.originalname).toLowerCase())) cb(null, true);
     else cb(new Error('Apenas imagens sao permitidas'), false);
   };
-  upload = multer({ storage, fileFilter, limits: { fileSize: 8 * 1024 * 1024 } });
+  upload = multer({ storage: imageStorage, fileFilter, limits: { fileSize: 8 * 1024 * 1024 } });
+
+  const videoStorage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadDir),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      cb(null, `vid_${Date.now()}${ext}`);
+    },
+  });
+  uploadVideo = multer({ storage: videoStorage, limits: { fileSize: 100 * 1024 * 1024 } });
 }
 
 module.exports = upload;
+module.exports.uploadVideo = uploadVideo;
 module.exports.cloudinary = cloudinary;
+

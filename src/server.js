@@ -8,6 +8,9 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Necessário para cookies funcionarem atrás do proxy do Railway
+app.set('trust proxy', 1);
+
 // ─── MIDDLEWARES ──────────────────────────────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,11 +27,13 @@ try {
 
 app.use(session({
   store: sessionStore,
-  secret: process.env.SESSION_SECRET || 'stilus_secret_dev_2025',
+  secret: process.env.SESSION_SECRET || 'stilus_secret_2025_xk9z',
   resave: false,
   saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 24 * 60 * 60 * 1000, // 24h
   },
 }));

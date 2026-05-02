@@ -4,6 +4,7 @@ const router = express.Router();
 const { pool } = require('./db');
 const { requireAuth } = require('./auth');
 const upload = require('./upload');
+const { uploadVideo } = require('./upload');
 
 // ─── API PÚBLICA ─────────────────────────────────────────────────────────────
 
@@ -212,6 +213,28 @@ router.post('/admin/midia/upload-foto', requireAuth, upload.single('foto'), asyn
       [titulo || 'Foto', descricao || '', 'foto', filename, url, destaque === 'on', parseInt(ordem) || 0]
     );
     res.redirect('/admin/midia?ok=Foto adicionada com sucesso!');
+  } catch (err) {
+    res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
+  }
+});
+
+// Upload vídeo direto (arquivo MP4)
+router.post('/admin/midia/upload-video', requireAuth, uploadVideo.single('video'), async (req, res) => {
+  try {
+    const { titulo, descricao, destaque, ordem } = req.body;
+    if (!req.file) return res.redirect('/admin/midia?erro=Nenhum vídeo enviado');
+    const url = req.file.path || `/uploads/${req.file.filename}`;
+    const filename = req.file.filename || req.file.originalname;
+    // Cloudinary gera thumb automático para vídeo
+    let thumb = '';
+    if (url.startsWith('http') && url.includes('cloudinary')) {
+      thumb = url.replace('/upload/', '/upload/so_0,w_400,h_300,c_fill/').replace('.mp4', '.jpg').replace('.mov', '.jpg');
+    }
+    await pool.query(
+      'INSERT INTO midia (titulo, descricao, tipo, filename, url, thumb_url, destaque, ordem) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+      [titulo || 'Vídeo', descricao || '', 'video_file', filename, url, thumb, destaque === 'on', parseInt(ordem) || 0]
+    );
+    res.redirect('/admin/midia?ok=Vídeo enviado com sucesso!');
   } catch (err) {
     res.redirect('/admin/midia?erro=' + encodeURIComponent(err.message));
   }
@@ -890,7 +913,7 @@ function renderOrcamentos(rows) {
 
 function renderMidia(rows, okMsg = '', errMsg = '') {
   const fotos = rows.filter(r => r.tipo === 'foto');
-  const videos = rows.filter(r => r.tipo === 'video');
+  const videos = rows.filter(r => r.tipo === 'video' || r.tipo === 'video_file');
 
   const fotoGrid = fotos.length === 0
     ? `<div class="empty"><svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><p>Nenhuma foto adicionada ainda.</p></div>`
@@ -916,18 +939,17 @@ function renderMidia(rows, okMsg = '', errMsg = '') {
         ${videos.map(v => `
           <div style="border-radius:8px;overflow:hidden;background:var(--surface2);border:1px solid var(--border)">
             <div style="aspect-ratio:16/9;position:relative;background:#000">
-              ${v.thumb_url
-                ? `<img src="${v.thumb_url}" style="width:100%;height:100%;object-fit:cover;opacity:.8">`
-                : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted)"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>`}
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-                <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,0,13,.9);display:flex;align-items:center;justify-content:center">
-                  <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </div>
-              </div>
+              ${v.tipo === 'video_file'
+                ? `<video src="${v.url}" style="width:100%;height:100%;object-fit:cover" controls preload="metadata"></video>`
+                : v.thumb_url
+                  ? `<img src="${v.thumb_url}" style="width:100%;height:100%;object-fit:cover;opacity:.8"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><div style="width:44px;height:44px;border-radius:50%;background:rgba(232,0,13,.9);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" fill="white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>`
+                  : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted)"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>`
+              }
             </div>
             <div style="padding:.75rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem">
               <div>
                 <div style="font-size:.8rem;font-weight:500;color:var(--text)">${v.titulo}</div>
+                <div style="font-size:.65rem;color:var(--muted);margin-top:2px">${v.tipo === 'video_file' ? '📁 Arquivo' : '▶ YouTube'}</div>
                 ${v.destaque ? '<span style="font-size:.65rem;background:var(--red-dim);color:var(--red);padding:1px 6px;border-radius:3px">Destaque</span>' : ''}
               </div>
               <form method="POST" action="/admin/midia/${v.id}/deletar" onsubmit="return confirm('Remover este vídeo?')" style="flex-shrink:0">
@@ -1002,34 +1024,80 @@ function renderMidia(rows, okMsg = '', errMsg = '') {
               Adicionar Vídeo
             </div>
           </div>
-          <form method="POST" action="/admin/midia/add-video">
-            <div class="form-col">
-              <label class="form-label">Link do YouTube</label>
-              <input class="form-input" type="text" name="video_url" placeholder="https://youtube.com/watch?v=..." required>
-              <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem">Cole o link do YouTube — a miniatura é gerada automaticamente</div>
-            </div>
-            <div class="form-grid" style="margin-top:.75rem">
-              <div class="form-col">
-                <label class="form-label">Título</label>
-                <input class="form-input" type="text" name="titulo" placeholder="Ex: Nosso trabalho">
+          <!-- Abas: Arquivo / YouTube -->
+          <div style="display:flex;gap:.4rem;margin-bottom:1rem">
+            <button type="button" onclick="switchTab('arquivo')" id="tab-arquivo" style="padding:.4rem .9rem;border-radius:5px;font-size:.75rem;font-weight:600;cursor:pointer;background:var(--red);color:white;border:none">📁 Arquivo MP4</button>
+            <button type="button" onclick="switchTab('youtube')" id="tab-youtube" style="padding:.4rem .9rem;border-radius:5px;font-size:.75rem;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border)">▶ YouTube</button>
+          </div>
+
+          <!-- Upload arquivo -->
+          <div id="form-arquivo">
+            <form method="POST" action="/admin/midia/upload-video" enctype="multipart/form-data">
+              <div class="upload-zone" onclick="document.getElementById('vInput').click()" style="padding:1.5rem">
+                <input id="vInput" type="file" name="video" accept="video/mp4,video/mov,video/avi,video/webm" onchange="prevVideo(this)">
+                <div id="vLabel">
+                  <div class="upload-icon">
+                    <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                  </div>
+                  <div class="upload-title">Clique para selecionar o vídeo</div>
+                  <div class="upload-hint">MP4, MOV, WEBM · até 100MB</div>
+                </div>
               </div>
-              <div class="form-col">
-                <label class="form-label">Ordem</label>
-                <input class="form-input" type="number" name="ordem" value="0" min="0">
+              <div class="form-grid" style="margin-top:.75rem">
+                <div class="form-col">
+                  <label class="form-label">Título</label>
+                  <input class="form-input" type="text" name="titulo" placeholder="Ex: Nosso trabalho" value="Nosso Trabalho">
+                </div>
+                <div class="form-col">
+                  <label class="form-label">Ordem</label>
+                  <input class="form-input" type="number" name="ordem" value="0" min="0">
+                </div>
               </div>
-            </div>
-            <div class="form-col" style="margin-top:.75rem">
-              <label class="form-label">Descrição (opcional)</label>
-              <input class="form-input" type="text" name="descricao" placeholder="Breve descrição...">
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem">
-              <label class="checkbox-label"><input type="checkbox" name="destaque"> Marcar como destaque</label>
-              <button type="submit" class="btn btn-primary">
-                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Adicionar Vídeo
-              </button>
-            </div>
-          </form>
+              <div class="form-col" style="margin-top:.75rem">
+                <label class="form-label">Descrição (opcional)</label>
+                <input class="form-input" type="text" name="descricao" placeholder="Breve descrição...">
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem">
+                <label class="checkbox-label"><input type="checkbox" name="destaque" checked> Marcar como destaque</label>
+                <button type="submit" class="btn btn-primary" id="btnUploadVideo">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Enviar Vídeo
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- YouTube -->
+          <div id="form-youtube" style="display:none">
+            <form method="POST" action="/admin/midia/add-video">
+              <div class="form-col">
+                <label class="form-label">Link do YouTube</label>
+                <input class="form-input" type="text" name="video_url" placeholder="https://youtube.com/watch?v=..." required>
+                <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem">Cole o link — a miniatura é gerada automaticamente</div>
+              </div>
+              <div class="form-grid" style="margin-top:.75rem">
+                <div class="form-col">
+                  <label class="form-label">Título</label>
+                  <input class="form-input" type="text" name="titulo" placeholder="Ex: Nosso trabalho">
+                </div>
+                <div class="form-col">
+                  <label class="form-label">Ordem</label>
+                  <input class="form-input" type="number" name="ordem" value="0" min="0">
+                </div>
+              </div>
+              <div class="form-col" style="margin-top:.75rem">
+                <label class="form-label">Descrição (opcional)</label>
+                <input class="form-input" type="text" name="descricao" placeholder="Breve descrição...">
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem">
+                <label class="checkbox-label"><input type="checkbox" name="destaque"> Marcar como destaque</label>
+                <button type="submit" class="btn btn-primary">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Adicionar YouTube
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -1063,6 +1131,21 @@ function renderMidia(rows, okMsg = '', errMsg = '') {
       var label = document.getElementById('mLabel');
       var url = URL.createObjectURL(input.files[0]);
       label.innerHTML = '<img src="'+url+'" style="width:100%;height:120px;object-fit:cover;border-radius:6px"><div style="font-size:.75rem;color:var(--green);margin-top:.4rem;text-align:center">Foto selecionada</div>';
+    }
+    function prevVideo(input){
+      if(!input.files[0]) return;
+      var label = document.getElementById('vLabel');
+      var size = (input.files[0].size / 1024 / 1024).toFixed(1);
+      label.innerHTML = '<div style="font-size:2rem;text-align:center">🎬</div><div style="font-size:.8rem;color:var(--green);text-align:center;margin-top:.4rem">'+input.files[0].name+'</div><div style="font-size:.72rem;color:var(--muted);text-align:center">'+size+' MB — pronto para enviar</div>';
+      document.getElementById('btnUploadVideo').textContent = 'Enviar Vídeo (' + size + 'MB)';
+    }
+    function switchTab(tab){
+      document.getElementById('form-arquivo').style.display = tab==='arquivo' ? 'block' : 'none';
+      document.getElementById('form-youtube').style.display = tab==='youtube' ? 'block' : 'none';
+      document.getElementById('tab-arquivo').style.background = tab==='arquivo' ? 'var(--red)' : 'var(--surface2)';
+      document.getElementById('tab-arquivo').style.color = tab==='arquivo' ? 'white' : 'var(--muted)';
+      document.getElementById('tab-youtube').style.background = tab==='youtube' ? 'var(--red)' : 'var(--surface2)';
+      document.getElementById('tab-youtube').style.color = tab==='youtube' ? 'white' : 'var(--muted)';
     }
     </script>
   `, '', 'midia');
