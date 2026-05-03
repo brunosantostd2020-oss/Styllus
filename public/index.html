@@ -3,701 +3,790 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stilus Planejados — Moveis Sob Medida · Cataguases MG</title>
+<meta name="theme-color" content="#0f0f0f">
+<title>Stilus Móveis Planejados — Cataguases MG</title>
+<meta name="description" content="Móveis planejados sob medida em Cataguases MG. Design exclusivo e acabamento impecável.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#C8000B;--red2:#E8000D;--dark:#0f0f0f;--dark2:#1a1a1a;
-  --gray:#555;--light:#f8f6f3;--white:#fff;--wpp:#25D366;--border:#e5e5e5;
-}
-html{scroll-behavior:smooth}
-body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
 
-/* TOPBAR */
-.topbar{background:var(--dark);padding:.45rem 5vw;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.6)}
-.topbar-left{display:flex;align-items:center;gap:.4rem}
-.topbar-right{display:flex;align-items:center;gap:1.4rem}
-.topbar-right a{color:rgba(255,255,255,.7);text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .2s}
-.topbar-right a:hover{color:var(--red2)}
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: #0f0f0f; background: #fff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:2px solid var(--border);padding:0 5vw;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
-.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
-.nav-logo-icon{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.nav-logo-text{font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:700;color:var(--dark)}
-.nav-logo-text span{color:var(--red)}
-.nav-links{display:flex;align-items:center;list-style:none}
-.nav-links a{font-size:.83rem;font-weight:500;color:var(--dark);text-decoration:none;padding:0 1rem;height:64px;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
-.nav-links a:hover,.nav-links a.active{color:var(--red);border-bottom-color:var(--red)}
-.nav-cta{background:var(--wpp);color:white;padding:.6rem 1.2rem;border-radius:6px;text-decoration:none;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:.4rem;transition:filter .2s;margin-left:.5rem;white-space:nowrap}
-.nav-cta:hover{filter:brightness(1.1)}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:5px}
-.menu-btn span{width:24px;height:2px;background:var(--dark);border-radius:2px;display:block;transition:.3s}
-
-/* HERO */
-#hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 100px);background:var(--light)}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 4vw 4rem 8vw}
-.hero-tag{font-family:"Playfair Display",serif;font-style:italic;font-size:1.35rem;color:var(--red);margin-bottom:.5rem}
-.hero-title{font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;color:var(--dark);margin-bottom:1.2rem}
-.hero-title strong{color:var(--red);display:block;font-size:clamp(2.2rem,4.5vw,3.5rem)}
-.hero-line{width:44px;height:3px;background:var(--red);margin-bottom:1.2rem;border-radius:2px}
-.hero-desc{font-size:.93rem;color:var(--gray);line-height:1.8;max-width:360px;margin-bottom:2rem}
-.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap}
-.btn-wpp{background:var(--wpp);color:white;padding:.8rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:.45rem;transition:filter .2s;box-shadow:0 4px 14px rgba(37,211,102,.3)}
-.btn-wpp:hover{filter:brightness(1.08)}
-.btn-outline{background:transparent;color:var(--dark);padding:.8rem 1.4rem;border:2px solid var(--dark);border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:500;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
-.btn-outline:hover{border-color:var(--red);color:var(--red)}
-.hero-right{position:relative;overflow:hidden;clip-path:polygon(6% 0,100% 0,100% 100%,0% 100%)}
-.hero-right img{width:100%;height:100%;object-fit:cover}
-.hero-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:80px;background:linear-gradient(to right,var(--light),transparent);z-index:1}
-
-/* SLOGAN */
-.slogan-bar{background:var(--dark);padding:1.8rem 5vw;text-align:center}
-.slogan-bar p{font-family:"Playfair Display",serif;font-size:clamp(1.1rem,2.8vw,1.7rem);color:white;display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap}
-.slogan-bar .q{color:var(--red2);font-size:2.2rem;line-height:.6}
-.slogan-bar strong{color:var(--red2)}
-
-/* DIFERENCIAIS */
-#diferenciais{padding:4rem 8vw;background:var(--white)}
-.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.dif-card{text-align:center;padding:2rem 1.2rem;border-radius:12px;border:1px solid var(--border);transition:box-shadow .2s}
-.dif-card:hover{box-shadow:0 8px 32px rgba(200,0,11,.08)}
-.dif-icon{width:68px;height:68px;border-radius:14px;background:rgba(200,0,11,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem}
-.dif-title{font-size:.95rem;font-weight:700;color:var(--red);letter-spacing:.03em;text-transform:uppercase;margin-bottom:.5rem}
-.dif-desc{font-size:.86rem;color:var(--gray);line-height:1.75}
-.dif-line{width:28px;height:2px;background:var(--red);margin:.7rem auto 0;border-radius:2px}
-
-/* PROJETOS */
-#projetos{padding:4rem 8vw;background:var(--light)}
-.section-label{text-align:center;margin-bottom:.4rem;font-family:"Playfair Display",serif;font-style:italic;font-size:1.25rem;color:var(--red);display:flex;align-items:center;justify-content:center;gap:.6rem}
-.section-label::before,.section-label::after{content:"";height:1px;width:36px;background:var(--red)}
-.section-title{text-align:center;font-size:clamp(1.2rem,2.3vw,1.7rem);font-weight:700;color:var(--dark);margin-bottom:2rem}
-.carousel-wrap{position:relative}
-.carousel-slide{display:none;grid-template-columns:repeat(3,1fr);gap:.8rem}
-.carousel-slide.active{display:grid}
-.carousel-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:#e5e5e5;position:relative}
-.carousel-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.carousel-item:hover img{transform:scale(1.05)}
-.carousel-item .img-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:white;font-size:.75rem;padding:.6rem .8rem;font-weight:500;letter-spacing:.03em;text-transform:capitalize}
-.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:var(--white);border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 10px rgba(0,0,0,.12);transition:all .2s;color:var(--dark)}
-.carousel-arrow:hover{background:var(--red);border-color:var(--red);color:white}
-.carousel-arrow.prev{left:-22px}
-.carousel-arrow.next{right:-22px}
-.carousel-dots{display:flex;gap:.4rem;justify-content:center;margin-top:1.1rem}
-.carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;border:none;padding:0}
-.carousel-dot.active{background:var(--red);width:22px;border-radius:4px}
-.proj-cta{text-align:center;margin-top:1.8rem}
-.btn-proj{display:inline-block;padding:.75rem 2rem;border:2px solid var(--dark);border-radius:99px;font-size:.85rem;font-weight:500;color:var(--dark);text-decoration:none;transition:all .2s}
-.btn-proj:hover{background:var(--dark);color:white}
-.no-imgs{text-align:center;padding:2.5rem;color:#aaa;font-size:.88rem;border:2px dashed var(--border);border-radius:12px}
-
-/* CTA */
-#cta{padding:3.5rem 8vw;background:var(--dark2);display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
-.cta-left h2{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(1.2rem,2.2vw,1.7rem);color:white;margin-bottom:.4rem}
-.cta-left h2 strong{color:var(--red2);font-style:normal;display:block}
-.cta-left p{font-size:.86rem;color:rgba(255,255,255,.45);line-height:1.7;max-width:320px;margin-top:.5rem}
-.cta-right{text-align:center}
-.cta-phone{display:flex;align-items:center;gap:.6rem;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;color:white;margin-bottom:.9rem;white-space:nowrap}
-.btn-wpp-lg{background:var(--wpp);color:white;padding:.85rem 1.8rem;border-radius:8px;text-decoration:none;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:filter .2s;box-shadow:0 4px 14px rgba(37,211,102,.35)}
-.btn-wpp-lg:hover{filter:brightness(1.08)}
-
-/* VANTAGENS */
-.vantagens{background:var(--dark);padding:2.2rem 8vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;border-bottom:1px solid rgba(255,255,255,.06)}
-.van-item{display:flex;align-items:flex-start;gap:.9rem}
-.van-title{font-size:.82rem;font-weight:600;color:white;margin-bottom:.2rem}
-.van-sub{font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.6}
-
-/* COMO CHEGAR */
-#endereco{padding:5rem 8vw;background:var(--white)}
-.endereco-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:start}
-.endereco-info{}
-.endereco-tag{font-family:"Playfair Display",serif;font-style:italic;font-size:1.25rem;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem}
-.endereco-tag::before{content:"";height:1px;width:36px;background:var(--red)}
-.endereco-title{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;color:var(--dark);margin-bottom:1.5rem;line-height:1.2}
-.endereco-cards{display:flex;flex-direction:column;gap:.9rem}
-.end-card{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.1rem;border-radius:10px;border:1px solid var(--border);background:var(--light);transition:box-shadow .2s}
-.end-card:hover{box-shadow:0 4px 18px rgba(200,0,11,.07)}
-.end-card-icon{width:42px;height:42px;border-radius:9px;background:rgba(200,0,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.end-card-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:#aaa;font-weight:600;margin-bottom:.2rem}
-.end-card-value{font-size:.9rem;font-weight:600;color:var(--dark);line-height:1.4}
-.end-card-sub{font-size:.75rem;color:var(--gray);margin-top:.15rem}
-.horarios-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem .8rem;margin-top:.3rem}
-.horario-row{display:flex;justify-content:space-between;font-size:.78rem;color:var(--gray);padding:.2rem 0;border-bottom:1px solid rgba(0,0,0,.05)}
-.horario-row span:first-child{font-weight:500;color:var(--dark)}
-.horario-row.fechado span:last-child{color:#e55}
-.btn-maps{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:white;padding:.75rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.84rem;font-weight:600;margin-top:1.2rem;transition:background .2s;box-shadow:0 4px 14px rgba(200,0,11,.25)}
-.btn-maps:hover{background:var(--red2)}
-.mapa-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid var(--border);position:relative}
-.mapa-wrap iframe{display:block;width:100%;height:380px;border:none}
-
-/* FOOTER novo */
-footer{background:#080808;padding:0}
-.footer-top{padding:3.5rem 8vw 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:2.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
-.footer-brand{}
-.footer-logo{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
-.footer-logo-icon{width:38px;height:38px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.footer-logo-name{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:white}
-.footer-desc{font-size:.77rem;color:rgba(255,255,255,.3);line-height:1.95;max-width:220px;margin-bottom:1.2rem}
-.footer-social{display:flex;gap:.5rem}
-.soc-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);text-decoration:none;transition:all .2s}
-.soc-btn:hover{border-color:var(--red2);color:var(--red2)}
-.footer-col h4{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:1rem}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.footer-col ul a{font-size:.78rem;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.4rem}
-.footer-col ul a:hover{color:white}
-.footer-col ul li{font-size:.78rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
-.footer-col ul li svg{flex-shrink:0;margin-top:1px}
-.footer-col ul li a{color:rgba(255,255,255,.35)}
-.footer-col ul li a:hover{color:var(--red2)}
-.footer-horarios{}
-.footer-horarios h4{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:.9rem}
-.fh-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.76rem}
-.fh-row span:first-child{color:rgba(255,255,255,.4)}
-.fh-row span:last-child{color:white;font-weight:500}
-.fh-row.fh-fechado span:last-child{color:#e55;font-weight:400}
-.footer-bottom{padding:1.2rem 8vw;display:flex;justify-content:space-between;align-items:center;font-size:.68rem;color:rgba(255,255,255,.15)}
-.footer-bottom a{color:rgba(255,255,255,.12);text-decoration:none;transition:color .2s}
-.footer-bottom a:hover{color:rgba(255,255,255,.4)}
-
-/* FLOAT WPP */
-.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:200;width:58px;height:58px;border-radius:50%;background:var(--wpp);display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.45);animation:pulse 2.5s infinite;transition:transform .25s}
-.wpp-float:hover{transform:scale(1.1)}
-@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,.7)}}
-
-/* ===================== MOBILE ===================== */
-@media(max-width:900px){
-  /* Topbar compacto */
-  .topbar{padding:.4rem 4vw;font-size:.7rem}
-  .topbar-left{display:none}
-  .topbar-right{gap:1rem;width:100%;justify-content:center}
-
-  /* Nav mobile */
-  nav{height:60px;padding:0 4vw}
-  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:white;border-bottom:2px solid var(--border);flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:99}
-  .nav-links.open{display:flex}
-  .nav-links a{height:52px;padding:0 5vw;border-bottom:1px solid var(--border);border-left:none;margin:0;font-size:.9rem}
-  .nav-links a:last-child{border-bottom:none}
-  .nav-links a:hover,.nav-links a.active{background:rgba(200,0,11,.04)}
-  .nav-cta{display:none}
-  .menu-btn{display:flex}
-
-  /* Hero mobile */
-  #hero{grid-template-columns:1fr;min-height:auto}
-  .hero-right{height:260px;clip-path:none;order:-1}
-  .hero-right::before{display:none}
-  .hero-left{padding:2rem 5vw 2.5rem}
-  .hero-tag{font-size:1.2rem}
-  .hero-title{font-size:1.9rem}
-  .hero-title strong{font-size:2.4rem}
-  .hero-desc{max-width:100%;font-size:.92rem}
-  .hero-btns{gap:.6rem}
-  .btn-wpp,.btn-outline{flex:1;justify-content:center;font-size:.88rem;padding:.85rem .8rem}
-
-  /* Slogan */
-  .slogan-bar{padding:1.5rem 4vw}
-  .slogan-bar .q{font-size:1.8rem}
-
-  /* Diferenciais mobile */
-  #diferenciais{padding:2.5rem 5vw}
-  .dif-grid{grid-template-columns:1fr;gap:.8rem}
-  .dif-card{display:flex;text-align:left;align-items:flex-start;gap:1rem;padding:1.2rem 1.1rem}
-  .dif-icon{width:52px;height:52px;flex-shrink:0;margin:0}
-  .dif-line{margin:.4rem 0 0}
-
-  /* Projetos mobile */
-  #projetos{padding:2.5rem 5vw}
-  .carousel-slide{grid-template-columns:1fr 1fr;gap:.6rem}
-  .carousel-item:nth-child(3){display:none}
-  .carousel-arrow{width:36px;height:36px}
-  .carousel-arrow.prev{left:-14px}
-  .carousel-arrow.next{right:-14px}
-
-  /* CTA mobile */
-  #cta{grid-template-columns:1fr;gap:1.5rem;padding:2.5rem 5vw;text-align:center}
-  .cta-left p{max-width:100%;margin:0 auto}
-  .cta-phone{justify-content:center;font-size:1.6rem}
-  .btn-wpp-lg{width:100%;justify-content:center;font-size:.95rem;padding:1rem}
-
-  /* Vantagens mobile */
-  .vantagens{grid-template-columns:1fr;gap:1.2rem;padding:2rem 5vw}
-
-  /* Como chegar mobile */
-  #endereco{padding:2.5rem 5vw}
-  .endereco-grid{grid-template-columns:1fr;gap:2rem}
-  .mapa-wrap iframe{height:280px}
-
-  /* Footer mobile */
-  .footer-top{grid-template-columns:1fr 1fr;gap:2rem;padding:2.5rem 5vw}
-  .footer-brand{grid-column:span 2}
-  .footer-desc{max-width:100%}
-  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
+/* ===== VARIÁVEIS ===== */
+:root {
+  --ink: #0f0f0f;
+  --bone: #f8f5f0;
+  --dark: #1a1a1a;
+  --gold: #c5a46d;
+  --muted: #666;
+  --wpp: #25D366;
 }
 
-@media(max-width:480px){
-  .topbar{display:none}
-  .hero-right{height:220px}
-  .hero-title{font-size:1.7rem}
-  .hero-title strong{font-size:2.1rem}
-  .hero-btns{flex-direction:column}
-  .btn-wpp,.btn-outline{width:100%;justify-content:center}
-  .carousel-slide{grid-template-columns:1fr}
-  .carousel-item:nth-child(2),.carousel-item:nth-child(3){display:none}
-  .carousel-arrow{display:none}
-  .slogan-bar p{font-size:1.1rem;gap:.3rem}
-  .footer-top{grid-template-columns:1fr}
-  .footer-brand{grid-column:span 1}
-  .horarios-grid{grid-template-columns:1fr}
+/* ===== UTILITÁRIOS ===== */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
+@media (min-width: 768px) { .wrap { padding: 0 2.5rem; } }
+
+.sec { padding: 4rem 0; }
+@media (min-width: 768px) { .sec { padding: 6rem 0; } }
+
+.tag {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; margin-bottom: 1rem;
 }
+.tag::before { content: ""; width: 28px; height: 1px; background: var(--gold); flex-shrink: 0; }
+
+.titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; line-height: 1.1; letter-spacing: -.01em;
+}
+.titulo em { font-style: normal; color: var(--gold); }
+
+/* ===== BOTÕES ===== */
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: var(--gold); color: var(--ink);
+  padding: .9rem 1.75rem; font-size: .8rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 3px; transition: opacity .3s;
+}
+.btn-gold:active { opacity: .85; }
+
+.btn-borda {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  border: 1.5px solid rgba(255,255,255,.5); color: #fff;
+  padding: .9rem 1.75rem; font-size: .8rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 3px; transition: all .3s;
+}
+.btn-borda:active { background: rgba(255,255,255,.1); }
+
+.btn-wpp {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  background: var(--wpp); color: #fff;
+  padding: .9rem 1.75rem; font-size: .85rem; font-weight: 600;
+  border-radius: 3px; transition: opacity .3s;
+}
+.btn-wpp:active { opacity: .85; }
+
+.btn-dark {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  border: 1.5px solid var(--ink); color: var(--ink);
+  padding: .9rem 1.75rem; font-size: .8rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 3px; transition: all .3s;
+}
+
+/* ===== REVELAR ===== */
+.rv { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.rv.show { opacity: 1; transform: none; }
+
+/* ===== HEADER ===== */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1rem 0;
+  transition: background .4s, padding .4s;
+}
+#header.fixo {
+  background: rgba(15,15,15,.95);
+  backdrop-filter: blur(10px);
+  padding: .75rem 0;
+}
+.hd { display: flex; align-items: center; justify-content: space-between; }
+.logo { color: #fff; display: flex; align-items: baseline; gap: .4rem; }
+.logo-nome { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: .04em; }
+.logo-sub { font-size: .55rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); }
+.nav-desk { display: none; }
+@media (min-width: 1024px) {
+  .nav-desk { display: flex; align-items: center; gap: 2rem; }
+  .nav-desk a { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.8); transition: color .3s; }
+  .nav-desk a:hover { color: var(--gold); }
+}
+.btn-ham {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: .6rem; color: #fff; width: 42px; height: 42px; justify-content: center;
+}
+@media (min-width: 1024px) { .btn-ham { display: none; } }
+.btn-ham span { display: block; height: 1.5px; background: currentColor; transition: all .3s; }
+.btn-ham.aberto span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.btn-ham.aberto span:nth-child(2) { opacity: 0; }
+.btn-ham.aberto span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Menu mobile */
+#menu-mob {
+  display: none;
+  position: fixed; inset: 0; z-index: 99;
+  background: var(--ink);
+  flex-direction: column; justify-content: center;
+  padding: 2rem 1.5rem;
+}
+#menu-mob.aberto { display: flex; }
+.menu-links { display: flex; flex-direction: column; gap: .25rem; margin-bottom: 2.5rem; }
+.menu-links a {
+  font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300;
+  color: #fff; padding: .5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* ===== HERO ===== */
+#hero {
+  background: var(--ink);
+  padding-top: 120px;
+  padding-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { #hero { padding-top: 160px; padding-bottom: 6rem; } }
+.hero-foto {
+  position: absolute; inset: 0;
+  background-image: url('/assets/hero-kitchen.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: .5;
+}
+.hero-gradiente {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(15,15,15,.4) 0%, rgba(15,15,15,.7) 60%, rgba(15,15,15,.95) 100%);
+}
+.hero-conteudo { position: relative; z-index: 2; }
+.hero-titulo {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1.1; color: #fff;
+  margin: .75rem 0 1.25rem;
+}
+.hero-titulo em { font-style: normal; color: var(--gold); }
+.hero-desc { color: rgba(255,255,255,.75); font-size: .95rem; line-height: 1.8; max-width: 500px; margin-bottom: 2rem; }
+.hero-btns { display: flex; flex-direction: column; gap: .75rem; }
+@media (min-width: 480px) { .hero-btns { flex-direction: row; } }
+
+/* ===== NÚMEROS ===== */
+#numeros { background: var(--ink); padding: 2.5rem 0; }
+.nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.08); }
+@media (min-width: 640px) { .nums { grid-template-columns: repeat(4, 1fr); } }
+.num { background: var(--ink); padding: 1.5rem 1rem; text-align: center; }
+.num-val { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); line-height: 1; margin-bottom: .3rem; }
+.num-txt { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.estrelas { display: flex; justify-content: center; gap: 2px; margin-bottom: .3rem; }
+.estrela { width: 13px; height: 13px; fill: var(--gold); }
+
+/* ===== SOBRE ===== */
+#sobre { background: var(--bone); }
+.sobre-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 1024px) { .sobre-grid { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; } }
+.sobre-foto { position: relative; }
+.sobre-foto img { width: 100%; height: 320px; object-fit: cover; border-radius: 2px; }
+@media (min-width: 768px) { .sobre-foto img { height: 520px; } }
+.sobre-placa {
+  position: absolute; bottom: 0; right: 0;
+  background: var(--ink); color: #fff;
+  padding: 1.25rem 1.5rem;
+}
+.placa-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); line-height: 1; }
+.placa-txt { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: .3rem; }
+.sobre-titulo { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--ink); margin: .75rem 0 1.25rem; }
+.sobre-titulo em { color: #8a6a35; }
+.sobre-p { color: var(--muted); font-size: .95rem; line-height: 1.8; margin-bottom: .9rem; }
+.sobre-p strong { color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.chip {
+  display: inline-flex; align-items: center; gap: .35rem;
+  border: 1px solid rgba(0,0,0,.12); background: #fff;
+  padding: .4rem .9rem; border-radius: 999px; font-size: .75rem; color: var(--ink);
+}
+.chip svg { width: 11px; height: 11px; stroke: var(--gold); stroke-width: 2.5; fill: none; }
+
+/* ===== PORTFOLIO ===== */
+#portfolio { background: var(--ink); color: #fff; }
+.pf-titulo { font-size: clamp(1.8rem, 5vw, 3rem); color: #fff; margin: .75rem 0 1rem; }
+.pf-titulo em { color: var(--gold); }
+.pf-desc { color: rgba(255,255,255,.6); font-size: .9rem; line-height: 1.7; margin-bottom: 2rem; }
+/* filtros */
+.filtros { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.filtros::-webkit-scrollbar { display: none; }
+.filtro {
+  flex-shrink: 0; padding: .5rem 1.1rem;
+  font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.7);
+  border-radius: 2px; background: none; transition: all .3s;
+}
+.filtro.ativo { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+/* carrossel */
+.galeria {
+  display: flex; gap: .75rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-bottom: .5rem;
+}
+.galeria::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .galeria { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; scroll-snap-type: none; gap: 1rem; }
+}
+.foto-item {
+  flex-shrink: 0; width: 75vw; max-width: 300px;
+  height: 380px; position: relative; overflow: hidden;
+  border-radius: 2px; scroll-snap-align: start; cursor: pointer;
+}
+@media (min-width: 768px) { .foto-item { width: auto; max-width: none; height: 320px; } }
+.foto-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+.foto-item:hover img { transform: scale(1.05); }
+.foto-sombra { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%); }
+.foto-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; }
+.foto-cat { font-size: .58rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.foto-nome { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #fff; }
+/* dots */
+.dots { display: flex; justify-content: center; gap: .45rem; margin-top: 1.25rem; }
+@media (min-width: 768px) { .dots { display: none; } }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.25); transition: all .3s; border: none; padding: 0; cursor: pointer; }
+.dot.ativo { width: 18px; border-radius: 3px; background: var(--gold); }
+
+/* ===== SERVIÇOS ===== */
+#servicos { background: var(--bone); }
+.sv-titulo { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--ink); margin: .75rem 0 1rem; }
+.sv-titulo em { color: #8a6a35; }
+.sv-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 2rem; }
+/* carrossel mobile, grid desktop */
+.sv-lista {
+  display: flex; gap: .75rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-bottom: .5rem;
+}
+.sv-lista::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .sv-lista { display: grid; grid-template-columns: repeat(2, 1fr); overflow: visible; gap: 1px; background: rgba(0,0,0,.08); }
+}
+@media (min-width: 1024px) { .sv-lista { grid-template-columns: repeat(3, 1fr); } }
+.sv-card {
+  flex-shrink: 0; width: 72vw; max-width: 260px;
+  background: var(--bone); padding: 1.75rem 1.5rem;
+  scroll-snap-align: start; border: 1px solid rgba(0,0,0,.07);
+  border-radius: 2px;
+}
+@media (min-width: 768px) { .sv-card { width: auto; max-width: none; border: none; border-radius: 0; padding: 2.25rem; transition: background .4s; } }
+@media (min-width: 768px) { .sv-card:hover { background: var(--ink); color: #fff; } }
+@media (min-width: 768px) { .sv-card:hover .sv-ic { border-color: var(--gold); } }
+@media (min-width: 768px) { .sv-card:hover .sv-ic svg { stroke: var(--gold); } }
+@media (min-width: 768px) { .sv-card:hover .sv-desc-card { color: rgba(255,255,255,.6); } }
+.sv-ic { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 1px solid rgba(0,0,0,.15); margin-bottom: 1.25rem; transition: border-color .4s; }
+.sv-ic svg { width: 21px; height: 21px; stroke: var(--ink); stroke-width: 1.4; fill: none; transition: stroke .4s; }
+.sv-nome { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; margin-bottom: .6rem; line-height: 1.2; }
+.sv-desc-card { color: var(--muted); font-size: .85rem; line-height: 1.65; transition: color .4s; }
+
+/* ===== DIFERENCIAIS ===== */
+#dif { background: #1a1a1a; color: #fff; }
+.dif-titulo { font-size: clamp(1.8rem, 4vw, 3rem); margin: .75rem 0 1rem; }
+.dif-titulo em { color: var(--gold); }
+.dif-sub { color: rgba(255,255,255,.55); font-size: .9rem; line-height: 1.7; margin-bottom: 2.5rem; }
+.dif-lista { list-style: none; border-top: 1px solid rgba(255,255,255,.1); }
+.dif-item { border-bottom: 1px solid rgba(255,255,255,.1); }
+.dif-btn {
+  width: 100%; display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem 0; text-align: left; color: #fff; background: none;
+}
+.dif-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); width: 40px; flex-shrink: 0; }
+.dif-nome { flex: 1; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+.dif-seta { width: 18px; height: 18px; stroke: rgba(255,255,255,.4); fill: none; stroke-width: 1.8; transition: transform .3s; flex-shrink: 0; }
+.dif-item.aberto .dif-seta { transform: rotate(180deg); stroke: var(--gold); }
+.dif-corpo { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+.dif-item.aberto .dif-corpo { max-height: 150px; }
+.dif-corpo p { color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.75; padding: 0 0 1.25rem 3.25rem; }
+
+/* ===== DEPOIMENTOS ===== */
+#dep { background: var(--bone); }
+.dep-titulo { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--ink); margin: .75rem 0 2rem; text-align: center; }
+.dep-titulo em { color: #8a6a35; }
+.dep-lista {
+  display: flex; gap: .75rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-bottom: .5rem;
+}
+.dep-lista::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .dep-lista { display: grid; grid-template-columns: repeat(2, 1fr); overflow: visible; gap: 1px; background: rgba(0,0,0,.08); }
+}
+.dep-card {
+  flex-shrink: 0; width: 82vw; max-width: 340px;
+  background: var(--bone); padding: 1.75rem 1.5rem;
+  scroll-snap-align: start; border: 1px solid rgba(0,0,0,.07); border-radius: 2px;
+}
+@media (min-width: 768px) { .dep-card { width: auto; max-width: none; border: none; border-radius: 0; padding: 2.5rem; } }
+.dep-stars { display: flex; gap: 2px; margin-bottom: 1rem; }
+.dep-star { width: 13px; height: 13px; fill: var(--gold); }
+.dep-texto { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; line-height: 1.5; color: var(--ink); margin-bottom: 1.5rem; }
+@media (min-width: 768px) { .dep-texto { font-size: 1.5rem; } }
+.dep-nome { font-size: .88rem; font-weight: 600; color: var(--ink); }
+.dep-cargo { font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-top: .2rem; }
+
+/* ===== CTA ===== */
+#cta {
+  background: var(--ink); color: #fff;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-fundo { position: absolute; inset: 0; background-image: url('/assets/portfolio-living.jpg'); background-size: cover; background-position: center; opacity: .2; }
+.cta-escuro { position: absolute; inset: 0; background: rgba(15,15,15,.8); }
+.cta-c { position: relative; z-index: 2; }
+.cta-titulo { font-size: clamp(2rem, 6vw, 4rem); margin: .75rem 0 1.25rem; color: #fff; }
+.cta-titulo em { color: var(--gold); }
+.cta-desc { color: rgba(255,255,255,.65); font-size: .95rem; max-width: 440px; margin: 0 auto 2rem; line-height: 1.75; }
+
+/* ===== CONTATO ===== */
+#contato { background: var(--bone); }
+.ct-titulo { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--ink); margin: .75rem 0 .75rem; }
+.ct-titulo em { color: #8a6a35; }
+.ct-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 2.5rem; }
+.ct-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 1024px) { .ct-grid { grid-template-columns: 1fr 1fr; } }
+.ct-lista { display: flex; flex-direction: column; gap: 1.75rem; }
+.ct-item { display: flex; gap: 1rem; align-items: flex-start; }
+.ct-icone { width: 42px; height: 42px; background: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 2px; }
+.ct-icone svg { width: 17px; height: 17px; stroke: var(--gold); stroke-width: 1.5; fill: none; }
+.ct-label { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+.ct-valor { color: var(--ink); font-size: .9rem; line-height: 1.65; }
+.ct-valor a { color: var(--ink); }
+.ct-btns { display: flex; flex-direction: column; gap: .75rem; margin-top: .5rem; }
+@media (min-width: 480px) { .ct-btns { flex-direction: row; } }
+.ct-mapa { height: 300px; border-radius: 2px; overflow: hidden; }
+@media (min-width: 768px) { .ct-mapa { height: 420px; } }
+.ct-mapa iframe { width: 100%; height: 100%; border: 0; filter: grayscale(1); }
+
+/* ===== FOOTER ===== */
+footer { background: var(--ink); color: #fff; padding: 3.5rem 0 2rem; }
+.ft-grid { display: grid; gap: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+@media (min-width: 768px) { .ft-grid { grid-template-columns: repeat(3, 1fr); } }
+.ft-logo { display: flex; align-items: baseline; gap: .4rem; margin-bottom: 1rem; }
+.ft-logo-nome { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; }
+.ft-p { color: rgba(255,255,255,.5); font-size: .83rem; line-height: 1.7; }
+.ft-titulo { font-size: .6rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: .85rem; }
+.ft-nav { display: flex; flex-direction: column; gap: .55rem; }
+.ft-nav a { font-size: .83rem; color: rgba(255,255,255,.6); }
+.ft-info { color: rgba(255,255,255,.6); font-size: .83rem; line-height: 1.7; }
+.ft-info a { display: block; color: rgba(255,255,255,.6); margin-top: .5rem; }
+.ft-bottom { padding-top: 1.5rem; display: flex; flex-direction: column; gap: .4rem; font-size: .72rem; color: rgba(255,255,255,.3); }
+@media (min-width: 768px) { .ft-bottom { flex-direction: row; justify-content: space-between; } }
+
+/* ===== WHATSAPP FIXO ===== */
+#wpp {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--wpp); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.45);
+  transition: transform .25s;
+}
+#wpp:active { transform: scale(.93); }
+#wpp svg { width: 28px; height: 28px; fill: #fff; }
+
+/* ===== LIGHTBOX ===== */
+#lightbox { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.95); align-items: center; justify-content: center; padding: 1rem; }
+#lightbox.aberto { display: flex; }
+.lb-fechar { position: absolute; top: 1rem; right: 1rem; color: #fff; padding: .75rem; }
+.lb-fechar svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+.lb-fig { max-width: 960px; width: 100%; }
+.lb-fig img { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 2px; }
+.lb-cap { text-align: center; margin-top: .75rem; }
+.lb-cap-cat { font-size: .58rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: .2rem; }
+.lb-cap-nome { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #fff; }
+
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-    Cataguases - MG
-  </div>
-  <div class="topbar-right">
-    <a href="tel:+55329815314">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      (32) 9815-3141
-    </a>
-    <a href="https://wa.me/553298153141" target="_blank">
-      <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-      (32) 9815-3141
-    </a>
-    <a href="https://instagram.com" target="_blank"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg></a>
-    <a href="https://facebook.com" target="_blank"><svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-  </div>
-</div>
-
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">
-    <div class="nav-logo-icon">
-      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+<!-- HEADER -->
+<header id="header">
+  <div class="wrap">
+    <div class="hd">
+      <a href="#" class="logo">
+        <span class="logo-nome">Stilus</span>
+        <span class="logo-sub">Móveis Planejados</span>
+      </a>
+      <nav class="nav-desk">
+        <a href="#sobre">Sobre</a>
+        <a href="#portfolio">Projetos</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#dif">Diferenciais</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <button class="btn-ham" id="btn-ham" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <span class="nav-logo-text">Stilus <span>Planejados</span></span>
+  </div>
+</header>
+
+<!-- MENU MOBILE -->
+<div id="menu-mob">
+  <nav class="menu-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#portfolio">Projetos</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#dif">Diferenciais</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a href="https://wa.me/5532998153141?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" class="btn-wpp">
+    Solicitar Orçamento
   </a>
-  <ul class="nav-links" id="navLinks">
-    <a href="#hero">Inicio</a>
-    <a href="#diferenciais">Servicos</a>
-    <a href="#projetos">Projetos</a>
-    <a href="#servico">Nosso Trabalho</a>
-    <a href="#cta">Contato</a>
-  </ul>
-  <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="nav-cta">
-    <svg width="15" height="15" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-    Orcamento
-  </a>
-  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
+</div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Convite</div>
-    <h1 class="hero-title">Venha fazer seu <strong>ORCAMENTO</strong> conosco!</h1>
-    <div class="hero-line"></div>
-    <p class="hero-desc">Moveis planejados com qualidade, design e acabamento impecavel para transformar seu ambiente.</p>
+  <div class="hero-foto"></div>
+  <div class="hero-gradiente"></div>
+  <div class="wrap hero-conteudo">
+    <p class="tag">Cataguases · MG · Sob medida</p>
+    <h1 class="hero-titulo">Ambientes que <em>transformam</em> o jeito de viver.</h1>
+    <p class="hero-desc">Móveis planejados com design exclusivo, acabamento impecável e entrega no prazo — do projeto à instalação.</p>
     <div class="hero-btns">
-      <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp">
-        <svg width="17" height="17" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-        Solicitar orcamento
-      </a>
-      <a href="#projetos" class="btn-outline">Ver projetos</a>
+      <a href="https://wa.me/5532998153141?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" class="btn-gold">Solicitar Orçamento</a>
+      <a href="#portfolio" class="btn-borda">Ver Projetos</a>
     </div>
-  </div>
-  <div class="hero-right">
-    <img id="heroImg" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85" alt="Cozinha planejada Stilus">
   </div>
 </section>
 
-<!-- SLOGAN -->
-<div class="slogan-bar">
-  <p><span class="q">"</span> VOCE SONHA, <strong>A GENTE REALIZA!</strong> <span class="q">"</span></p>
+<!-- NÚMEROS -->
+<section id="numeros">
+  <div class="wrap">
+    <div class="nums">
+      <div class="num rv">
+        <div class="estrelas">
+          <svg class="estrela" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="estrela" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="estrela" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="estrela" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="estrela" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="num-val">5.0</p>
+        <p class="num-txt">Google</p>
+      </div>
+      <div class="num rv">
+        <p class="num-val">+12</p>
+        <p class="num-txt">Anos de experiência</p>
+      </div>
+      <div class="num rv">
+        <p class="num-val">+500</p>
+        <p class="num-txt">Projetos entregues</p>
+      </div>
+      <div class="num rv">
+        <p class="num-val">100%</p>
+        <p class="num-txt">Sob medida</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="sec">
+  <div class="wrap">
+    <div class="sobre-grid">
+      <div class="rv sobre-foto">
+        <img src="/assets/portfolio-office.jpg" alt="Ambiente Stilus" loading="lazy">
+        <div class="sobre-placa">
+          <p class="placa-num">12+</p>
+          <p class="placa-txt">Anos em Cataguases</p>
+        </div>
+      </div>
+      <div class="rv">
+        <p class="tag">A empresa</p>
+        <h2 class="titulo sobre-titulo">Mais que móveis, <em>experiências</em> de design.</h2>
+        <p class="sobre-p">A <strong>Stilus Móveis Planejados</strong> nasceu para transformar ambientes com personalidade — combinando design, conforto e funcionalidade em cada projeto.</p>
+        <p class="sobre-p">Cada detalhe é pensado exclusivamente para o seu espaço, com olhar arquitetônico e execução impecável.</p>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 14 14"><polyline points="2 7 5 10 12 3"/></svg>Atendimento personalizado</span>
+          <span class="chip"><svg viewBox="0 0 14 14"><polyline points="2 7 5 10 12 3"/></svg>Projetos sob medida</span>
+          <span class="chip"><svg viewBox="0 0 14 14"><polyline points="2 7 5 10 12 3"/></svg>Materiais premium</span>
+          <span class="chip"><svg viewBox="0 0 14 14"><polyline points="2 7 5 10 12 3"/></svg>Equipe especializada</span>
+          <span class="chip"><svg viewBox="0 0 14 14"><polyline points="2 7 5 10 12 3"/></svg>Entrega no prazo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <p class="tag">Portfólio</p>
+      <h2 class="titulo pf-titulo">Projetos que <em>elevam</em> cada ambiente.</h2>
+      <p class="pf-desc">Uma seleção dos nossos ambientes — cozinhas, banheiros, dormitórios e muito mais.</p>
+    </div>
+    <div class="filtros rv" id="filtros">
+      <button class="filtro ativo" data-f="Todos">Todos</button>
+      <button class="filtro" data-f="Cozinha">Cozinha</button>
+      <button class="filtro" data-f="Banheiro">Banheiro</button>
+      <button class="filtro" data-f="Sala">Sala</button>
+      <button class="filtro" data-f="Painel">Painel</button>
+      <button class="filtro" data-f="Closet">Closet</button>
+      <button class="filtro" data-f="Escritório">Escritório</button>
+    </div>
+    <div class="galeria rv" id="galeria">
+      <div class="foto-item" data-c="Cozinha" onclick="abrirLb('/assets/portfolio-kitchen.jpg','Cozinha Onyx','Cozinha')">
+        <img src="/assets/portfolio-kitchen.jpg" alt="Cozinha Onyx" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Cozinha</p><p class="foto-nome">Cozinha Onyx</p></div>
+      </div>
+      <div class="foto-item" data-c="Banheiro" onclick="abrirLb('/assets/portfolio-bathroom.jpg','Banho Mármore','Banheiro')">
+        <img src="/assets/portfolio-bathroom.jpg" alt="Banho Mármore" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Banheiro</p><p class="foto-nome">Banho Mármore</p></div>
+      </div>
+      <div class="foto-item" data-c="Sala" onclick="abrirLb('/assets/portfolio-living.jpg','Sala Aurum','Sala')">
+        <img src="/assets/portfolio-living.jpg" alt="Sala Aurum" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Sala</p><p class="foto-nome">Sala Aurum</p></div>
+      </div>
+      <div class="foto-item" data-c="Painel" onclick="abrirLb('/assets/portfolio-ripado.jpg','Painel Ripado','Painel')">
+        <img src="/assets/portfolio-ripado.jpg" alt="Painel Ripado" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Painel</p><p class="foto-nome">Painel Ripado</p></div>
+      </div>
+      <div class="foto-item" data-c="Closet" onclick="abrirLb('/assets/portfolio-lighting.jpg','Closet Iluminado','Closet')">
+        <img src="/assets/portfolio-lighting.jpg" alt="Closet Iluminado" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Closet</p><p class="foto-nome">Closet Iluminado</p></div>
+      </div>
+      <div class="foto-item" data-c="Escritório" onclick="abrirLb('/assets/portfolio-office.jpg','Home Office','Escritório')">
+        <img src="/assets/portfolio-office.jpg" alt="Home Office" loading="lazy">
+        <div class="foto-sombra"></div>
+        <div class="foto-info"><p class="foto-cat">Escritório</p><p class="foto-nome">Home Office</p></div>
+      </div>
+    </div>
+    <div class="dots rv" id="dots-gal"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="fecharLb()">
+  <button class="lb-fechar" onclick="fecharLb()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <figure class="lb-fig" onclick="event.stopPropagation()">
+    <img id="lb-img" src="" alt="">
+    <figcaption class="lb-cap">
+      <p class="lb-cap-cat" id="lb-cat"></p>
+      <p class="lb-cap-nome" id="lb-nome"></p>
+    </figcaption>
+  </figure>
 </div>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <p class="tag">Serviços</p>
+      <h2 class="titulo sv-titulo">Tudo que o seu espaço <em>precisa</em>.</h2>
+      <p class="sv-desc">Da marcenaria ao design — executamos cada projeto com precisão e acabamento impecável.</p>
+    </div>
+    <div class="sv-lista rv">
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><h3 class="sv-nome">Armários sob medida</h3><p class="sv-desc-card">Construção e instalação com aproveitamento máximo e acabamento premium.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="1"/><path d="M5 11V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v4"/><line x1="5" y1="19" x2="5" y2="21"/><line x1="19" y1="19" x2="19" y2="21"/></svg></div><h3 class="sv-nome">Mesas sob medida</h3><p class="sv-desc-card">Fabricação para sala, escritório e home office em madeira maciça ou painéis.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></div><h3 class="sv-nome">Prateleiras e nichos</h3><p class="sv-desc-card">Instalação planejada, funcional e decorativa para qualquer ambiente.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3 class="sv-nome">Design de móveis</h3><p class="sv-desc-card">Criação exclusiva do projeto — do esboço ao 3D, refletindo o seu estilo.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="6" rx="1"/><path d="M6 14v-3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3"/></svg></div><h3 class="sv-nome">Aparadores</h3><p class="sv-desc-card">Construção e instalação com design elegante para sala, corredor ou quarto.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M4 18v-5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5"/><path d="M2 18h20"/></svg></div><h3 class="sv-nome">Mobiliário para banheiro</h3><p class="sv-desc-card">Gabinetes resistentes à umidade com acabamento refinado e durável.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M8 21H5a2 2 0 0 1-2-2v-4l2-5h14l2 5v4a2 2 0 0 1-2 2h-3"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg></div><h3 class="sv-nome">Mobiliário para cozinha</h3><p class="sv-desc-card">Cozinhas planejadas completas que otimizam espaço e elevam a estética.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><rect x="4" y="14" width="16" height="6" rx="1"/><path d="M8 14v-3a4 4 0 0 1 8 0v3"/></svg></div><h3 class="sv-nome">Mobiliário para dormitório</h3><p class="sv-desc-card">Guarda-roupas e roupeiros planejados para qualquer estilo de quarto.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><h3 class="sv-nome">Montagem de móveis</h3><p class="sv-desc-card">Montagem profissional com equipe técnica especializada — rápido e seguro.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3 class="sv-nome">Móveis de madeira</h3><p class="sv-desc-card">Peças artesanais em madeira maciça — resistência, beleza natural e durabilidade.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="1"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div><h3 class="sv-nome">Móveis para sala de estar</h3><p class="sv-desc-card">Estantes e painéis de TV que transformam sua sala em ambiente sofisticado.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><h3 class="sv-nome">Escritório e loja</h3><p class="sv-desc-card">Balcões, mesas executivas e divisórias para ambientes comerciais de alto padrão.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div><h3 class="sv-nome">Quartos infantis</h3><p class="sv-desc-card">Móveis seguros e criativos — beliches e armários pensados para cada fase.</p></div>
+      <div class="sv-card"><div class="sv-ic"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><h3 class="sv-nome">Móveis sob medida</h3><p class="sv-desc-card">Qualquer ambiente, qualquer dimensão — do projeto à instalação final.</p></div>
+    </div>
+  </div>
+</section>
 
 <!-- DIFERENCIAIS -->
-<section id="diferenciais">
-  <div class="dif-grid">
-    <div class="dif-card">
-      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-      <div><div class="dif-title">Moveis Planejados</div><div class="dif-desc">com qualidade e acabamento impecavel</div><div class="dif-line"></div></div>
+<section id="dif" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <p class="tag">Por que Stilus</p>
+      <h2 class="titulo dif-titulo">Detalhes que <em>definem</em> o alto padrão.</h2>
+      <p class="dif-sub">Não vendemos móveis — entregamos ambientes que valorizam seu imóvel e elevam o seu modo de viver.</p>
     </div>
-    <div class="dif-card">
-      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-      <div><div class="dif-title">Projetos Personalizados</div><div class="dif-desc">pensados para o seu espaco e seu estilo</div><div class="dif-line"></div></div>
-    </div>
-    <div class="dif-card">
-      <div class="dif-icon"><svg width="30" height="30" fill="none" stroke="#C8000B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      <div><div class="dif-title">Atendimento Especializado</div><div class="dif-desc">do inicio ao pos-venda</div><div class="dif-line"></div></div>
-    </div>
+    <ul class="dif-lista rv">
+      <li class="dif-item"><button class="dif-btn" onclick="toggleDif(this)"><span class="dif-num">01</span><span class="dif-nome">Design exclusivo</span><svg class="dif-seta" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dif-corpo"><p>Projetos únicos criados para refletir a personalidade de quem habita o espaço — sem cópias, sem modelos prontos.</p></div></li>
+      <li class="dif-item"><button class="dif-btn" onclick="toggleDif(this)"><span class="dif-num">02</span><span class="dif-nome">Acabamento premium</span><svg class="dif-seta" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dif-corpo"><p>Materiais nobres, ferragens importadas e marcenaria de altíssima precisão em cada detalhe.</p></div></li>
+      <li class="dif-item"><button class="dif-btn" onclick="toggleDif(this)"><span class="dif-num">03</span><span class="dif-nome">Atenção aos detalhes</span><svg class="dif-seta" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dif-corpo"><p>Nada passa despercebido — do alinhamento das veias da madeira ao toque das ferragens.</p></div></li>
+      <li class="dif-item"><button class="dif-btn" onclick="toggleDif(this)"><span class="dif-num">04</span><span class="dif-nome">Transparência no processo</span><svg class="dif-seta" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dif-corpo"><p>Acompanhamento próximo em cada etapa, do projeto à instalação final.</p></div></li>
+      <li class="dif-item"><button class="dif-btn" onclick="toggleDif(this)"><span class="dif-num">05</span><span class="dif-nome">Entrega no prazo</span><svg class="dif-seta" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dif-corpo"><p>Cronograma rigoroso, comunicação clara e respeito total ao seu tempo e investimento.</p></div></li>
+    </ul>
   </div>
 </section>
 
-<!-- PROJETOS -->
-<section id="projetos">
-  <div class="section-label">Nossos Projetos</div>
-  <div class="section-title">Conheca alguns ambientes que ja transformamos</div>
-  <div class="carousel-wrap">
-    <div id="carouselContainer">
-      <!-- Fotos carregadas dinamicamente via API -->
-      <div class="no-imgs" id="noImgs" style="display:none">Nenhum projeto cadastrado ainda. <a href="/admin" style="color:var(--red)">Adicionar fotos</a></div>
+<!-- DEPOIMENTOS -->
+<section id="dep" class="sec">
+  <div class="wrap">
+    <div class="rv" style="text-align:center">
+      <p class="tag" style="justify-content:center">Depoimentos</p>
+      <h2 class="titulo dep-titulo">Quem vive Stilus, <em>recomenda</em>.</h2>
     </div>
-    <button class="carousel-arrow prev" id="prevBtn" aria-label="Anterior">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="carousel-arrow next" id="nextBtn" aria-label="Proximo">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-    <div class="carousel-dots" id="carouselDots"></div>
-  </div>
-  <div class="proj-cta">
-    <a href="https://wa.me/553298153141?text=Ola!%20Quero%20ver%20mais%20projetos%20da%20Stilus." target="_blank" class="btn-proj">Ver todos os projetos</a>
+    <div class="dep-lista rv">
+      <figure class="dep-card"><div class="dep-stars"><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><blockquote class="dep-texto">"Ficou melhor do que imaginávamos. Qualidade impecável e atendimento excelente do início ao fim."</blockquote><p class="dep-nome">Mariana Costa</p><p class="dep-cargo">Cozinha planejada · Cataguases</p></figure>
+      <figure class="dep-card"><div class="dep-stars"><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><blockquote class="dep-texto">"Profissionais atenciosos, projeto detalhado e prazos respeitados. Recomendo de olhos fechados!"</blockquote><p class="dep-nome">Rafael e Bruna Almeida</p><p class="dep-cargo">Apartamento completo · Leopoldina</p></figure>
+      <figure class="dep-card"><div class="dep-stars"><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><blockquote class="dep-texto">"A Stilus entendeu tudo que queríamos. O resultado superou todas as expectativas!"</blockquote><p class="dep-nome">Dr. Henrique Vieira</p><p class="dep-cargo">Home office e closet · Cataguases</p></figure>
+      <figure class="dep-card"><div class="dep-stars"><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="dep-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><blockquote class="dep-texto">"Acabamento perfeito, materiais de primeira e instalação caprichada. Vale cada centavo!"</blockquote><p class="dep-nome">Camila Resende</p><p class="dep-cargo">Sala de estar · Muriaé</p></figure>
+    </div>
   </div>
 </section>
-
-<!-- SOBRE O SERVIÇO -->
-<section id="servico" style="padding:4.5rem 8vw;background:var(--white)">
-  <div class="section-label">Nosso Trabalho</div>
-  <div class="section-title" style="margin-bottom:2rem">Veja como transformamos ambientes</div>
-  <div id="midiaContainer" style="display:none">
-    <!-- Vídeos -->
-    <div id="videoSection" style="display:none;margin-bottom:2rem">
-      <h3 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:#aaa;margin-bottom:1rem">Vídeos</h3>
-      <div id="videoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem"></div>
-    </div>
-    <!-- Fotos -->
-    <div id="fotoSection" style="display:none">
-      <h3 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:#aaa;margin-bottom:1rem">Fotos</h3>
-      <div id="fotoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem"></div>
-    </div>
-  </div>
-  <div id="midiaVazio" style="text-align:center;padding:2rem;display:none">
-    <p style="color:#aaa;font-size:.88rem">Em breve adicionaremos fotos e vídeos do nosso trabalho.</p>
-  </div>
-</section>
-
-<!-- lightbox simples -->
-<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;align-items:center;justify-content:center;cursor:zoom-out" onclick="this.style.display='none'">
-  <img id="lightboxImg" src="" style="max-width:92vw;max-height:88vh;border-radius:8px;box-shadow:0 8px 48px rgba(0,0,0,.5)">
-</div>
 
 <!-- CTA -->
-<section id="cta">
-  <div class="cta-left">
-    <h2>Pronto para transformar <strong>seu ambiente?</strong></h2>
-    <p>Fale com a gente e solicite seu orcamento sem compromisso.</p>
-  </div>
-  <div class="cta-right">
-    <div class="cta-phone">
-      <svg width="26" height="26" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-      (32) 9815-3141
-    </div>
-    <a href="https://wa.me/553298153141?text=Ola!%20Gostaria%20de%20solicitar%20um%20orcamento." target="_blank" class="btn-wpp-lg">
-      <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-      Solicitar orcamento
+<section id="cta" class="sec">
+  <div class="cta-fundo"></div>
+  <div class="cta-escuro"></div>
+  <div class="wrap cta-c rv">
+    <p class="tag" style="justify-content:center">Vamos começar</p>
+    <h2 class="titulo cta-titulo">Seu projeto dos sonhos <em>começa agora</em>.</h2>
+    <p class="cta-desc">Fale agora com um especialista e transforme o seu ambiente em uma assinatura Stilus.</p>
+    <a href="https://wa.me/5532998153141?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" class="btn-wpp">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Falar no WhatsApp
     </a>
   </div>
 </section>
 
-<!-- VANTAGENS -->
-<div class="vantagens">
-  <div class="van-item">
-    <svg width="28" height="28" fill="none" stroke="#25D366" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <div><div class="van-title">Atendimento personalizado</div><div class="van-sub">Do projeto a instalacao, conte com quem entende.</div></div>
-  </div>
-  <div class="van-item">
-    <svg width="28" height="28" fill="none" stroke="#25D366" stroke-width="1.7" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-    <div><div class="van-title">Qualidade garantida</div><div class="van-sub">Materiais de alto padrao e acabamento impecavel.</div></div>
-  </div>
-  <div class="van-item">
-    <svg width="28" height="28" fill="none" stroke="#25D366" stroke-width="1.7" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-    <div><div class="van-title">Pagamento facilitado</div><div class="van-sub">Condicoes especiais para realizar o seu sonho.</div></div>
-  </div>
-</div>
-
-<!-- COMO CHEGAR -->
-<section id="endereco">
-  <div class="endereco-grid">
-    <div class="endereco-info">
-      <div class="endereco-tag">Como Chegar</div>
-      <h2 class="endereco-title">Venha nos visitar em Cataguases</h2>
-      <div class="endereco-cards">
-        <div class="end-card">
-          <div class="end-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div>
-            <div class="end-card-label">Endereco</div>
-            <div class="end-card-value">Rua Joaquim Peixoto Ramos, 59 — Sala 29</div>
-            <div class="end-card-sub">Centro · Cataguases — MG · CEP 36777-066</div>
-          </div>
+<!-- CONTATO -->
+<section id="contato" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <p class="tag">Contato</p>
+      <h2 class="titulo ct-titulo">Visite nosso <em>showroom</em>.</h2>
+      <p class="ct-desc">Estamos em Cataguases, prontos para transformar a sua ideia em projeto.</p>
+    </div>
+    <div class="ct-grid rv">
+      <div class="ct-lista">
+        <div class="ct-item">
+          <span class="ct-icone"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><p class="ct-label">Endereço</p><p class="ct-valor">Rua Joaquim Peixoto Ramos, 59 - sala 29<br>Centro, Cataguases - MG · 36777-066</p></div>
         </div>
-        <div class="end-card">
-          <div class="end-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <div class="end-card-label">Horario de Funcionamento</div>
-            <div class="horarios-grid">
-              <div class="horario-row"><span>Segunda</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-              <div class="horario-row"><span>Terca</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-              <div class="horario-row"><span>Quarta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-              <div class="horario-row"><span>Quinta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-              <div class="horario-row"><span>Sexta</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-              <div class="horario-row"><span>Sabado</span><span>8h – 12h</span></div>
-              <div class="horario-row fechado"><span>Domingo</span><span>Fechado</span></div>
-            </div>
-          </div>
+        <div class="ct-item">
+          <span class="ct-icone"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l.98-.98a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div><p class="ct-label">Telefone</p><p class="ct-valor"><a href="tel:+5532998153141">(32) 99815-3141</a></p></div>
         </div>
-        <div class="end-card">
-          <div class="end-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#C8000B" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <div>
-            <div class="end-card-label">Telefone / WhatsApp</div>
-            <div class="end-card-value">(32) 9815-3141</div>
-            <div class="end-card-sub">Atendemos pelo WhatsApp tambem</div>
-          </div>
+        <div class="ct-item">
+          <span class="ct-icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          <div><p class="ct-label">Atendimento</p><p class="ct-valor">Segunda a Sexta · 08h às 18h<br>Sábado · 08h às 12h</p></div>
+        </div>
+        <div class="ct-btns">
+          <a href="https://wa.me/5532998153141?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" class="btn-wpp">WhatsApp</a>
+          <a href="https://instagram.com/" target="_blank" class="btn-dark">Instagram</a>
         </div>
       </div>
-      <a href="https://www.google.com/maps/place/Stilus+M%C3%B3veis+Planejados/@-21.3887772,-42.6925877,17z" target="_blank" class="btn-maps">
-        <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Abrir no Google Maps
-      </a>
-    </div>
-    <div class="mapa-wrap">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3758.8!2d-42.6947!3d-21.3888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa2d782091f020d%3A0xc35b5aca9c9e0c4!2sStilus%20M%C3%B3veis%20Planejados!5e0!3m2!1spt-BR!2sbr!4v1"
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="Localizacao Stilus Planejados">
-      </iframe>
+      <div class="ct-mapa">
+        <iframe title="Stilus Cataguases" src="https://www.google.com/maps?q=Rua+Joaquim+Peixoto+Ramos,+59,+Centro,+Cataguases+-+MG&output=embed" loading="lazy" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer id="sobre">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="footer-logo">
-        <div class="footer-logo-icon"><svg width="17" height="17" fill="none" stroke="white" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <span class="footer-logo-name">Stilus Planejados</span>
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <span class="ft-logo-nome">Stilus</span>
+          <span class="logo-sub">Móveis Planejados</span>
+        </div>
+        <p class="ft-p">Ambientes sob medida que combinam design, conforto e funcionalidade. Cataguases — MG.</p>
       </div>
-      <p class="footer-desc">Moveis planejados com qualidade, design e acabamento impecavel para transformar seu lar em Cataguases e regiao. Faca um orcamento sem compromisso.</p>
-      <div class="footer-social">
-        <a href="https://wa.me/553298153141" target="_blank" class="soc-btn" title="WhatsApp">
-          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-        </a>
-        <a href="https://instagram.com/stilusplanejados" target="_blank" class="soc-btn" title="Instagram">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
-        </a>
-        <a href="https://facebook.com" target="_blank" class="soc-btn" title="Facebook">
-          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
+      <nav>
+        <p class="ft-titulo">Navegação</p>
+        <div class="ft-nav">
+          <a href="#sobre">Sobre</a>
+          <a href="#portfolio">Projetos</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#dif">Diferenciais</a>
+          <a href="#contato">Contato</a>
+        </div>
+      </nav>
+      <div>
+        <p class="ft-titulo">Contato</p>
+        <div class="ft-info">
+          Rua Joaquim Peixoto Ramos, 59 — sala 29<br>Centro, Cataguases - MG
+          <a href="tel:+5532998153141">(32) 99815-3141</a>
+          <a href="https://instagram.com/" target="_blank">Instagram</a>
+        </div>
       </div>
     </div>
-    <div class="footer-col">
-      <h4>Navegacao</h4>
-      <ul>
-        <li><a href="#hero"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Inicio</a></li>
-        <li><a href="#diferenciais"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Servicos</a></li>
-        <li><a href="#projetos"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Projetos</a></li>
-        <li><a href="#endereco"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Como Chegar</a></li>
-        <li><a href="#cta"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Contato</a></li>
-      </ul>
+    <div class="ft-bottom">
+      <p>© <span id="ano"></span> Stilus Móveis Planejados. Todos os direitos reservados.</p>
+      <p>Cataguases · Minas Gerais</p>
     </div>
-    <div class="footer-col">
-      <h4>Contato</h4>
-      <ul>
-        <li>
-          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Rua Joaquim Peixoto Ramos, 59 — Sala 29, Centro, Cataguases MG
-        </li>
-        <li>
-          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:+55329815314">(32) 9815-3141</a>
-        </li>
-        <li>
-          <svg width="13" height="13" fill="#E8000D" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-          <a href="https://wa.me/553298153141" target="_blank">(32) 9815-3141</a>
-        </li>
-        <li>
-          <svg width="13" height="13" fill="none" stroke="#E8000D" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
-          <a href="https://instagram.com/stilusplanejados" target="_blank">@stilusplanejados</a>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-horarios">
-      <h4>Funcionamento</h4>
-      <div class="fh-row"><span>Seg — Sex</span><span>8h – 11h30 / 13h30 – 18h</span></div>
-      <div class="fh-row"><span>Sabado</span><span>8h – 12h</span></div>
-      <div class="fh-row fh-fechado"><span>Domingo</span><span>Fechado</span></div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>2025 Stilus Planejados · Cataguases MG · Todos os direitos reservados.</span>
-    <a href="/admin" style="color:rgba(255,255,255,.5);text-decoration:none;display:flex;align-items:center;gap:.4rem;font-size:.75rem;border:1px solid rgba(255,255,255,.2);padding:.4rem .85rem;border-radius:5px;transition:all .2s" onmouseover="this.style.color='white';this.style.borderColor='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.2)'">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Painel Admin
-    </a>
   </div>
 </footer>
 
-<!-- BOTÃO ADMIN FIXO (canto inferior esquerdo) -->
-<a href="/admin" style="position:fixed;bottom:1.8rem;left:1.8rem;z-index:199;background:rgba(15,15,15,.92);color:rgba(255,255,255,.7);text-decoration:none;display:flex;align-items:center;gap:.45rem;padding:.55rem 1rem;border-radius:8px;font-size:.75rem;font-weight:500;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(8px);transition:all .2s;font-family:'DM Sans',sans-serif" onmouseover="this.style.background='#E8000D';this.style.color='white';this.style.borderColor='#E8000D'" onmouseout="this.style.background='rgba(15,15,15,.92)';this.style.color='rgba(255,255,255,.7)';this.style.borderColor='rgba(255,255,255,.15)'" title="Acessar painel admin">
-  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-  Admin
-</a>
-
-<!-- FLOAT WPP -->
-<a href="https://wa.me/553298153141?text=Ola!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orcamento." target="_blank" class="wpp-float" title="Falar no WhatsApp">
-  <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+<!-- WPP FIXO -->
+<a id="wpp" href="https://wa.me/5532998153141?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
 </a>
 
 <script>
-// ── CARREGA MÍDIA (FOTO & VÍDEO) ─────────────────────────────────────────────
-fetch('/api/midia')
-  .then(function(r){ return r.json(); })
-  .then(function(data){
-    if(!data || data.length === 0){
-      document.getElementById('midiaVazio').style.display = 'block';
-      return;
-    }
-    document.getElementById('midiaContainer').style.display = 'block';
-    var videos = data.filter(function(m){ return m.tipo === 'video'; });
-    var fotos  = data.filter(function(m){ return m.tipo === 'foto'; });
+document.getElementById('ano').textContent = new Date().getFullYear();
 
-    if(videos.length > 0){
-      document.getElementById('videoSection').style.display = 'block';
-      var vg = document.getElementById('videoGrid');
-      videos.forEach(function(v){
-        var div = document.createElement('div');
-        div.style.cssText = 'border-radius:12px;overflow:hidden;background:#f0eeeb;box-shadow:0 2px 12px rgba(0,0,0,.08)';
-        var player = v.tipo === 'video_file'
-          ? '<video src="'+v.url+'" style="width:100%;aspect-ratio:16/9;display:block;background:#000" controls playsinline preload="metadata"></video>'
-          : '<div style="aspect-ratio:16/9"><iframe src="'+v.url+'?rel=0" title="'+v.titulo+'" style="width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe></div>';
-        div.innerHTML = player + (v.titulo ? '<div style="padding:.6rem .8rem;font-size:.82rem;font-weight:600;color:#1a1a1a">'+v.titulo+'</div>' : '');
-        vg.appendChild(div);
-      });
-    }
+// Header
+const hdr = document.getElementById('header');
+window.addEventListener('scroll', () => hdr.classList.toggle('fixo', window.scrollY > 50), {passive:true});
 
-    if(fotos.length > 0){
-      document.getElementById('fotoSection').style.display = 'block';
-      var fg = document.getElementById('fotoGrid');
-      fotos.forEach(function(f){
-        var div = document.createElement('div');
-        div.style.cssText = 'border-radius:10px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in;background:#e5e5e5';
-        var img = document.createElement('img');
-        img.src = f.url; img.alt = f.titulo;
-        img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform .4s';
-        img.onmouseover = function(){ this.style.transform='scale(1.05)'; };
-        img.onmouseout  = function(){ this.style.transform='scale(1)'; };
-        img.onclick = function(){
-          document.getElementById('lightboxImg').src = f.url;
-          document.getElementById('lightbox').style.display = 'flex';
-        };
-        div.appendChild(img);
-        fg.appendChild(div);
-      });
-    }
-  })
-  .catch(function(){ document.getElementById('midiaVazio').style.display='block'; });
+// Menu mobile
+const ham = document.getElementById('btn-ham');
+const menu = document.getElementById('menu-mob');
+ham.addEventListener('click', () => {
+  const aberto = menu.classList.toggle('aberto');
+  ham.classList.toggle('aberto', aberto);
+  document.body.style.overflow = aberto ? 'hidden' : '';
+});
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menu.classList.remove('aberto');
+  ham.classList.remove('aberto');
+  document.body.style.overflow = '';
+}));
 
-// ── CARREGA FOTOS DO BANCO VIA API ──────────────────────────────────────────
-var allSlides = [];
-var currentSlide = 0;
+// Reveal
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
+}), { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-function buildCarousel(imgs) {
-  var container = document.getElementById('carouselContainer');
-  var dotsEl = document.getElementById('carouselDots');
-  container.innerHTML = '';
-  dotsEl.innerHTML = '';
-
-  if (!imgs || imgs.length === 0) {
-    // Usa fotos de placeholder enquanto nao ha fotos cadastradas
-    imgs = [
-      {url:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80', titulo:'Cozinha'},
-      {url:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', titulo:'Closet'},
-      {url:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80', titulo:'Sala'},
-      {url:'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80', titulo:'Quarto'},
-      {url:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80', titulo:'Banheiro'},
-      {url:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80', titulo:'Escritorio'},
-    ];
-  }
-
-  // Agrupa em slides de 3
-  var perSlide = 3;
-  allSlides = [];
-  for (var i = 0; i < imgs.length; i += perSlide) {
-    allSlides.push(imgs.slice(i, i + perSlide));
-  }
-
-  allSlides.forEach(function(group, idx) {
-    var slide = document.createElement('div');
-    slide.className = 'carousel-slide' + (idx === 0 ? ' active' : '');
-    group.forEach(function(img) {
-      var item = document.createElement('div');
-      item.className = 'carousel-item';
-      item.innerHTML = '<img src="' + img.url + '" alt="' + (img.titulo||'Projeto') + '" loading="lazy"><div class="img-label">' + (img.titulo||'') + '</div>';
-      slide.appendChild(item);
+// Filtros portfólio
+document.querySelectorAll('.filtro').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filtro').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    const f = btn.dataset.f;
+    const gal = document.getElementById('galeria');
+    gal.querySelectorAll('.foto-item').forEach(item => {
+      item.style.display = (f === 'Todos' || item.dataset.c === f) ? '' : 'none';
     });
-    container.appendChild(slide);
-
-    var dot = document.createElement('button');
-    dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
-    dot.dataset.slide = idx;
-    dot.addEventListener('click', function() { goToSlide(+this.dataset.slide); });
-    dotsEl.appendChild(dot);
-  });
-
-  currentSlide = 0;
-}
-
-function goToSlide(n) {
-  var slides = document.querySelectorAll('.carousel-slide');
-  var dots = document.querySelectorAll('.carousel-dot');
-  if (!slides.length) return;
-  slides[currentSlide].classList.remove('active');
-  if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
-  currentSlide = (n + allSlides.length) % allSlides.length;
-  slides[currentSlide].classList.add('active');
-  if (dots[currentSlide]) dots[currentSlide].classList.add('active');
-}
-
-document.getElementById('nextBtn').addEventListener('click', function() { goToSlide(currentSlide + 1); });
-document.getElementById('prevBtn').addEventListener('click', function() { goToSlide(currentSlide - 1); });
-setInterval(function() { if (allSlides.length > 1) goToSlide(currentSlide + 1); }, 5000);
-
-// Carrega fotos da API
-fetch('/api/imagens?secao=portfolio')
-  .then(function(r) { return r.json(); })
-  .then(function(data) { buildCarousel(data); })
-  .catch(function() { buildCarousel([]); });
-
-// ── MENU MOBILE ──────────────────────────────────────────────────────────────
-document.getElementById('menuBtn').addEventListener('click', function() {
-  document.getElementById('navLinks').classList.toggle('open');
-});
-document.querySelectorAll('#navLinks a').forEach(function(a) {
-  a.addEventListener('click', function() {
-    document.getElementById('navLinks').classList.remove('open');
+    gal.scrollLeft = 0;
   });
 });
 
-// ── NAV ATIVO ────────────────────────────────────────────────────────────────
-var sections = document.querySelectorAll('section[id],footer[id]');
-var navAs = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', function() {
-  var cur = '';
-  sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
-  navAs.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
-}, {passive:true});
+// Lightbox
+function abrirLb(src, nome, cat) {
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-nome').textContent = nome;
+  document.getElementById('lb-cat').textContent = cat;
+  document.getElementById('lightbox').classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+function fecharLb() {
+  document.getElementById('lightbox').classList.remove('aberto');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+
+// Acordeão diferenciais
+function toggleDif(btn) {
+  const item = btn.closest('.dif-item');
+  const estaAberto = item.classList.contains('aberto');
+  document.querySelectorAll('.dif-item.aberto').forEach(i => i.classList.remove('aberto'));
+  if (!estaAberto) item.classList.add('aberto');
+}
 </script>
 </body>
 </html>
